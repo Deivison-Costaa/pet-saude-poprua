@@ -1,0 +1,26 @@
+# Ren'Py generated files
+game/saves/
+game/cache/
+game/bytecode.rpyb
+*.rpyc
+*.rpycm
+
+# Logs
+log.txt
+errors.txt
+
+# Android keystores (credentials — nunca commitar)
+*.keystore
+android.json
+
+# Temporários
+_docx_temp/
+traceback.txt
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Python
+__pycache__/
+*.pyc
