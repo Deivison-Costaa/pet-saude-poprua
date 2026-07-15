@@ -72,8 +72,9 @@ jobs:
 
       - name: Gerar APK
         run: |
-          ./renpy-sdk/renpy.sh launcher android_build "$GITHUB_WORKSPACE" --dest dist
-          ls -la dist
+          cd renpy-sdk
+          ./renpy.sh launcher android_build "$GITHUB_WORKSPACE" --dest "$GITHUB_WORKSPACE/dist"
+          ls -la "$GITHUB_WORKSPACE/dist"
 
       - name: Remover chaves antes do cache ser salvo
         if: always()
