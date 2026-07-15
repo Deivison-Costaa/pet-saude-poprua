@@ -74,9 +74,14 @@ jobs:
 
       - name: Limitar APK a arm64-v8a (celulares modernos)
         run: |
-          sed -i 's/include "x86_64", "armeabi-v7a", "arm64-v8a"/include "arm64-v8a"/' renpy-sdk/rapt/templates/app-build.gradle
-          sed -i 's/universalApk true/universalApk false/' renpy-sdk/rapt/templates/app-build.gradle
-          grep -A2 'include\|universalApk' renpy-sdk/rapt/templates/app-build.gradle
+          GRADLE=renpy-sdk/rapt/templates/app-build.gradle
+          echo "=== antes ===" && grep -n 'include\|universalApk\|splits' "$GRADLE" || true
+          sed -i 's/include "x86_64", "armeabi-v7a", "arm64-v8a"/include "arm64-v8a"/' "$GRADLE" || true
+          sed -i 's/include "armeabi-v7a", "arm64-v8a", "x86_64"/include "arm64-v8a"/' "$GRADLE" || true
+          sed -i 's/include "arm64-v8a", "armeabi-v7a", "x86_64"/include "arm64-v8a"/' "$GRADLE" || true
+          sed -i 's/universalApk true/universalApk false/' "$GRADLE" || true
+          sed -i 's/universalApk true;/universalApk false;/' "$GRADLE" || true
+          echo "=== depois ===" && grep -n 'include\|universalApk\|splits' "$GRADLE" || true
 
       - name: Gerar APK
         run: |
