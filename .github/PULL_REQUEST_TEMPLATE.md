@@ -1,3 +1,9 @@
+## Issue relacionada
+
+<!-- Escreva "Closes #N" (ex: Closes #2) para vincular e fechar a issue automaticamente quando este PR for mesclado. Deixe em branco se não houver issue. -->
+
+Closes #
+
 ## O que este PR faz
 
 <!-- resumo em 2-3 linhas, em português -->
