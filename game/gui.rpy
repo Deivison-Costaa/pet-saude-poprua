@@ -27,24 +27,27 @@ define gui.interface_text_color = '#ffffff'
 
 
 ################################################################################
-## Fontes (DejaVuSans suporta acentuação PT-BR completa)
+## Fontes
+## Texto: Atkinson Hyperlegible (OFL) — desenhada para máxima legibilidade;
+##        acentuação PT-BR completa. Títulos: Kaushan Script (OFL, pincel).
 ################################################################################
 
-define gui.text_font = "fonts/Lato-Regular.ttf"
-define gui.name_text_font = "fonts/Lato-Bold.ttf"
-define gui.interface_text_font = "fonts/Lato-Regular.ttf"
+define gui.text_font = "fonts/AtkinsonHyperlegible-Regular.ttf"
+define gui.name_text_font = "fonts/AtkinsonHyperlegible-Bold.ttf"
+define gui.interface_text_font = "fonts/AtkinsonHyperlegible-Regular.ttf"
+define gui.titulo_font = "fonts/KaushanScript-Regular.ttf"
 
 define config.font_replacement_map = {
-    ("fonts/Lato-Regular.ttf", True,  False) : ("fonts/Lato-Bold.ttf",       False, False),
-    ("fonts/Lato-Regular.ttf", False, True)  : ("fonts/Lato-Italic.ttf",     False, False),
-    ("fonts/Lato-Regular.ttf", True,  True)  : ("fonts/Lato-BoldItalic.ttf", False, False),
+    ("fonts/AtkinsonHyperlegible-Regular.ttf", True,  False) : ("fonts/AtkinsonHyperlegible-Bold.ttf",       False, False),
+    ("fonts/AtkinsonHyperlegible-Regular.ttf", False, True)  : ("fonts/AtkinsonHyperlegible-Italic.ttf",     False, False),
+    ("fonts/AtkinsonHyperlegible-Regular.ttf", True,  True)  : ("fonts/AtkinsonHyperlegible-BoldItalic.ttf", False, False),
 }
 
-define gui.text_size = 23
-define gui.name_text_size = 30
-define gui.interface_text_size = 24
-define gui.label_text_size = 28
-define gui.notify_text_size = 16
+define gui.text_size = 26
+define gui.name_text_size = 31
+define gui.interface_text_size = 25
+define gui.label_text_size = 29
+define gui.notify_text_size = 17
 define gui.title_text_size = 50
 
 
@@ -61,11 +64,11 @@ define gui.main_menu_text_color = "#5ab8f5"
 ## Diálogos
 ################################################################################
 
-define gui.textbox_height = 185
+define gui.textbox_height = 170
 define gui.textbox_yalign = 1.0
 
-define gui.name_xpos = 240
-define gui.name_ypos = 0
+define gui.name_xpos = 110
+define gui.name_ypos = 14
 define gui.name_xalign = 0.0
 
 define gui.namebox_width = None
@@ -73,9 +76,9 @@ define gui.namebox_height = None
 define gui.namebox_borders = Borders(5, 5, 5, 5)
 define gui.namebox_tile = False
 
-define gui.dialogue_xpos = 268
-define gui.dialogue_ypos = 50
-define gui.dialogue_width = 744
+define gui.dialogue_xpos = 110
+define gui.dialogue_ypos = 58
+define gui.dialogue_width = 1060
 define gui.dialogue_text_xalign = 0.0
 
 
@@ -117,8 +120,9 @@ define gui.choice_button_borders = Borders(100, 5, 100, 5)
 define gui.choice_button_text_font = gui.text_font
 define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
-define gui.choice_button_text_idle_color = "#cccccc"
-define gui.choice_button_text_hover_color = "#ffffff"
+## Placas aquarela claras: texto escuro no repouso, claro no hover (placa azul)
+define gui.choice_button_text_idle_color = "#1d3d5c"
+define gui.choice_button_text_hover_color = "#f4f1ea"
 
 
 ################################################################################

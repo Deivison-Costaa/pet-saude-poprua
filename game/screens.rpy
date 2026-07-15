@@ -81,58 +81,28 @@ style frame:
 ## HUD de medidores — PET-Saúde
 ################################################################################
 
+## Só a EMPATIA fica visível em tempo real (visibilidade pedagógica — roteiro).
+## Direito, Rede e Acolhimento são computados em silêncio e revelados no Epílogo.
 screen medidores():
     zorder 110
 
     frame:
-        xalign 0.5
-        xsize 860
-        ypos 5
+        xalign 0.985
+        ypos 8
         yanchor 0.0
         background "#000000bb"
-        padding (14, 7, 14, 7)
+        padding (14, 8, 14, 10)
 
-        has hbox
-        spacing 20
+        has vbox
+        spacing 3
 
-        ## CONFIANÇA
-        vbox:
-            spacing 2
-            text "CONFIANÇA" size 12 color "#5C8FB3" bold True
-            bar:
-                value VariableValue("confianca", 100)
-                xsize 200
-                ysize 13
-                left_bar Solid("#5C8FB3")
-                right_bar Solid("#1a2b3a")
-
-        ## SAÚDE
-        vbox:
-            spacing 2
-            text "SAÚDE" size 12 color "#7CA982" bold True
-            bar:
-                value VariableValue("saude", 100)
-                xsize 200
-                ysize 13
-                left_bar Solid("#7CA982")
-                right_bar Solid("#1a2b3a")
-
-        ## ACESSO
-        vbox:
-            spacing 2
-            text "ACESSO" size 12 color "#C4A55A" bold True
-            bar:
-                value VariableValue("acesso", 100)
-                xsize 200
-                ysize 13
-                left_bar Solid("#C4A55A")
-                right_bar Solid("#1a2b3a")
-
-        ## ESTIGMA — oculto (só ícone de "?")
-        vbox:
-            spacing 2
-            text "ESTIGMA" size 12 color "#444444" bold True
-            text "???" size 12 color "#333333"
+        text "EMPATIA" size 13 color "#D8A8B8" bold True
+        bar:
+            value VariableValue("empatia", 100)
+            xsize 210
+            ysize 13
+            left_bar Solid("#B07286")
+            right_bar Solid("#1a2b3a")
 
 
 ################################################################################
@@ -248,9 +218,10 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
-    background "#0a1a2ab8"
-    hover_background "#1A6B9Acc"
-    padding (30, 12, 30, 12)
+    ## Placas aquarela (miolo quase opaco — texto não vaza sobre o cenário)
+    background Frame("gui/aquarela/choice_idle.png", 46, 26, tile=False)
+    hover_background Frame("gui/aquarela/choice_hover.png", 46, 26, tile=False)
+    padding (38, 16, 38, 16)
 
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
@@ -270,14 +241,12 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Voltar") action Rollback()
+            textbutton _("Histórico") action ShowMenu('history')
+            textbutton _("Avançar") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("Salvar") action ShowMenu('save')
+            textbutton _("Opções") action ShowMenu('preferences')
 
 
 init python:
@@ -308,41 +277,47 @@ screen navigation():
         style_prefix "navigation"
 
         xpos gui.navigation_xpos
-        yalign 0.5
+        ypos 292
 
-        spacing gui.navigation_spacing
+        spacing 0
 
         if main_menu:
 
-            textbutton _("Start") action Start()
+            textbutton _("Jogar") action Start()
+
+            textbutton _("Capítulos") action ShowMenu("capitulos")
+
+            textbutton _("Perfil / Progresso") action ShowMenu("perfil")
+
+            textbutton _("Materiais") action ShowMenu("materiais")
+
+            textbutton _("Redes de apoio") action ShowMenu("redes_apoio")
+
+            textbutton _("Sobre o jogo") action ShowMenu("sobre_jogo")
 
         else:
 
-            textbutton _("History") action ShowMenu("history")
+            textbutton _("Histórico") action ShowMenu("history")
 
-            textbutton _("Save") action ShowMenu("save")
+            textbutton _("Salvar") action ShowMenu("save")
 
-        textbutton _("Load") action ShowMenu("load")
+        textbutton _("Carregar") action ShowMenu("load")
 
-        textbutton _("Preferences") action ShowMenu("preferences")
+        textbutton _("Configurações") action ShowMenu("preferences")
 
         if _in_replay:
 
-            textbutton _("End Replay") action EndReplay(confirm=True)
+            textbutton _("Encerrar replay") action EndReplay(confirm=True)
 
         elif not main_menu:
 
-            textbutton _("Main Menu") action MainMenu()
+            textbutton _("Menu principal") action MainMenu()
 
-        textbutton _("About") action ShowMenu("about")
-
-        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
-
-            textbutton _("Help") action ShowMenu("help")
+        textbutton _("Créditos") action ShowMenu("about")
 
         if renpy.variant("pc"):
 
-            textbutton _("Quit") action Quit(confirm=not main_menu)
+            textbutton _("Sair") action Quit(confirm=not main_menu)
 
 
 style navigation_button is gui_button
@@ -351,9 +326,18 @@ style navigation_button_text is gui_button_text
 style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
+    ## Sobre o painel de papel: texto limpo no repouso, placa azul no hover
+    ## (a placa clara é branca — some sobre o papel)
+    background None
+    hover_background Frame("gui/aquarela/nav_hover.png", 34, 20, tile=False)
+    padding (26, 4, 26, 4)
 
 style navigation_button_text:
     properties gui.text_properties("navigation_button")
+    font gui.titulo_font
+    idle_color "#1d3d5c"
+    hover_color "#f4f1ea"
+    size 22
 
 
 ## Tela main_menu ##############################################################
@@ -366,6 +350,7 @@ screen main_menu():
 
     add gui.main_menu_background
 
+    ## Painel translúcido à esquerda (estrutura proposta em docs/estrutura-telas.md)
     frame:
         pass
 
@@ -374,11 +359,51 @@ screen main_menu():
     if gui.show_name:
 
         vbox:
-            text "[config.name!t]":
-                style "main_menu_title"
+            style "default"
+            xpos 34
+            ypos 34
+            spacing 4
 
-            text _("Ren'Py 8"):
-                style "main_menu_version"
+            text "Caminhos":
+                font gui.titulo_font
+                size 42
+                color "#1d3d5c"
+                line_leading -6
+
+            text "do Cuidado":
+                font gui.titulo_font
+                size 42
+                color "#1d3d5c"
+                line_leading -8
+
+            null height 4
+
+            text _("Um jogo sobre acolhimento,\ndireito e empatia."):
+                size 15
+                color "#33393f"
+                italic True
+
+    ## Rodapé institucional
+    fixed:
+        xfill True
+        ysize 38
+        yalign 1.0
+
+        add Solid("#1d3d5ce8")
+
+        text "UFPB  ·  PET-Saúde  ·  GT-6 POP RUA":
+            xpos 30
+            yalign 0.5
+            size 14
+            color "#ebf0f4"
+            bold True
+
+        text "protótipo — nome provisório · v[config.version]":
+            xalign 0.99
+            yalign 0.5
+            size 12
+            color "#c8d4de"
+            italic True
 
 
 style main_menu_frame is empty
@@ -466,7 +491,7 @@ screen game_menu(title, scroll=None):
 
     use navigation
 
-    textbutton _("Return"):
+    textbutton _("Voltar"):
         style "return_button"
 
         action Return()
@@ -519,6 +544,7 @@ style game_menu_label:
     ysize 120
 
 style game_menu_label_text:
+    font gui.titulo_font
     size gui.title_text_size
     color gui.accent_color
     yalign 0.5
@@ -535,7 +561,7 @@ screen about():
 
     tag menu
 
-    use game_menu(_("About"), scroll="viewport"):
+    use game_menu(_("Créditos"), scroll="viewport"):
 
         style_prefix "about"
 
@@ -546,7 +572,9 @@ screen about():
 
             null height 15
 
-            text _("Projeto educacional PET-Saúde — GT6 Pop Rua | Frente TI")
+            text _("Visual novel educacional sobre o cuidado à população em situação de rua.\n")
+            text _("PET-Saúde · GT6 Pop Rua · UFPB — Frente TI")
+            text _("História 1: “Ele não parece morador de rua” (protótipo para testes).")
 
             null height 15
 
@@ -575,19 +603,19 @@ screen save():
 
     tag menu
 
-    use file_slots(_("Save"))
+    use file_slots(_("Salvar"))
 
 
 screen load():
 
     tag menu
 
-    use file_slots(_("Load"))
+    use file_slots(_("Carregar"))
 
 
 screen file_slots(title):
 
-    default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
+    default page_name_value = FilePageNameInputValue(pattern=_("Página {}"), auto=_("Salvamentos automáticos"), quick=_("Salvamentos rápidos"))
 
     use game_menu(title):
 
@@ -700,7 +728,7 @@ screen preferences():
     else:
         $ cols = 4
 
-    use game_menu(_("Preferences"), scroll="viewport"):
+    use game_menu(_("Configurações"), scroll="viewport"):
 
         vbox:
 
@@ -711,16 +739,16 @@ screen preferences():
 
                     vbox:
                         style_prefix "radio"
-                        label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
-                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                        label _("Tela")
+                        textbutton _("Janela") action Preference("display", "window")
+                        textbutton _("Tela cheia") action Preference("display", "fullscreen")
 
                 vbox:
                     style_prefix "check"
-                    label _("Skip")
-                    textbutton _("Unseen Text") action Preference("skip", "toggle")
-                    textbutton _("After Choices") action Preference("after choices", "toggle")
-                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                    label _("Avançar")
+                    textbutton _("Texto não lido") action Preference("skip", "toggle")
+                    textbutton _("Após escolhas") action Preference("after choices", "toggle")
+                    textbutton _("Transições") action InvertSelected(Preference("transitions", "toggle"))
 
             null height (4 * gui.pref_spacing)
 
@@ -730,25 +758,25 @@ screen preferences():
 
                 vbox:
 
-                    label _("Text Speed")
+                    label _("Velocidade do texto")
 
                     bar value Preference("text speed")
 
-                    label _("Auto-Forward Time")
+                    label _("Tempo do avanço automático")
 
                     bar value Preference("auto-forward time")
 
                 vbox:
 
                     if config.has_music:
-                        label _("Music Volume")
+                        label _("Volume da música")
 
                         hbox:
                             bar value Preference("music volume")
 
                     if config.has_sound:
 
-                        label _("Sound Volume")
+                        label _("Volume dos efeitos")
 
                         hbox:
                             bar value Preference("sound volume")
@@ -757,7 +785,7 @@ screen preferences():
                                 textbutton _("Test") action Play("sound", config.sample_sound)
 
                     if config.has_voice:
-                        label _("Voice Volume")
+                        label _("Volume das vozes")
 
                         hbox:
                             bar value Preference("voice volume")
@@ -768,7 +796,7 @@ screen preferences():
                     if config.has_music or config.has_sound or config.has_voice:
                         null height gui.pref_spacing
 
-                        textbutton _("Mute All"):
+                        textbutton _("Silenciar tudo"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
 
@@ -852,7 +880,7 @@ screen history():
 
     predict False
 
-    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport")):
+    use game_menu(_("Histórico"), scroll=("vpgrid" if gui.history_height else "viewport")):
 
         style_prefix "history"
 
@@ -928,7 +956,7 @@ screen help():
 
     default device = "keyboard"
 
-    use game_menu(_("Help"), scroll="viewport"):
+    use game_menu(_("Ajuda"), scroll="viewport"):
 
         style_prefix "help"
 
@@ -1109,8 +1137,8 @@ screen confirm(message, yes_action, no_action):
                 xalign 0.5
                 spacing 100
 
-                textbutton _("Yes") action yes_action
-                textbutton _("No") action no_action
+                textbutton _("Sim") action yes_action
+                textbutton _("Não") action no_action
 
     key "game_menu" action no_action
 
@@ -1347,8 +1375,8 @@ screen quick_menu():
         xalign 0.5
         yalign 1.0
 
-        textbutton _("Back") action Rollback()
-        textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+        textbutton _("Voltar") action Rollback()
+        textbutton _("Avançar") action Skip() alternate Skip(fast=True, confirm=True)
         textbutton _("Auto") action Preference("auto-forward", "toggle")
         textbutton _("Menu") action ShowMenu()
 

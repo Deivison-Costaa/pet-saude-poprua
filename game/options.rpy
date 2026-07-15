@@ -1,13 +1,13 @@
 ## options.rpy — PET-Saúde: Pop Rua
 ## Configurações do projeto
 
-define config.name = _("PET-Saúde: Pop Rua")
+define config.name = _("Caminhos do Cuidado")
 define gui.show_name = True
-define config.version = "0.1"
+define config.version = "0.2"
 
 define gui.about = _p("""
-Jogo educacional desenvolvido no âmbito do PET-Saúde.
-GT6 — Pop Rua | Frente TI
+Visual novel educacional sobre o cuidado à população em situação de rua.
+PET-Saúde · GT6 Pop Rua · UFPB — Frente TI
 """)
 
 define build.name = "petsaude-pop-rua"
@@ -38,5 +38,13 @@ init python:
     build.classify('**/.**', None)
     build.classify('**/#**', None)
     build.classify('**/thumbs.db', None)
+    ## Material de planejamento fica fora dos pacotes do jogo
+    build.classify('docs/**', None)
+    build.classify('assets-gerados/**', None)
+    build.classify('README.md', None)
+    build.classify('*.docx', None)
+    build.classify('*.png', None)
+    build.classify('*.txt', None)
+    build.classify('01-07/**', None)
+    build.classify('Imagens-*/**', None)
     build.documentation('*.html')
-    build.documentation('*.txt')

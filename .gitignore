@@ -24,3 +24,7 @@ Desktop.ini
 # Python
 __pycache__/
 *.pyc
+
+# Segredos (chaves de API — nunca commitar)
+.env
+.env.*
