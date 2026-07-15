@@ -50,10 +50,9 @@ jobs:
         if: steps.cache-renpy.outputs.cache-hit != 'true'
         env:
           RAPT_NO_TERMS: "1"
-          PYTHONPATH: ${{ github.workspace }}/renpy-sdk
         run: |
           cd renpy-sdk/rapt
-          yes y | ../lib/py3-linux-x86_64/python -O android.py installsdk || true
+          yes y | ../lib/py3-linux-x86_64/python -O -c "import sys, os; sys.path.insert(0, os.path.dirname(os.getcwd())); sys.argv = ['android.py', 'installsdk']; exec(open('android.py').read())" || true
           test -d Sdk || (echo "Android SDK não instalado" && exit 1)
 
       - name: Escrever local.properties (assinatura)
