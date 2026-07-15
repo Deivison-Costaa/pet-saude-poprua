@@ -72,6 +72,12 @@ jobs:
           EOF
           cat renpy-sdk/rapt/project/local.properties
 
+      - name: Limitar APK a arm64-v8a (celulares modernos)
+        run: |
+          sed -i 's/include "x86_64", "armeabi-v7a", "arm64-v8a"/include "arm64-v8a"/' renpy-sdk/rapt/templates/app-build.gradle
+          sed -i 's/universalApk true/universalApk false/' renpy-sdk/rapt/templates/app-build.gradle
+          grep -A2 'include\|universalApk' renpy-sdk/rapt/templates/app-build.gradle
+
       - name: Gerar APK
         run: |
           cd renpy-sdk
