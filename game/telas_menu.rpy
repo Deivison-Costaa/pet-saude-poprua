@@ -39,7 +39,7 @@ screen capitulos():
                     else:
                         text "não iniciada" size 13 color "#8899aa" italic True yalign 0.5
 
-                text "“Ele não parece morador de rua”" size 22 color "#f0f0f0" bold True
+                text "“Ele não parece morador de rua”" font gui.titulo_font size 26 color "#f0f0f0"
                 text "Renato, 54 anos, chega à UPA com dor no peito. Quem é essa população — e o que o seu olhar decide antes da ficha?" size 15 color "#b8c4ce"
 
                 null height 6
@@ -79,7 +79,7 @@ screen perfil():
         vbox:
             spacing 16
 
-            text "Histórias" size 20 color "#f0f0f0" bold True
+            text "Histórias" font gui.titulo_font size 26 color "#f0f0f0"
 
             hbox:
                 spacing 12
@@ -152,7 +152,7 @@ screen materiais():
                 xfill True
                 has vbox
                 spacing 6
-                text "Quem é a população em situação de rua?" size 18 color "#f0f0f0" bold True
+                text "Quem é a população em situação de rua?" font gui.titulo_font size 22 color "#f0f0f0"
                 text "É heterogênea: não existe um perfil único. Os motivos mais citados (dados de 2022) são problemas familiares, desemprego e uso de substâncias. A surpresa de que alguém “não parece morador de rua” é, ela mesma, um sinal de que o imaginário precisa ser revisado." size 15 color "#b8c4ce"
 
             frame:
@@ -161,7 +161,7 @@ screen materiais():
                 xfill True
                 has vbox
                 spacing 6
-                text "O direito ao atendimento" size 18 color "#f0f0f0" bold True
+                text "O direito ao atendimento" font gui.titulo_font size 22 color "#f0f0f0"
                 text "O SUS é universal. A Portaria GM/MS 940/2011 garante o cadastro do Cartão SUS mesmo com dados incompletos ou sem documento. Exigir endereço ou documentação para atender é uma barreira ilegal." size 15 color "#b8c4ce"
 
             frame:
@@ -170,7 +170,7 @@ screen materiais():
                 xfill True
                 has vbox
                 spacing 6
-                text "Registro que vira cuidado" size 18 color "#f0f0f0" bold True
+                text "Registro que vira cuidado" font gui.titulo_font size 22 color "#f0f0f0"
                 text "A codificação CIAP-2 e o campo de vulnerabilidade social no e-SUS fazem o caso circular pela rede: busca ativa do Consultório na Rua, vinculação à UBS de referência, prioridade nos fluxos. Texto livre é carta que não chega." size 15 color "#b8c4ce"
 
             frame:
@@ -179,7 +179,7 @@ screen materiais():
                 xfill True
                 has vbox
                 spacing 6
-                text "Fontes" size 18 color "#f0f0f0" bold True
+                text "Fontes" font gui.titulo_font size 22 color "#f0f0f0"
                 text "MDHC — Diagnóstico Federal 2023 · Portaria GM/MS 940/2011 · PNAB 2017 · Decreto 7053/2009 (Política Nacional para a PSR) · Política Nacional de Humanização (HumanizaSUS)." size 14 color "#8899aa" italic True
 
 
@@ -213,7 +213,7 @@ screen redes_apoio():
                     xfill True
                     has vbox
                     spacing 3
-                    text nome size 16 color "#8FD0C6" bold True
+                    text nome font gui.titulo_font size 19 color "#8FD0C6"
                     text desc size 14 color "#b8c4ce"
 
             null height 6
@@ -233,7 +233,7 @@ screen sobre_jogo():
         vbox:
             spacing 14
 
-            text "Caminhos do Cuidado {size=-6}{i}(nome provisório){/i}{/size}" size 24 color "#f0f0f0" bold True
+            text "Caminhos do Cuidado {size=-8}{i}(nome provisório){/i}{/size}" font gui.titulo_font size 30 color "#f0f0f0"
             text "Um jogo sobre acolhimento, direito e empatia." size 16 color "#b8c4ce" italic True
 
             null height 4
@@ -244,7 +244,7 @@ screen sobre_jogo():
                 xfill True
                 has vbox
                 spacing 6
-                text "Proposta" size 18 color "#3E7CB1" bold True
+                text "Proposta" font gui.titulo_font size 22 color "#3E7CB1"
                 text "Sensibilizar e capacitar profissionais de saúde para o cuidado à população em situação de rua (PSR), por meio de histórias interativas baseadas em situações reais de atendimento." size 15 color "#b8c4ce"
 
             frame:
@@ -253,7 +253,7 @@ screen sobre_jogo():
                 xfill True
                 has vbox
                 spacing 6
-                text "Como funcionam as missões" size 18 color "#3E7CB1" bold True
+                text "Como funcionam as missões" font gui.titulo_font size 22 color "#3E7CB1"
                 text "Em cada história você troca de perspectiva profissional (recepção, medicina, enfermagem, serviço social) e toma decisões que movem quatro dimensões do cuidado: Direito em Saúde, Conhecimento da Rede, Empatia e Acolhimento. Nenhuma delas aparece durante o jogo — todas são reveladas no epílogo, junto com o mapa da rede." size 15 color "#b8c4ce"
                 text "Os pesos das escolhas são provisórios e serão calibrados com profissionais de saúde após os testes." size 13 color "#8899aa" italic True
 
@@ -263,5 +263,5 @@ screen sobre_jogo():
                 xfill True
                 has vbox
                 spacing 6
-                text "Quem faz" size 18 color "#3E7CB1" bold True
+                text "Quem faz" font gui.titulo_font size 22 color "#3E7CB1"
                 text "PET-Saúde · Grupo Tutorial 6 — Pop Rua · Universidade Federal da Paraíba (UFPB), em parceria com a rede de saúde do território." size 15 color "#b8c4ce"

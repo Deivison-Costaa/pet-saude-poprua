@@ -277,9 +277,9 @@ screen navigation():
         style_prefix "navigation"
 
         xpos gui.navigation_xpos
-        yalign 0.62
+        ypos 292
 
-        spacing gui.navigation_spacing
+        spacing 0
 
         if main_menu:
 
@@ -330,13 +330,14 @@ style navigation_button:
     ## (a placa clara é branca — some sobre o papel)
     background None
     hover_background Frame("gui/aquarela/nav_hover.png", 34, 20, tile=False)
-    padding (26, 9, 26, 9)
+    padding (26, 4, 26, 4)
 
 style navigation_button_text:
     properties gui.text_properties("navigation_button")
+    font gui.titulo_font
     idle_color "#1d3d5c"
     hover_color "#f4f1ea"
-    size 21
+    size 22
 
 
 ## Tela main_menu ##############################################################
@@ -365,18 +366,20 @@ screen main_menu():
 
             text "Caminhos":
                 font gui.titulo_font
-                size 46
+                size 42
                 color "#1d3d5c"
+                line_leading -6
 
             text "do Cuidado":
                 font gui.titulo_font
-                size 46
+                size 42
                 color "#1d3d5c"
+                line_leading -8
 
-            null height 6
+            null height 4
 
             text _("Um jogo sobre acolhimento,\ndireito e empatia."):
-                size 16
+                size 15
                 color "#33393f"
                 italic True
 
