@@ -39,6 +39,7 @@ jobs:
           echo "$ANDROID_KEYSTORE_B64" | base64 -d > android.keystore
           echo "$BUNDLE_KEYSTORE_B64" | base64 -d > bundle.keystore
           printf '%s' "$ANDROID_JSON" > android.json
+          cp android.keystore bundle.keystore renpy-sdk/rapt/
         env:
           ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
           BUNDLE_KEYSTORE_B64: ${{ secrets.BUNDLE_KEYSTORE_B64 }}
@@ -47,13 +48,18 @@ jobs:
       - name: Instalar Android SDK (RAPT)
         if: steps.cache-renpy.outputs.cache-hit != 'true'
         run: |
-          yes y | ./renpy-sdk/renpy.sh renpy-sdk/rapt/android.py installsdk || true
-          test -d renpy-sdk/rapt/Sdk || (echo "Android SDK não instalado" && exit 1)
+          cd renpy-sdk/rapt
+          yes y | ../lib/py3-linux-x86_64/python -O android.py installsdk || true
+          test -d Sdk || (echo "Android SDK não instalado" && exit 1)
 
       - name: Gerar APK
         run: |
           ./renpy-sdk/renpy.sh renpy-sdk/launcher android_build "$GITHUB_WORKSPACE" --dest dist
           ls -la dist
+
+      - name: Remover chaves antes do cache ser salvo
+        if: always()
+        run: rm -f renpy-sdk/rapt/android.keystore renpy-sdk/rapt/bundle.keystore android.keystore bundle.keystore android.json
 
       - name: Publicar APK como artefato
         uses: actions/upload-artifact@v4
