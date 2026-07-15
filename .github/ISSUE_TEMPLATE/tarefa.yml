@@ -1,0 +1,27 @@
+name: "✅ Nova tarefa"
+description: "Trabalho a fazer — texto, arte, código ou documentação"
+labels: ["tipo:tarefa"]
+body:
+  - type: textarea
+    id: o_que
+    attributes:
+      label: O que precisa ser feito?
+      placeholder: "Descreva a tarefa com o resultado esperado."
+    validations:
+      required: true
+  - type: dropdown
+    id: frente
+    attributes:
+      label: Qual frente?
+      options:
+        - Conteúdo (textos, roteiro, pedagogia)
+        - Arte (imagens, sprites, cenários)
+        - Código (Ren'Py, builds)
+        - Documentação (cronograma, atas, fluxogramas)
+    validations:
+      required: true
+  - type: input
+    id: prazo
+    attributes:
+      label: Para quando?
+      placeholder: "Ex.: reunião de 22/07, ou entrega de 05/08"

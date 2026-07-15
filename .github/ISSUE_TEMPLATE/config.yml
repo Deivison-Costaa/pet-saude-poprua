@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "💬 Dúvida rápida"
+    url: https://github.com/Deivison-Costaa/pet-saude-poprua/discussions
+    about: "Para conversas que não são tarefa nem bug"

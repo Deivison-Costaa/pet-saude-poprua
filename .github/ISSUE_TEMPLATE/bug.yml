@@ -1,0 +1,34 @@
+name: "🐛 Reportar um problema no jogo"
+description: "Algo errado, estranho ou quebrado durante o jogo ou nos menus"
+labels: ["tipo:bug"]
+body:
+  - type: textarea
+    id: onde
+    attributes:
+      label: Onde aconteceu?
+      description: "Em que tela ou cena? (ex.: menu principal, Cena 4 do Dia 1, tela de Perfil)"
+      placeholder: "Ex.: na tela de decisão da Cena 1"
+    validations:
+      required: true
+  - type: textarea
+    id: o_que
+    attributes:
+      label: O que aconteceu — e o que você esperava?
+      placeholder: "Ex.: o texto saiu da caixa de diálogo; eu esperava que coubesse."
+    validations:
+      required: true
+  - type: textarea
+    id: print
+    attributes:
+      label: Print (opcional, mas ajuda muito)
+      description: "Arraste a imagem para cá. No Windows: Win+Shift+S para recortar a tela."
+  - type: dropdown
+    id: dispositivo
+    attributes:
+      label: Onde você estava jogando?
+      options:
+        - Computador (Windows)
+        - Celular/Tablet (Android)
+        - Outro
+    validations:
+      required: true

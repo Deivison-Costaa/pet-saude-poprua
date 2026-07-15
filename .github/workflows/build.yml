@@ -1,0 +1,49 @@
+name: Build do jogo (Windows / Linux / Mac)
+
+on:
+  workflow_dispatch:      # botão "Run workflow" na aba Actions
+  push:
+    tags: ["v*"]          # ou automaticamente ao criar uma tag v0.2, v1.0...
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache do Ren'Py SDK
+        id: cache-renpy
+        uses: actions/cache@v4
+        with:
+          path: renpy-sdk
+          key: renpy-sdk-8.5.3
+
+      - name: Baixar Ren'Py SDK
+        if: steps.cache-renpy.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL -o renpy.tar.bz2 https://www.renpy.org/dl/8.5.3/renpy-8.5.3-sdk.tar.bz2
+          mkdir renpy-sdk
+          tar -xjf renpy.tar.bz2 -C renpy-sdk --strip-components=1
+
+      - name: Gerar builds
+        run: |
+          ./renpy-sdk/renpy.sh renpy-sdk/launcher distribute --destination dist \
+            --package win --package linux --package mac "$GITHUB_WORKSPACE"
+          ls -la dist
+
+      - name: Publicar artefatos (baixar na página desta execução)
+        uses: actions/upload-artifact@v4
+        with:
+          name: builds-caminhos-do-cuidado
+          path: dist/*
+          retention-days: 30
+
+      - name: Anexar à release (apenas em tags)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+
+## Android (APK): por enquanto o build é manual pelo launcher do Ren'Py
+## (Android → Build). Automatizar exige guardar o keystore como secret
+## do repositório — abrir issue quando o grupo quiser.
