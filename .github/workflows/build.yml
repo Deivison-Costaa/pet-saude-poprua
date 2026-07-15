@@ -32,6 +32,33 @@ jobs:
             --package win --package linux --package mac "$GITHUB_WORKSPACE"
           ls -la "$GITHUB_WORKSPACE/dist"
 
+      - name: Gerar AppImage (Linux)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          mkdir -p AppDir
+          tar -xjf dist/*-linux.tar.bz2 -C AppDir --strip-components=1
+          cat > AppDir/AppRun << 'RUNEOF'
+          #!/bin/bash
+          HERE="$(dirname "$(readlink -f "$0")")"
+          exec "$HERE"/petsaude-pop-rua.sh "$@"
+          RUNEOF
+          chmod +x AppDir/AppRun
+          cat > AppDir/petsaude-pop-rua.desktop << 'DKEOF'
+          [Desktop Entry]
+          Name=Caminhos do Cuidado
+          Comment=Visual novel educacional sobre cuidado a populacao em situacao de rua
+          Exec=petsaude-pop-rua.sh
+          Icon=petsaude-pop-rua
+          Type=Application
+          Categories=Game;Education;
+          Terminal=false
+          DKEOF
+          cp AppDir/game/gui/window_icon.png AppDir/petsaude-pop-rua.png
+          curl -sSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
+          APPIMAGE_EXTRACT_AND_RUN=1 ./appimagetool AppDir "dist/Caminhos-do-Cuidado-x86_64.AppImage"
+          ls -la dist/
+
       - name: Publicar artefatos (baixar na página desta execução)
         uses: actions/upload-artifact@v4
         with:
@@ -43,4 +70,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
+          name: ${{ github.ref_name }}
+          body: "Protótipo da 1ª história (Renato). Build automático via GitHub Actions."
           files: dist/*
