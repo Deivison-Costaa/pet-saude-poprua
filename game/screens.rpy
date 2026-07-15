@@ -81,58 +81,28 @@ style frame:
 ## HUD de medidores — PET-Saúde
 ################################################################################
 
+## Só a EMPATIA fica visível em tempo real (visibilidade pedagógica — roteiro).
+## Direito, Rede e Acolhimento são computados em silêncio e revelados no Epílogo.
 screen medidores():
     zorder 110
 
     frame:
-        xalign 0.5
-        xsize 860
-        ypos 5
+        xalign 0.985
+        ypos 8
         yanchor 0.0
         background "#000000bb"
-        padding (14, 7, 14, 7)
+        padding (14, 8, 14, 10)
 
-        has hbox
-        spacing 20
+        has vbox
+        spacing 3
 
-        ## CONFIANÇA
-        vbox:
-            spacing 2
-            text "CONFIANÇA" size 12 color "#5C8FB3" bold True
-            bar:
-                value VariableValue("confianca", 100)
-                xsize 200
-                ysize 13
-                left_bar Solid("#5C8FB3")
-                right_bar Solid("#1a2b3a")
-
-        ## SAÚDE
-        vbox:
-            spacing 2
-            text "SAÚDE" size 12 color "#7CA982" bold True
-            bar:
-                value VariableValue("saude", 100)
-                xsize 200
-                ysize 13
-                left_bar Solid("#7CA982")
-                right_bar Solid("#1a2b3a")
-
-        ## ACESSO
-        vbox:
-            spacing 2
-            text "ACESSO" size 12 color "#C4A55A" bold True
-            bar:
-                value VariableValue("acesso", 100)
-                xsize 200
-                ysize 13
-                left_bar Solid("#C4A55A")
-                right_bar Solid("#1a2b3a")
-
-        ## ESTIGMA — oculto (só ícone de "?")
-        vbox:
-            spacing 2
-            text "ESTIGMA" size 12 color "#444444" bold True
-            text "???" size 12 color "#333333"
+        text "EMPATIA" size 13 color "#D8A8B8" bold True
+        bar:
+            value VariableValue("empatia", 100)
+            xsize 210
+            ysize 13
+            left_bar Solid("#B07286")
+            right_bar Solid("#1a2b3a")
 
 
 ################################################################################
@@ -270,14 +240,12 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            textbutton _("Voltar") action Rollback()
+            textbutton _("Histórico") action ShowMenu('history')
+            textbutton _("Avançar") action Skip() alternate Skip(fast=True, confirm=True)
             textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            textbutton _("Salvar") action ShowMenu('save')
+            textbutton _("Opções") action ShowMenu('preferences')
 
 
 init python:
@@ -308,41 +276,47 @@ screen navigation():
         style_prefix "navigation"
 
         xpos gui.navigation_xpos
-        yalign 0.5
+        yalign 0.62
 
         spacing gui.navigation_spacing
 
         if main_menu:
 
-            textbutton _("Start") action Start()
+            textbutton _("Jogar") action Start()
+
+            textbutton _("Capítulos") action ShowMenu("capitulos")
+
+            textbutton _("Perfil / Progresso") action ShowMenu("perfil")
+
+            textbutton _("Materiais") action ShowMenu("materiais")
+
+            textbutton _("Redes de apoio") action ShowMenu("redes_apoio")
+
+            textbutton _("Sobre o jogo") action ShowMenu("sobre_jogo")
 
         else:
 
-            textbutton _("History") action ShowMenu("history")
+            textbutton _("Histórico") action ShowMenu("history")
 
-            textbutton _("Save") action ShowMenu("save")
+            textbutton _("Salvar") action ShowMenu("save")
 
-        textbutton _("Load") action ShowMenu("load")
+        textbutton _("Carregar") action ShowMenu("load")
 
-        textbutton _("Preferences") action ShowMenu("preferences")
+        textbutton _("Configurações") action ShowMenu("preferences")
 
         if _in_replay:
 
-            textbutton _("End Replay") action EndReplay(confirm=True)
+            textbutton _("Encerrar replay") action EndReplay(confirm=True)
 
         elif not main_menu:
 
-            textbutton _("Main Menu") action MainMenu()
+            textbutton _("Menu principal") action MainMenu()
 
-        textbutton _("About") action ShowMenu("about")
-
-        if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
-
-            textbutton _("Help") action ShowMenu("help")
+        textbutton _("Créditos") action ShowMenu("about")
 
         if renpy.variant("pc"):
 
-            textbutton _("Quit") action Quit(confirm=not main_menu)
+            textbutton _("Sair") action Quit(confirm=not main_menu)
 
 
 style navigation_button is gui_button
@@ -354,6 +328,9 @@ style navigation_button:
 
 style navigation_button_text:
     properties gui.text_properties("navigation_button")
+    idle_color "#cdd9e4"
+    hover_color "#ffffff"
+    size 21
 
 
 ## Tela main_menu ##############################################################
@@ -366,6 +343,7 @@ screen main_menu():
 
     add gui.main_menu_background
 
+    ## Painel translúcido à esquerda (estrutura proposta em docs/estrutura-telas.md)
     frame:
         pass
 
@@ -374,11 +352,52 @@ screen main_menu():
     if gui.show_name:
 
         vbox:
-            text "[config.name!t]":
-                style "main_menu_title"
+            style "default"
+            xpos 24
+            ypos 30
+            spacing 4
 
-            text _("Ren'Py 8"):
-                style "main_menu_version"
+            text "Caminhos":
+                size 40
+                bold True
+                color "#f4f1ea"
+                outlines [(2, "#12283ba0", 0, 2)]
+
+            text "do Cuidado":
+                size 40
+                bold True
+                color "#f4f1ea"
+                outlines [(2, "#12283ba0", 0, 2)]
+
+            null height 2
+
+            text _("Um jogo sobre acolhimento,\ndireito e empatia."):
+                size 16
+                color "#dfe7ed"
+                italic True
+                outlines [(1, "#12283ba0", 0, 1)]
+
+    ## Rodapé institucional
+    fixed:
+        xfill True
+        ysize 38
+        yalign 1.0
+
+        add Solid("#1d3d5ce8")
+
+        text "UFPB  ·  PET-Saúde  ·  GT-6 POP RUA":
+            xpos 30
+            yalign 0.5
+            size 14
+            color "#ebf0f4"
+            bold True
+
+        text "protótipo — nome provisório · v[config.version]":
+            xalign 0.99
+            yalign 0.5
+            size 12
+            color "#c8d4de"
+            italic True
 
 
 style main_menu_frame is empty
@@ -546,7 +565,9 @@ screen about():
 
             null height 15
 
-            text _("Projeto educacional PET-Saúde — GT6 Pop Rua | Frente TI")
+            text _("Visual novel educacional sobre o cuidado à população em situação de rua.\n")
+            text _("PET-Saúde · GT6 Pop Rua · UFPB — Frente TI")
+            text _("História 1: “Ele não parece morador de rua” (protótipo para testes).")
 
             null height 15
 
@@ -575,14 +596,14 @@ screen save():
 
     tag menu
 
-    use file_slots(_("Save"))
+    use file_slots(_("Salvar"))
 
 
 screen load():
 
     tag menu
 
-    use file_slots(_("Load"))
+    use file_slots(_("Carregar"))
 
 
 screen file_slots(title):
@@ -1347,8 +1368,8 @@ screen quick_menu():
         xalign 0.5
         yalign 1.0
 
-        textbutton _("Back") action Rollback()
-        textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+        textbutton _("Voltar") action Rollback()
+        textbutton _("Avançar") action Skip() alternate Skip(fast=True, confirm=True)
         textbutton _("Auto") action Preference("auto-forward", "toggle")
         textbutton _("Menu") action ShowMenu()
 

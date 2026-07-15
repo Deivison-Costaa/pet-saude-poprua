@@ -1,0 +1,44 @@
+[
+ {
+  "nome": "menu_upa_entardecer",
+  "arquivo": "C:\\Users\\Deivison\\Desktop\\pet-saude\\Jogo - 14-07\\assets-gerados\\menu_upa_entardecer.png",
+  "segundos": 49,
+  "prompt": "Wide establishing scene for a game main menu: a Brazilian UPA 24h emergency health unit at dusk, warm golden-orange sky fading to deep blue, soft warm light spilling from the entrance. In the middle distance, small soft-edged figures: health professionals in white and teal warmly welcoming a few homeless people of diverse body types near the entrance ramp — figures loose and painterly, no facial detail, integrated into the wash. Foreground street with long soft shadows. Left third of the composition calmer and emptier to hold menu buttons. Blank sign shapes only. digital watercolor illustration, soft loose washes, muted faded pastel palette, simplified almost cartoonish shapes, minimal fine detail, gentle soft edges, light paper texture, slightly desaturated, calm subdued mood, soft background blur, mobile visual novel background, clean uncluttered composition, eye-level view, no text, no letters, no logos",
+  "size": "1536x1024"
+ },
+ {
+  "nome": "obj_carteira_trabalho",
+  "arquivo": "C:\\Users\\Deivison\\Desktop\\pet-saude\\Jogo - 14-07\\assets-gerados\\obj_carteira_trabalho.png",
+  "segundos": 36,
+  "prompt": "An old worn Brazilian work document booklet (carteira de trabalho), closed, deep blue cover faded and scuffed, dog-eared corners, slightly bent spine, its cover markings suggested only as soft illegible golden smudges. digital watercolor illustration, single object study, soft loose washes, muted faded pastel palette, simplified but clearly readable shapes, gentle soft edges, light paper texture, slightly desaturated, calm mood, centered close-up prop, transparent background, subtle soft shadow beneath, mobile game item art, clean and uncluttered, no people, no hands, no readable text, no letters, no numbers",
+  "size": "1024x1024"
+ },
+ {
+  "nome": "obj_cartao_sus",
+  "arquivo": "C:\\Users\\Deivison\\Desktop\\pet-saude\\Jogo - 14-07\\assets-gerados\\obj_cartao_sus.png",
+  "segundos": 50,
+  "prompt": "A Brazilian public health plastic card (SUS card): white card with soft blue and green horizontal accents, gentle rounded corners, slightly worn, lying flat at a small angle; any lettering rendered only as blurred illegible strokes. digital watercolor illustration, single object study, soft loose washes, muted faded pastel palette, simplified but clearly readable shapes, gentle soft edges, light paper texture, slightly desaturated, calm mood, centered close-up prop, transparent background, subtle soft shadow beneath, mobile game item art, clean and uncluttered, no people, no hands, no readable text, no letters, no numbers",
+  "size": "1024x1024"
+ },
+ {
+  "nome": "obj_receita_medica",
+  "arquivo": "C:\\Users\\Deivison\\Desktop\\pet-saude\\Jogo - 14-07\\assets-gerados\\obj_receita_medica.png",
+  "segundos": 39,
+  "prompt": "A medical prescription: single sheet of slightly creased white paper with soft illegible handwritten scribble lines in blue-gray, a faint stamp shape as a smudge, one folded corner. digital watercolor illustration, single object study, soft loose washes, muted faded pastel palette, simplified but clearly readable shapes, gentle soft edges, light paper texture, slightly desaturated, calm mood, centered close-up prop, transparent background, subtle soft shadow beneath, mobile game item art, clean and uncluttered, no people, no hands, no readable text, no letters, no numbers",
+  "size": "1024x1024"
+ },
+ {
+  "nome": "sprite_senhora",
+  "arquivo": "C:\\Users\\Deivison\\Desktop\\pet-saude\\Jogo - 14-07\\assets-gerados\\sprite_senhora.png",
+  "segundos": 60,
+  "prompt": "A Brazilian woman in her early 60s waiting in a public emergency room: fuller plus-size body type, light-brown skin, gray-streaked hair in a low bun, simple floral blouse and long skirt, small purse held tight, arms crossed, disapproving judgmental expression with raised eyebrow. clean semi-realistic comic illustration style, soft cel shading, natural proportions, warm approachable rendering, full body standing character for a visual novel sprite, facing slightly toward viewer, transparent background, no text, no watermark, consistent with a Brazilian public health (SUS) educational game cast",
+  "size": "1024x1536"
+ },
+ {
+  "nome": "sprite_outro_paciente",
+  "arquivo": "C:\\Users\\Deivison\\Desktop\\pet-saude\\Jogo - 14-07\\assets-gerados\\sprite_outro_paciente.png",
+  "segundos": 47,
+  "prompt": "A Brazilian man around 45 waiting in a public emergency room: stocky broad build, dark skin, short curly hair, polo shirt and jeans, holding a numbered-ticket-like blank slip, slightly annoyed skeptical expression, weight shifted to one leg. clean semi-realistic comic illustration style, soft cel shading, natural proportions, warm approachable rendering, full body standing character for a visual novel sprite, facing slightly toward viewer, transparent background, no text, no watermark, consistent with a Brazilian public health (SUS) educational game cast",
+  "size": "1024x1536"
+ }
+]

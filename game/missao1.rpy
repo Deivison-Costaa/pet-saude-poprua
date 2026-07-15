@@ -1,546 +1,807 @@
-## missao1.rpy — Missão 1: "Ele não parece morador de rua"
-## GT6 – Pop Rua | Frente TI | PET-Saúde
-##
-## Paciente: Renato, 54 anos.
-## Eixo temático: Quem é essa população (afetividade)
+## missao1.rpy — DIA 1: "ELE NÃO PARECE MORADOR DE RUA"
+## Eixo: quem é essa população (afetividade) — desconstrução do estereótipo
+## Fonte: ROTEIRO-VISUAL-NOVEL.docx (cenas 0–7) — texto fiel ao documento.
+## Pesos provisórios: ▲=+5 · ▲▲=+10 · ▲▲▲=+15 (negativos equivalentes).
 
 init python:
     def ajustar(varname, delta):
-        """Ajusta medidor dentro do intervalo 0-100."""
-        val = getattr(renpy.store, varname, 0)
-        setattr(renpy.store, varname, max(0, min(100, val + delta)))
+        """Ajusta um medidor global, mantendo-o na faixa 0–100."""
+        atual = getattr(store, varname)
+        setattr(store, varname, max(0, min(100, atual + delta)))
+
+    def no_acende(nome):
+        """Acende um nó no mapa da rede."""
+        store.nos_rede[nome] = True
 
 
-## ─────────────────────────────────────────────────────────────────────────────
-## ENTRADA
-## ─────────────────────────────────────────────────────────────────────────────
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 0 — ABERTURA
+## Papel: profissional recém-chegado à UPA (visão geral)
+## ═════════════════════════════════════════════════════════════════════════════
 
 label missao1:
     play music "audio/music/ambiente_upa.ogg" fadein 2.0
-    jump m1_abertura
+
+    scene bg aqua_recepcao with fade
+    window show
+
+    centered "{color=#f4f1ea}{b}{size=+16}DIA 1{/size}{/b}\n\n{size=+6}“Ele não parece morador de rua”{/size}{/color}"
+
+    narr "{b}Seu papel:{/b} profissional recém-chegado à UPA."
+
+    show renato hesitante at right with dissolve
+
+    narr "É seu primeiro dia na UPA. O pronto-socorro está lotado. Renato chegou há pouco com dor no peito e falta de ar — passou pela Classificação de Risco Clínica e recebeu a cor {b}amarela{/b}: deve ser atendido com prioridade pelo quadro, não pela condição de moradia."
+
+    show esus at overlay_esus with dissolve
+    narr "Você abre o prontuário no e-SUS e o sistema puxa um cadastro antigo: um endereço de um bairro do outro lado da cidade, registrado há mais de uma década. A recepção apenas confirmou que o cadastro existe — ninguém atualizou nada."
+    narr "No campo de observações da triagem, a técnica anotou em letra apertada: {i}“paciente relata situação de rua há alguns meses”{/i}."
+    hide esus with dissolve
+
+    narr "Você olha para a sala de espera. Renato está de cabeça baixa, roupa simples mas limpa, segurando um caderno velho. Ele não se parece com o que você imaginava."
+    narr "E, justamente por isso, outros pacientes e até funcionários começam a olhar de um jeito diferente — não por desprezo à condição de rua, mas porque ele não “parece” dessa condição. E isso, em alguns olhares, vira suspeita de outra coisa."
+    narr "Esta UPA opera 24 horas e tem Serviço Social com fluxo direto para a equipe do {b}Consultório na Rua{/b} de plantão noturno — o agente comunitário desta noite é {b}Marcos{/b} (ramal 4127), conhecido por andar com um caderno parecido com o de Renato. Você ainda não falou com ele. Pode acionar."
+
+    jump m1_cena1
 
 
-## ─────────────────────────────────────────────────────────────────────────────
-## ABERTURA — A chegada de Renato
-## ─────────────────────────────────────────────────────────────────────────────
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 1 — MOMENTO DE DECISÃO 0 — "Ele não deveria estar aqui"
+## Papel: Recepcionista da UPA
+## ═════════════════════════════════════════════════════════════════════════════
 
-label m1_abertura:
-    scene bg upa_recepcao with fade
+label m1_cena1:
+    scene bg aqua_espera with dissolve
+    narr "{b}Seu papel agora:{/b} Recepcionista da UPA — a primeira pessoa do serviço a perceber o que acontece na sala de espera."
 
-    narr "É seu primeiro dia na UPA. O pronto-socorro está lotado."
-    narr "Renato chegou há pouco com dor no peito e falta de ar. Passou pela Classificação de Risco Clínica e recebeu cor {b}amarela{/b} — deve ser atendido pelo quadro clínico, não pela condição de moradia."
-    narr "Você abre o prontuário no e-SUS. Um cadastro antigo registra um endereço de outro bairro, de mais de uma década atrás. No campo de observações da triagem, a técnica anotou em letra apertada:"
-    narr "{i}\"Paciente relata situação de rua há alguns meses.\"{/i}"
-    narr "Você olha para a sala de espera."
+    show renato hesitante at right with dissolve
+    show senhora at left_np(0.31) with dissolve
 
-    show renato normal at center with dissolve
+    narr "Você está na recepção registrando outro paciente quando começam os murmúrios na sala de espera. Uma senhora, três cadeiras à frente de Renato, vira para o marido e fala num tom que ela acha discreto, mas não é:"
 
-    narr "Renato está sentado no canto, de cabeça baixa, com roupa simples mas limpa, segurando um caderno velho."
-    narr "Ele não se parece com o que você imaginava."
+    senhora_c "Esse homem aí, olha só, tá bem vestido, tá limpo, deve ter plano de saúde. Por que ele tá usando o SUS? Tá tirando lugar de quem precisa."
 
-    jump m1_momento1
+    hide senhora with dissolve
+    show outro_paciente at left_np(0.33) with dissolve
 
+    outro_pac "Se tivesse condição de pagar plano, eu não estaria aqui esperando. Vem gente aqui que não precisa."
 
-## ─────────────────────────────────────────────────────────────────────────────
-## MOMENTO 1 — "A primeira impressão"
-## ─────────────────────────────────────────────────────────────────────────────
+    hide outro_paciente with dissolve
 
-label m1_momento1:
-    show renato normal at center
-    show tecnica at right with dissolve
-
-    tec "Renato? Pode vir."
-
-    narr "Ele entra calado. Senta. Endereço desatualizado no sistema, observação da triagem à vista. Como você abre o atendimento?"
+    narr "Renato escuta tudo. Aperta o caderno mais forte no colo. Não diz nada."
+    narr "Você sabe — porque a anotação da triagem está aberta na sua tela — que ele está em situação de rua há alguns meses. Os outros não sabem."
+    narr "O direito ao SUS, universal por princípio constitucional, está sendo questionado em voz alta na sua sala de espera. Você tem alguns segundos para decidir."
 
     menu:
+        narr "Como você age?"
 
-        "Protocolo clínico — {i}\"Onde está a dor? Há quanto tempo? Tem histórico cardíaco?\"{/i}":
-            $ ajustar("saude", 5)
-            $ escolha_m1 = "A"
-            narr "Você vai direto ao protocolo. Renato lê a pressa e responde o mínimo — pressão alta, dor no peito há três horas. Mantém o caderno fechado."
-            jump m1_sub11
+        "Fingir que não ouviu e chamar Renato discretamente ao balcão, sob justificativa administrativa.":
+            $ escolha_c1 = "A"
+            recep "Renato? Preciso confirmar uma informação no seu cadastro, vem aqui um instante."
+            $ ajustar("acolhimento", 5)
+            $ ajustar("empatia", -10)
+            narr "Você protegeu Renato individualmente — gesto bem-intencionado. Mas a sala de espera continua sendo um lugar onde aquilo pode ser dito sem que ninguém nomeie que é errado."
+            narr "Proteger sem educar o espaço é cuidado incompleto: o silêncio diante do estigma público é uma forma de concordância."
 
-        "Pausa e pergunta aberta — {i}\"Renato, me conta o que está sentindo. Não só a dor — como você está?\"{/i}":
-            $ ajustar("confianca", 15)
-            $ escolha_m1 = "B"
-            show renato aberto with dissolve
-            renato "Eu... tô com uma dor aqui. {i}(aponta para o peito){/i} E uma falta de ar que não passa."
-            narr "Ele hesita, respira fundo."
-            renato "Na verdade... não tô dormindo direito. Faz semanas. Tem um peso aqui que não é só físico."
-            jump m1_sub11
+        "Levantar a voz da recepção e responder à senhora na frente de todos.":
+            $ escolha_c1 = "B"
+            recep "Minha senhora, aqui ninguém pergunta se a pessoa tem plano ou não. O SUS é universal e atende todo mundo, ponto final."
+            $ ajustar("direito", 10)
+            $ ajustar("empatia", 5)
+            $ ajustar("acolhimento", -10)
+            narr "A intenção é correta — você defendeu o princípio publicamente. Mas a forma transformou Renato em evento público da sala: agora todos olham para ele tentando entender por que foi defendido."
+            narr "Defender o direito sem expor a pessoa que ele protege é o desafio do cuidado humanizado."
 
-        "Pergunta sobre moradia — {i}\"Você tem onde dormir hoje? Precisa de encaminhamento para abrigo?\"{/i}":
-            $ ajustar("confianca", -15)
-            $ ajustar("estigma", 10)
-            $ escolha_m1 = "C"
-            show renato hesitante with dissolve
-            renato "Eu vim com dor no peito."
-            narr "Renato se fecha. Veio com medo de infarto, não pedindo abrigo. A pergunta chegou antes do olhar."
-            jump m1_sub11
+        "Atravessar a sala com calma, falar firme com a senhora sem alarde — e depois oferecer uma água a Renato.":
+            $ escolha_c1 = "C"
+            show senhora at left_np(0.31) with dissolve
+            recep "Senhora, todo mundo aqui passou pela classificação clínica e foi chamado pela urgência do quadro, não pela aparência. O SUS atende qualquer pessoa, e ninguém aqui tá tirando lugar de ninguém."
+            hide senhora with dissolve
+            recep "Você vai ser chamado em breve. Aceita uma água?"
+            $ ajustar("direito", 10)
+            $ ajustar("empatia", 15)
+            $ ajustar("acolhimento", 10)
+            $ ajustar("rede", 5)
+            narr "Você nomeou o princípio (universalidade) sem expor o paciente, restaurou a dignidade da cena em vez de criar nova humilhação, e ainda fez um gesto de acolhimento direto a Renato."
+            narr "Direito e empatia operados juntos — não como discurso, como prática cotidiana de recepção."
+
+    call reflexao_card("O estigma contra a PSR nem sempre vem da equipe — vem, com frequência, de outros usuários do mesmo serviço. A aparência de Renato inverte o problema: ele passa a ser suspeito de não pertencer ao SUS.", "Defender o direito é técnica, não opinião pessoal — e a forma como se defende decide se a defesa também acolhe.")
+
+    jump m1_cena2
 
 
-## Sub-decisão 1.1 — O campo endereço no e-SUS
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 2 — MOMENTO DE DECISÃO 1 — A primeira impressão
+## Papel: Médico
+## ═════════════════════════════════════════════════════════════════════════════
+
+label m1_cena2:
+    scene bg aqua_consultorio with dissolve
+    narr "{b}Seu papel agora:{/b} Médico — quem recebe Renato para a consulta inicial. A pergunta é: que tipo de profissional eu vou ser nos primeiros 30 segundos?"
+
+    show renato hesitante at center with dissolve
+
+    show esus at overlay_esus with dissolve
+    narr "Você chama Renato. Ele entra calado e senta. Na sua tela, três informações entram em conflito antes de você falar: o endereço desatualizado do outro lado da cidade, a observação da triagem ({i}“situação de rua há alguns meses”{/i}) e a classificação amarela (urgência cardiovascular)."
+    narr "Antes do paciente, o sistema já te entregou uma narrativa — e ela está incompleta."
+    hide esus with dissolve
+
+    menu:
+        narr "Como você abre o atendimento?"
+
+        "Ir direto ao protocolo clínico, sem rodeios.":
+            $ escolha_c2 = "A"
+            med "Onde está a dor? Há quanto tempo? Tem histórico cardíaco?"
+            $ ajustar("empatia", -5)
+            narr "O protocolo se cumpre, mas o paciente fica invisível atrás da queixa. Quando o instrumento chega antes do encontro, o profissional executa, não cuida."
+            narr "Você também aceitou passivamente a narrativa enviesada do sistema. Renato responde o mínimo e a consulta vira triagem repetida."
+
+        "Chamar pelo nome e abrir com pergunta aberta, priorizando a queixa cardiovascular.":
+            $ escolha_c2 = "B"
+            med "Renato, me conta o que está sentindo. Não só a dor — como você está chegando aqui hoje?"
+            $ ajustar("acolhimento", 15)
+            $ ajustar("empatia", 15)
+            $ ajustar("direito", 5)
+            show renato aberto at center
+            narr "Você ofereceu vínculo antes do instrumento, respeitou a prioridade clínica que o paciente trouxe e abriu espaço sem forçar."
+            narr "Renato hesita, respira fundo e começa a falar do peso no peito que “não é só físico”."
+
+        "Ver a observação “situação de rua” e tentar resolver a moradia primeiro.":
+            $ escolha_c2 = "C"
+            med "O senhor tem onde dormir hoje? Precisa de encaminhamento para abrigo?"
+            $ ajustar("empatia", -10)
+            $ ajustar("acolhimento", -10)
+            narr "Sua intenção foi cuidar da pessoa inteira, mas você reduziu Renato à condição de moradia antes de escutá-lo."
+            narr "Ele veio com dor no peito e medo de infarto, e a primeira coisa que ouve é uma pergunta sobre abrigo. Cuidado social antes da escuta clínica vira mais uma forma de estigma — agora bem-intencionado."
+
+    jump m1_sub11
+
+
+## ▸ Sub-decisão 1.1 — O campo "endereço" no e-SUS
 
 label m1_sub11:
-    narr "O campo de endereço no e-SUS está desatualizado — o sistema pede atualização. Renato apresenta uma carteira de trabalho vencida como único documento."
+    narr "{b}Sub-decisão — o campo “endereço” no e-SUS.{/b} Papel: profissional clínico responsável pelo preenchimento da ficha."
+
+    show esus at overlay_esus with dissolve
+    narr "Renato responde ao cumprimento. Ao preencher a ficha, você chega ao campo “endereço”. Está em branco — ou desatualizado de uma década. Renato desvia o olhar."
+    narr "Há três caminhos no sistema, e cada um materializa uma compreensão diferente do que é direito à saúde."
 
     menu:
+        narr "O que você faz no sistema?"
 
-        "Usar o campo de vulnerabilidade social do e-SUS; aceitar o documento que ele tem":
-            $ ajustar("acesso", 15)
-            tec "Tudo certo. O sistema aceita outros documentos para quem está em situação de rua."
-            narr "A situação de rua é registrada no campo correto. O atendimento avança sem barreira."
-            jump m1_sub12
+        "Usar a funcionalidade de vulnerabilidade social do e-SUS: registrar como PSR sem endereço fixo.":
+            $ escolha_s11 = "A"
+            $ ajustar("direito", 10)
+            $ ajustar("rede", 10)
+            $ ajustar("acolhimento", 5)
+            hide esus with dissolve
+            show carteira at obj_esq with dissolve
+            show cartao at obj_dir with dissolve
+            narr "Procedimento correto e preciso. Renato tira uma {b}carteira de trabalho vencida{/b} do bolso — suficiente para iniciar o registro. O {b}Cartão SUS{/b} é garantido mesmo com dados incompletos."
+            narr "Você ativou a base normativa, transformou uma barreira potencial em ponte de cuidado e deixou a carteira vencida sinalizada como pendência documental."
+            hide carteira
+            hide cartao
+            with dissolve
 
-        "Deixar o campo em branco por enquanto — resolver depois":
-            narr "O registro fica fragmentado. O próximo profissional começa sem saber que Renato esteve aqui."
-            jump m1_sub12
+        "Deixar o campo em branco e prosseguir sem explicar — “depois alguém atualiza isso”.":
+            $ escolha_s11 = "B"
+            $ ajustar("rede", -10)
+            hide esus with dissolve
+            narr "O atendimento acontece, mas o sistema continua não sabendo onde Renato está. Quando ele voltar (se voltar), outro profissional recomeça do zero."
 
-        "Exigir endereço atualizado — {i}\"Precisa regularizar no CRAS antes de continuar\"{/i}":
-            $ ajustar("acesso", -20)
-            $ ajustar("confianca", -10)
-            $ ajustar("estigma", 10)
-            show renato hesitante with dissolve
-            narr "Renato olha para você sem entender."
-            narr "{b}O SUS garante atendimento independente de documentação.{/b} Essa exigência é uma barreira ilegal."
-            jump m1_sub12
+        "Informar que o sistema “exige” o endereço e orientá-lo a regularizar no CRAS antes de ser atendido.":
+            $ escolha_s11 = "C"
+            $ ajustar("direito", -10)
+            $ ajustar("acolhimento", -10)
+            $ ajustar("empatia", -10)
+            hide esus with dissolve
+            narr "Esta é uma {b}barreira ilegal{/b}. A legislação do SUS garante atendimento independente de documentação, e a Portaria GM/MS 940/2011 prevê expressamente o cadastro em vulnerabilidade social com dados incompletos."
+
+    jump m1_sub12
 
 
-## Sub-decisão 1.2 — Classificação de risco
+## ▸ Sub-decisão 1.2 — A espera depois do cadastro
 
 label m1_sub12:
-    tec "PA 180/110. FC 98. Sudorese leve e palidez."
+    scene bg aqua_espera with dissolve
+    show renato hesitante at right with dissolve
 
-    narr "Os sinais vitais estão alterados. A Classificação de Risco pelo Protocolo de Manchester prioriza pelo {b}quadro clínico{/b}, não pela condição social."
+    narr "{b}Sub-decisão — a espera depois do cadastro.{/b} Papel: Técnica de Enfermagem responsável pelo fluxo da sala de espera."
+    narr "Renato foi classificado (amarela) e encaminhado à sala de espera. Minutos depois, você percebe que ele está inquieto, olhando repetidamente para a porta de saída."
+    narr "A espera estimada é de 20 minutos — o momento crítico em que pacientes da PSR frequentemente desistem e vão embora."
 
     menu:
+        narr "Como você age?"
 
-        "{b}LARANJA{/b} — urgente, atendimento em até 10 minutos":
-            $ ajustar("saude", 5)
-            narr "Classificação correta para o quadro clínico de Renato."
-            jump m1_sub13
+        "Não fazer nada. É a rotina; mexer com um paciente específico pode parecer favorecimento.":
+            $ escolha_s12 = "A"
+            $ ajustar("empatia", -5)
+            narr "Para alguém acostumado a ser ignorado, o silêncio do serviço é lido como dispensa. A neutralidade aparente do “tratamento igual”, em populações que partem de desvantagens diferentes, reproduz a exclusão."
+            narr "Renato considera ir embora."
 
-        "{b}AMARELO{/b} — pouco urgente, até 60 minutos — {i}\"deve ser ansiedade\"{/i}":
-            $ ajustar("saude", -10)
-            $ ajustar("estigma", 5)
-            narr "A pressão e a frequência cardíaca não apontam para ansiedade simples. A condição de moradia pode ter influenciado a leitura clínica."
-            jump m1_sub13
+        "Passar por ele propositalmente, avisar que será chamado em breve e oferecer água.":
+            $ escolha_s12 = "B"
+            tec "Renato, o médico vai te chamar já já. Aceita uma água enquanto espera?"
+            $ ajustar("acolhimento", 10)
+            $ ajustar("empatia", 10)
+            narr "Humanizar a espera é parte do cuidado, não cortesia opcional. Para alguém acostumado a ser invisível, ser informado e ofertado um copo d’água muda o significado da sala de espera."
+            narr "Renato para de olhar para a saída."
 
-        "{b}VERDE{/b} — não urgente — {i}\"mais emocional do que físico\"{/i}":
-            $ ajustar("saude", -20)
-            $ ajustar("estigma", 15)
-            narr "Classificação incorreta. O médico vai receber Renato mais comprometido do que deveria estar."
-            narr "{b}[[Efeito Atrasado registrado]]{/b}"
-            jump m1_sub13
+        "Comunicar à segurança para “ficar de olho” no Renato, porque ele “parece nervoso e pode querer sair”.":
+            $ escolha_s12 = "C"
+            $ ajustar("acolhimento", -10)
+            $ ajustar("empatia", -15)
+            $ ajustar("direito", -15)
+            narr "Vigilância não é cuidado. Renato percebe."
+            narr "Você confirmou, sem perceber, o estigma que ele temia encontrar do outro lado da mesa."
+
+    jump m1_sub13
 
 
-## Sub-decisão 1.3 — A sala de espera
+## ▸ Sub-decisão 1.3 — A passagem para a consulta médica
 
 label m1_sub13:
-    show renato hesitante at center
-    narr "Vinte minutos de espera. Renato olha para a porta, inquieto. A qualquer momento pode se levantar e ir embora."
-
-    menu:
-
-        "Não fazer nada — ele foi avisado que haveria espera":
-            narr "Renato continua olhando para a porta. Sem referência."
-            jump m1_reflexao1
-
-        "Avisar sobre o tempo de espera e oferecer um copo d'água":
-            $ ajustar("confianca", 10)
-            $ ajustar("vinculo", 5)
-            tec "Renato, mais uns 15 minutinhos. Quer água?"
-            show renato aberto with dissolve
-            renato "Tá bom. Obrigado."
-            narr "Pequeno gesto. Renato para de olhar para a porta."
-            jump m1_reflexao1
-
-        "Pedir à segurança que {i}\"fique de olho\"{/i} — ele parece agitado":
-            $ ajustar("confianca", -5)
-            $ ajustar("estigma", 15)
-            narr "O segurança se posiciona perto. Renato percebe. Aperta o caderno contra o peito e baixa a cabeça."
-            show renato hesitante with dissolve
-            jump m1_reflexao1
-
-
-## Reflexão intermediária — Momento 1
-
-label m1_reflexao1:
-    scene bg_escuro with fade
-    call reflexao_card("A surpresa ao constatar que Renato não se encaixa na imagem mental de 'morador de rua' revela como o estigma opera na prática.", "O acolhimento não começa no preenchimento da ficha. Começa no olhar.")
-    jump m1_momento2
-
-
-## ─────────────────────────────────────────────────────────────────────────────
-## MOMENTO 2 — "O que a ficha não diz"
-## ─────────────────────────────────────────────────────────────────────────────
-
-label m1_momento2:
-    scene bg upa_consultorio with fade
-    show renato normal at center with dissolve
+    scene bg aqua_corredor with dissolve
     show medico at right with dissolve
 
-    narr "O diagnóstico revela crise hipertensiva com forte componente ansioso. Renato não mencionou depressão. O estado dele agora reflete as escolhas anteriores."
+    narr "{b}Sub-decisão — a passagem para a consulta médica.{/b} Papel: Técnica de Enfermagem fazendo a entrega do paciente ao médico de plantão."
+    narr "Chega a hora de Renato ser atendido. O médico de plantão está cansado e olha para a tela com pressa. Você tem cerca de 40 segundos para entregar o caso — e o que enfatizar vai moldar como o médico vai olhar para Renato."
 
     menu:
+        narr "O que você enfatiza nesses 40 segundos?"
 
-        "Checklist direto — {i}\"Você tem diagnóstico de depressão ou ansiedade?\"{/i}":
-            $ ajustar("saude", 5)
-            $ escolha_m2 = "A"
-            if confianca >= 35:
-                renato "Tenho. Depressão severa. Estava tomando medicação, mas perdi o plano quando fui demitido."
-                narr "A confiança construída antes abriu essa porta."
-            else:
-                renato "Não."
-                narr "A confiança baixa fechou essa porta."
-            jump m1_sub21
+        "Passar apenas os dados técnicos, sem mencionar contexto social.":
+            $ escolha_s13 = "A"
+            tec "Masculino, 54 anos, dor torácica há 3 horas, PA 180/110, FC 98, classificação amarela."
+            narr "Você protegeu o paciente da exposição, o que é legítimo, mas removeu informações que podem ser clínicas — situação de rua afeta adesão, rotina de medicação, possibilidade de retorno."
+            narr "A separação rígida entre “social” e “clínico” é uma forma de leitura enviesada. O médico vai descobrir tudo de novo (ou não vai descobrir)."
 
-        "Focar só na hipertensão — a saúde mental não é prioridade agora":
-            $ ajustar("saude", 5)
-            $ ajustar("estigma", 5)
-            $ escolha_m2 = "B"
-            narr "A hipertensão é tratada. O componente ansioso fica sem resposta."
-            narr "{b}[[Efeito Atrasado]]{/b}: Renato volta em duas semanas com quadro pior, sem registro de saúde mental no prontuário."
-            jump m1_sub21
+        "Passar os dados técnicos e acrescentar o contexto com naturalidade profissional, sem rótulo.":
+            $ escolha_s13 = "B"
+            tec "...e ele está em situação de rua há alguns meses, pelo que relatou na triagem; pode ser relevante para pensar a alta."
+            $ ajustar("rede", 10)
+            $ ajustar("acolhimento", 10)
+            $ ajustar("direito", 10)
+            narr "Você integrou contexto social ao caso clínico sem transformá-lo em rótulo. O médico recebe o caso completo e pode pensar a conduta desde o início considerando a realidade do paciente."
+            narr "É o registro como fio de continuidade, exercido em tempo real entre profissionais."
 
-        "Reduzir o ritmo — {i}\"Às vezes o corpo mostra o que a gente não consegue falar. Você está passando por algo difícil além da saúde?\"{/i}":
-            $ ajustar("confianca", 20)
-            $ escolha_m2 = "C"
-            show renato emocionado with dissolve
-            narr "Silêncio longo."
-            renato "Faz 8 meses que eu durmo na rua."
-            narr "Ele para. Parece não acreditar que disse isso em voz alta."
-            renato "Nunca pensei que ia chegar nisso."
-            narr "Ele abre o caderno devagar."
-            jump m1_sub22_direto
+        "Começar a passagem mencionando “o morador de rua” e depois ir aos dados técnicos.":
+            $ escolha_s13 = "C"
+            tec "Esse aqui é o morador de rua... masculino, 54 anos, dor torácica..."
+            $ ajustar("empatia", -10)
+            $ ajustar("acolhimento", -5)
+            narr "Apresentar o paciente pela condição de moradia antes do nome ou do quadro organiza toda a leitura seguinte. Você não fez por mal — fez porque é “assim que o serviço fala”."
+            narr "E é exatamente isso que o jogo quer tornar visível. O médico vai entrar procurando o problema social, não o cardiovascular."
+
+    call reflexao_card("O acolhimento da PSR começa antes da ficha clínica — nos olhares da sala de espera, na recepção, na linguagem que a equipe usa para descrever o caso entre si. As quatro dimensões não são etapas separadas: são camadas simultâneas que o profissional opera o tempo todo.", "Defender o direito sem expor a pessoa, registrar com contexto sem rotular, escutar sem julgar, esperar sem desistir — gestos pequenos, técnicos, repetidos.")
+
+    jump m1_cena3
 
 
-## Sub-decisão 2.1 — Registro no prontuário
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 3 — MOMENTO DE DECISÃO 2 — O que a ficha não diz
+## Papel: Médico
+## ═════════════════════════════════════════════════════════════════════════════
+
+label m1_cena3:
+    scene bg aqua_consultorio with dissolve
+    narr "{b}Seu papel agora:{/b} Médico — a emergência cardiovascular já foi afastada, mas o atendimento ainda não terminou de verdade."
+
+    show renato hesitante at center with dissolve
+
+    narr "A pressão começou a ceder depois da medicação; o eletrocardiograma não indica infarto agudo. Mesmo assim Renato continua inquieto: respiração curta, mãos fechadas sobre o caderno, olhar preso na parede atrás de você."
+    narr "Você percebe um detalhe que não entrou em nenhum campo: Renato parece pedir desculpas por ocupar espaço ali, mesmo depois de atendido."
+
+    renato "Desculpa... não quero atrapalhar."
+
+    menu:
+        narr "Como você conduz a conversa daqui em diante?"
+
+        "Continuar pelo protocolo clínico, evitando abrir o tema emocional.":
+            $ escolha_c3 = "A"
+            med "A dor piora quando faz esforço? Já teve pressão alta antes?"
+            $ ajustar("acolhimento", 5)
+            $ ajustar("empatia", -5)
+            narr "Você não foi negligente nem incorreto — a consulta seguiu como muitas em serviços sobrecarregados. Mas, quando o profissional permanece só no território seguro do protocolo, o paciente aprende que certos sofrimentos não cabem ali."
+            narr "Renato sai com a pressão melhor e a sensação de ter deixado parte de si do lado de fora."
+
+        "Investigar o componente emocional de forma direta, mas no ritmo acelerado da consulta.":
+            $ escolha_c3 = "B"
+            med "Esses sintomas podem ter relação com ansiedade ou estresse. Você já passou por acompanhamento psicológico ou psiquiátrico?"
+            renato "Já tomei remédio há um tempo atrás."
+            $ ajustar("empatia", 5)
+            $ ajustar("acolhimento", -5)
+            narr "A intenção foi correta — você percebeu sofrimento além da pressão e tentou nomeá-lo. Mas a forma manteve Renato na posição de quem é avaliado, não escutado."
+            narr "Investigar saúde mental sem construir segurança transforma vulnerabilidade em mais um item do interrogatório clínico."
+
+        "Direcionar a conversa para a vulnerabilidade social, antes de consolidar a escuta clínica.":
+            $ escolha_c3 = "C"
+            med "Você tá conseguindo ficar em abrigo? Tem alguém te ajudando nesse momento?"
+            $ ajustar("empatia", -10)
+            $ ajustar("acolhimento", -5)
+            $ ajustar("direito", -5)
+            narr "Sua intenção foi cuidar além do sintoma — mas, ao antecipar o contexto social, Renato sente que o serviço já decidiu quem ele é antes de entender o que ele veio buscar."
+            narr "Quando toda vulnerabilidade vira imediatamente “caso social”, a pessoa desaparece atrás da condição de moradia."
+
+    jump m1_sub21
+
+
+## ▸ Sub-decisão 2.1 — O registro no prontuário e-SUS
 
 label m1_sub21:
-    narr "Como você registra o atendimento no prontuário do e-SUS?"
+    narr "{b}Sub-decisão — o registro no prontuário.{/b} A consulta terminou, mas o cuidado depende do que vai permanecer registrado."
+
+    show esus at overlay_esus with dissolve
+    narr "Você abre o campo de evolução no prontuário. Cabem poucas linhas — e elas vão decidir quanto do atendimento continua existindo para o resto da rede."
+    narr "A crise foi controlada, mas a consulta revelou o que não aparece em exames: insegurança, sofrimento emocional, dificuldade de continuidade e meses em situação de rua."
 
     menu:
+        narr "Como você documenta o atendimento?"
 
-        "Só diagnóstico e conduta clínica":
-            narr "O próximo profissional começa do zero — sem histórico de depressão, sem contexto de rua."
-            jump m1_sub22
+        "Registrar apenas os dados clínicos imediatos: “Crise hipertensiva. Medicado. Alta com orientações.”":
+            $ escolha_s21 = "A"
+            $ ajustar("rede", -10)
+            narr "Você registrou só o que o protocolo reconhece com facilidade. Quando o contexto desaparece do prontuário, ele também desaparece da continuidade do cuidado."
+            narr "Se Renato retornar, o próximo profissional encontrará apenas uma crise hipertensiva isolada — não a trajetória que a produziu."
 
-        "Diagnóstico + depressão + contexto de rua + encaminhamento para saúde mental e serviço social":
-            $ ajustar("acesso", 20)
-            $ ajustar("vinculo", 10)
-            narr "Registro completo. Cria continuidade de cuidado. O próximo profissional sabe com quem está falando."
-            jump m1_sub22
+        "Registrar o quadro clínico e acrescentar, em termos amplos, o sofrimento emocional recente.":
+            $ escolha_s21 = "B"
+            $ ajustar("rede", 5)
+            $ ajustar("empatia", 5)
+            narr "A intenção foi correta — você impediu que o sofrimento sumisse do prontuário. Mas registros muito genéricos têm limites: o próximo profissional saberá que há algo além da pressão, mas talvez não compreenda o contexto."
+            narr "Continuidade parcial — abre uma porta, mas talvez não oriente o caminho inteiro."
 
-        "Registrar o clínico, omitir o contexto emocional {i}\"para não expor\"{/i}":
-            $ ajustar("acesso", 5)
-            narr "Sigilo não é apagar — é proteger. Um prontuário sem contexto fragmenta o cuidado."
-            jump m1_sub22
+        "Registrar detalhadamente a situação de rua e as observações sobre vulnerabilidade social.":
+            $ escolha_s21 = "C"
+            $ ajustar("rede", 10)
+            $ ajustar("empatia", -5)
+            narr "Sua intenção foi fortalecer a continuidade. Mas, quando o registro enfatiza a vulnerabilidade antes da singularidade clínica, Renato pode passar a circular pela rede primeiro como “o paciente em situação de rua” — e só depois como alguém com dor, medo e sofrimento específicos."
+            narr "O prontuário deve ampliar o olhar da equipe, não substituir a pessoa por uma categoria."
+
+    hide esus with dissolve
+    jump m1_sub22
 
 
-## Sub-decisão 2.2 — O caderno de Renato
+## ▸ Sub-decisão 2.2 — A prescrição fora do papel
 
 label m1_sub22:
-    show renato aberto at center
-    narr "Renato pega o caderno, parece quase mostrar algo. Recua."
-    renato "Desculpa. Não sei por que mostrei isso."
-    jump m1_sub22_escolha
+    narr "{b}Sub-decisão — a prescrição fora do papel.{/b} O tratamento precisa sair da lógica do consultório e entrar na rotina real de Renato."
 
-label m1_sub22_direto:
-    show renato emocionado at center
-    show caderno at center with dissolve
-    narr "No caderno: uma coluna de 'ENTREVISTAS' com nomes riscados. Na outra página, o começo de uma carta para os filhos que nunca foi enviada."
-    hide caderno with dissolve
-    renato "Desculpa. Não sei por que mostrei isso."
-    jump m1_sub22_escolha
-
-label m1_sub22_escolha:
-    menu:
-
-        "{i}\"Entendo.\"{/i} — e volta ao exame":
-            $ ajustar("confianca", -5)
-            show renato hesitante with dissolve
-            narr "Renato guarda o caderno. Fecha-se de novo."
-            jump m1_sub23
-
-        "Para. Olha para ele. {i}\"Não precisa pedir desculpa. Fico feliz que você mostrou.\"{/i}":
-            $ ajustar("confianca", 20)
-            $ ajustar("estigma", -5)
-            show renato aberto with dissolve
-            narr "Renato fica em silêncio. Mas não guarda o caderno."
-            narr "É a primeira vez em meses que alguém o trata como uma pessoa com uma história — não com um problema a resolver."
-            jump m1_sub23
-
-        "Pede para ler o bilhete para os filhos":
-            $ ajustar("confianca", -15)
-            show renato hesitante with dissolve
-            renato "Não. Isso é meu."
-            narr "A invasão fechou o que tinha começado a se abrir."
-            jump m1_sub23
-
-
-## Sub-decisão 2.3 — Prescrição ancorada na rotina
-
-label m1_sub23:
-    narr "Anti-hipertensivo de uso diário. Preferencialmente pela manhã, antes de comer."
+    show receita at obj_dir with dissolve
+    narr "Você prepara a receita do anti-hipertensivo: uso contínuo, um comprimido por dia. Parece simples na tela. Mas a eficácia depende de coisas que o protocolo assume como garantidas: horário estável, local seguro para guardar o remédio, alimentação regular, retorno à UBS."
+    narr "Renato segura o caderno contra o peito. Você se pergunta não só “o que prescrever?”, mas “o que dessa prescrição cabe na vida dele?”."
+    hide receita with dissolve
 
     menu:
+        narr "Como você conduz a orientação do tratamento?"
 
-        "Posologia padrão — {i}\"tome em jejum pela manhã\"{/i}":
-            $ ajustar("saude", 5)
-            narr "Posologia padrão. Mas a rotina de Renato não é padrão. A adesão ao tratamento depende de conhecer essa rotina."
-            jump m1_reflexao2
+        "Explicar a prescrição de forma rápida e padronizada, com orientações gerais de retorno.":
+            $ escolha_s22 = "A"
+            med "Tomar um comprimido por dia, de preferência pela manhã, e evitar esquecer."
+            $ ajustar("acolhimento", 5)
+            $ ajustar("empatia", -5)
+            narr "A prescrição foi tecnicamente correta, mas o protocolo pressupõe uma rotina estável para existir na prática. Sem investigar como o paciente vive fora do consultório, a adesão passa a depender de condições nunca garantidas."
+            narr "Renato sai com a receita, mas sem espaço para dizer se conseguirá segui-la."
 
-        "Perguntar sobre a rotina real de Renato antes de prescrever":
-            $ ajustar("saude", 15)
-            $ ajustar("confianca", 5)
-            narr "Você pergunta como é o dia a dia dele."
-            renato "Eu fico num abrigo. Acordo cedo, antes das 7. Café eles dão."
-            narr "Você ancora a posologia nessa rotina. A prescrição agora é viável."
-            jump m1_reflexao2
+        "Incluir o sofrimento emocional na explicação, mas mantendo o ritmo acelerado.":
+            $ escolha_s22 = "B"
+            med "A pressão melhorou, mas às vezes estresse e ansiedade também dificultam o controle. Você já fez algum acompanhamento?"
+            renato "Já tomei uns remédios um tempo atrás."
+            $ ajustar("empatia", 5)
+            $ ajustar("acolhimento", -5)
+            narr "A intenção foi correta — você percebeu que o tratamento não dependia só do comprimido. Mas a conversa seguiu no ritmo do protocolo, não no tempo da escuta."
+            narr "Saúde mental como complemento rápido sinaliza que o tema pode ser mencionado, mas não aprofundado. Você abriu uma porta; Renato ainda não sentiu segurança para atravessá-la."
 
-        "Perguntar só sobre armazenamento do medicamento":
-            $ ajustar("saude", 8)
-            narr "Armazenamento resolvido. Mas o horário e os hábitos do paciente continuam desconhecidos."
-            jump m1_reflexao2
+        "Fazer da realidade social o centro da orientação ao entregar a receita.":
+            $ escolha_s22 = "C"
+            med "Você tá conseguindo ficar em abrigo? Tem algum lugar seguro pra guardar os remédios?"
+            renato "Às vezes sim, às vezes não."
+            $ ajustar("empatia", -5)
+            $ ajustar("acolhimento", -5)
+            narr "Adaptar a prescrição à realidade concreta faz parte do cuidado. Mas, quando a vulnerabilidade organiza imediatamente toda a orientação, Renato sente que o serviço já espera menos dele como paciente."
+            narr "Reduzir a conversa às limitações vira gestão de vulnerabilidade, não construção compartilhada de autonomia."
+
+    call reflexao_card("Adaptar o cuidado à realidade do paciente é diferente de reduzir o paciente à própria vulnerabilidade. Quando o contexto social ocupa sozinho o centro da consulta, o risco é que a pessoa desapareça atrás da categoria “caso social”.", "O desafio é equilibrar clínica, escuta e contexto sem transformar nenhuma delas na única forma de enxergar quem está sendo atendido.")
+
+    jump m1_cena4
 
 
-## Reflexão intermediária — Momento 2
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 4 — MOMENTO DE DECISÃO 3 — O intervalo que não é vazio
+## Papel: Enfermeiro(a)
+## ═════════════════════════════════════════════════════════════════════════════
 
-label m1_reflexao2:
-    scene bg_escuro with fade
-    call reflexao_card("Separar saúde física da mental em populações vulneráveis gera retornos precoces e agravados.", "O prontuário é uma ferramenta de cuidado — não apenas um registro.")
-    jump m1_momento3
+label m1_cena4:
+    scene bg aqua_box with dissolve
+    narr "{b}Seu papel agora:{/b} Enfermeiro(a) — responsável pela observação clínica no box de estabilização."
 
-
-## ─────────────────────────────────────────────────────────────────────────────
-## MOMENTO 3 — "O intervalo de observação"
-## ─────────────────────────────────────────────────────────────────────────────
-
-label m1_momento3:
-    scene bg upa_observacao with fade
     show renato hesitante at center with dissolve
-    show tecnica at right with dissolve
 
-    narr "Renato tomou a primeira dose. PA 168/104, FC 92. O protocolo exige pelo menos 30 minutos de observação."
-    narr "A sala de espera está cheia. Há outros pacientes para atender."
+    narr "Renato tomou a primeira dose do anti-hipertensivo. O monitor multiparâmetro marca {b}PA 168/104, FC 92{/b} — ainda alta, mas cedendo. O protocolo pede ao menos 30 minutos de observação antes de pensar em alta."
+    narr "Você tem outros pacientes esperando — mas esta sala também é onde o cuidado se decide."
 
     menu:
+        narr "Como você usa esse intervalo?"
 
-        "Sair e atender o próximo — voltar quando o monitor alarmar":
-            $ ajustar("confianca", -5)
-            narr "Renato aperta o caderno. Olha para a porta. Sem referência, sem saber o que esperar."
-            jump m1_sub31
+        "Sair da sala e voltar quando o alarme disparar ou a equipe chamar.":
+            $ escolha_c4 = "A"
+            $ ajustar("acolhimento", -5)
+            $ ajustar("empatia", -5)
+            narr "O monitor cumpre a função técnica e ninguém deixou de fazer o mínimo. Mas, para alguém que já se sente invisível, ser deixado sozinho com os aparelhos confirma que o cuidado terminou quando a medicação foi administrada."
+            narr "A observação virou vigilância eletrônica, não presença profissional."
 
-        "Avisar a enfermagem para checar em 15 min; iniciar o rascunho do registro":
-            $ ajustar("confianca", 5)
-            $ ajustar("acesso", 5)
-            tec "Pode contar comigo. Volto em 15."
-            show renato aberto with dissolve
-            narr "Renato vê que alguém vai continuar presente. Solta levemente os ombros."
-            jump m1_sub31
+        "Avisar que volta em 15 minutos, alinhar com a equipe e começar o registro com a história fresca.":
+            $ escolha_c4 = "B"
+            $ ajustar("rede", 10)
+            $ ajustar("acolhimento", 10)
+            narr "Você tratou o intervalo como tempo clínico, não como pausa. O alinhamento com a equipe garantiu que a informação não dependa só da sua memória."
+            narr "Você retorna com a evolução rascunhada e a equipe ciente do caso. A observação não é desperdício — é onde o cuidado se consolida."
 
-        "Delegar integralmente à enfermagem — {i}\"pode liberar quando estabilizar\"{/i}":
-            $ ajustar("vinculo", -10)
-            narr "O caso vira 'leito monitorado'. Renato percebe quando se torna um número."
-            jump m1_sub31
+        "Delegar integralmente a observação à enfermagem (“me chama se mudar alguma coisa”).":
+            $ escolha_c4 = "C"
+            $ ajustar("acolhimento", -10)
+            $ ajustar("empatia", -5)
+            narr "Delegar não é errado — delegar sem contexto é transferir responsabilidade sem transferir cuidado. A enfermagem monitora os sinais, mas não sabe da insônia, dos bilhetes para os filhos no caderno, do possível componente emocional da pressão."
+            narr "Quando você voltar, o caso recomeça pela tela do monitor, não pela história da pessoa."
+
+    jump m1_sub31
 
 
-## Sub-decisão 3.1 — Reavaliação clínica
+## ▸ Sub-decisão 3.1 — A reavaliação clínica
 
 label m1_sub31:
-    narr "35 minutos depois. PA 148/92, FC 84. Critérios clínicos dentro do limite para alta."
+    narr "{b}Sub-decisão — a reavaliação clínica.{/b} Papel: Médico(a) — responsável pela reavaliação antes da decisão de alta."
+    narr "35 minutos depois. {b}PA 148/92, FC 84{/b}. Renato está mais corado, respiração tranquila, refere alívio. Clinicamente, cumpre os critérios de alta."
+    narr "Mas alta segura não é só pressão controlada — é também ler o que vai acontecer quando ele atravessar a porta."
 
     menu:
+        narr "Como você conduz a reavaliação?"
 
-        "Conferir sinais vitais, perguntar 'tá melhor?', registrar 'estável para alta'":
-            narr "Clinicamente em ordem. Mas há sinais que só aparecem na fala — e você não perguntou."
-            jump m1_sub32
+        "Conferir os sinais vitais, perguntar “tá melhor?” e marcar “estável para alta”.":
+            $ escolha_s31 = "A"
+            med "Tá melhor?"
+            narr "Você confirmou o que o monitor já dizia — e perdeu a chance de captar sinais de alerta que só aparecem quando o paciente fala."
+            narr "A reavaliação foi um carimbo, não uma escuta."
 
-        "Sentar, refazer o exame, perguntar abertamente sobre dor, falta de ar e sono":
-            $ ajustar("confianca", 10)
+        "Sentar ao lado, refazer o exame e perguntar de forma aberta.":
+            $ escolha_s31 = "B"
+            med "Como tá agora — não só a dor, mas a cabeça, a respiração, o sono?"
+            show renato aberto at center
+            renato "A dor no peito sumiu... mas o coração acelera quando eu penso em sair daqui."
+            $ ajustar("acolhimento", 15)
+            $ ajustar("empatia", 10)
             $ renato_medo_alta = True
-            show renato hesitante at center
-            renato "Tá... mas ainda sinto o coração acelerado quando penso em sair."
-            narr "Ele não está com medo dos sintomas. Está com medo da alta."
-            narr "Esse dado vai mudar o Momento 4."
-            jump m1_sub32
+            narr "A reavaliação capturou um dado que nenhum aparelho mede: Renato tem {b}medo da alta{/b}. Esse dado vai mudar como você conduz os próximos momentos."
+            narr "Reavaliar com presença é diferente de reconferir com pressa."
 
-        "Manter em observação 'por garantia', sem reavaliar clinicamente":
-            $ ajustar("vinculo", -5)
-            narr "A observação se estende sem finalidade clínica. Para Renato, é mais tempo de incerteza."
-            jump m1_sub32
+        "Manter Renato em observação por mais 1 hora “por garantia”, sem reavaliar de fato.":
+            $ escolha_s31 = "C"
+            $ ajustar("acolhimento", -10)
+            $ ajustar("direito", -5)
+            narr "Mais tempo no box sem reavaliação real é só mais espera para Renato — e atrasa os outros da fila. Cautela sem ação clínica é deslocamento do trabalho, não proteção."
+            narr "Renato continua sem saber por que ainda está ali, reforçando que o serviço decide sobre ele, não com ele."
+
+    jump m1_sub32
 
 
-## Sub-decisão 3.2 — Consolidação do prontuário
+## ▸ Sub-decisão 3.2 — O prontuário antes da alta
 
 label m1_sub32:
-    narr "Antes da alta, como você registra o atendimento no e-SUS?"
+    narr "{b}Sub-decisão — o prontuário antes da alta.{/b} Papel: profissional clínico responsável pela evolução no prontuário eletrônico."
+
+    show esus at overlay_esus with dissolve
+    narr "Antes de chamar Renato para a conversa de alta, você abre a evolução no e-SUS. O que se registra agora é o que a UBS de referência, o Consultório na Rua e qualquer profissional que cruzar com Renato vão ler depois."
+    narr "O registro é o fio que conecta este atendimento ao próximo — ou que se rompe na porta da UPA."
 
     menu:
+        narr "Como você registra?"
 
-        "Texto livre básico — diagnóstico e conduta":
-            narr "O registro existe, mas é ilegível para o sistema. O CNR não encontra Renato automaticamente."
-            jump m1_reflexao3
+        "Registrar em texto livre, sem codificação nem campo de vulnerabilidade.":
+            $ escolha_s32 = "A"
+            $ ajustar("rede", -10)
+            narr "A informação está lá, mas não circula. A busca ativa do CNR não vai puxar o caso e a UBS não vai filtrar Renato como prioridade."
+            narr "Texto livre é como uma carta que nunca chega — existe, mas não alcança quem precisa lê-la."
 
-        "CIAP-2 (K86 + P03) + vulnerabilidade social + sinalização para busca ativa pelo CNR":
-            $ ajustar("acesso", 20)
-            narr "Registro completo. O e-SUS lista Renato para busca ativa pelo Consultório na Rua."
-            narr "{i}\"Cinco minutos bem feitos podem valer meses de acesso.\"{/i}"
-            jump m1_reflexao3
+        "Estruturar com CIAP-2, campo de vulnerabilidade social e sinalização de busca ativa pelo CNR.":
+            $ escolha_s32 = "B"
+            $ ajustar("rede", 15)
+            $ ajustar("direito", 10)
+            $ no_acende("UBS de referência")
+            narr "O e-SUS agora lista Renato automaticamente na próxima exportação para o CNR e para a UBS de referência. O registro virou ponte, não papel."
+            narr "Cada campo preenchido foi uma decisão consciente sobre continuidade."
 
-        "Registrar só o clínico — omitir contexto emocional 'para não comprometer a alta'":
-            $ ajustar("acesso", 5)
-            narr "O registro clínico está feito. Mas o contexto que mais define se Renato vai conseguir continuar o tratamento ficou de fora."
-            jump m1_reflexao3
+        "Registrar o quadro clínico, mas omitir o conteúdo emocional “para não expor o paciente”.":
+            $ escolha_s32 = "C"
+            $ ajustar("rede", 5)
+            $ ajustar("empatia", -5)
+            narr "A intenção de proteger é legítima, mas a omissão guarda uma intimidade que Renato confiou para que o cuidado seguisse, não para que sumisse no próximo turno."
+            narr "Sigilo não é apagar — é registrar com cuidado em campo apropriado. O próximo saberá da hipertensão, mas não entenderá por que ela aconteceu."
+
+    hide esus with dissolve
+
+    call reflexao_card("O intervalo de observação parece tempo morto, mas é o exato lugar onde a alta se constrói. Reavaliar é diferente de reconferir; registrar é diferente de digitar.", "Quando esses dois movimentos acontecem com presença, a alta deixa de ser ato administrativo e passa a ser o início da continuidade do cuidado.")
+
+    jump m1_cena5
 
 
-## Reflexão intermediária — Momento 3
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 5 — MOMENTO DE DECISÃO 4 — A alta que começa antes da porta
+## Papel: Médico(a)
+## ═════════════════════════════════════════════════════════════════════════════
 
-label m1_reflexao3:
-    scene bg_escuro with fade
-    call reflexao_card("O intervalo de observação parece tempo morto. Mas é o exato lugar onde a alta se constrói.", "Reavaliar é diferente de reconferir. Registrar é diferente de digitar.")
-    jump m1_momento4
+label m1_cena5:
+    scene bg aqua_box with dissolve
+    narr "{b}Seu papel agora:{/b} Médico(a) — responsável pela alta e pela articulação inicial com a rede de cuidado."
 
+    show renato normal at center with dissolve
 
-## ─────────────────────────────────────────────────────────────────────────────
-## MOMENTO 4 — "A alta"
-## ─────────────────────────────────────────────────────────────────────────────
-
-label m1_momento4:
-    scene bg upa_corredor with fade
-    show assistente at right with dissolve
-    show renato normal at left with dissolve
-
-    narr "Hora da alta. Renato não tem dinheiro. Não tem Cartão SUS ativo. Não tem endereço no sistema."
+    narr "Renato melhorou. Você precisa dar a alta. Ele vai precisar de anti-hipertensivo contínuo e acompanhamento de saúde mental."
+    narr "O endereço no sistema continua o de uma década atrás — a recepção não atualiza esse campo, e não é função sua corrigi-lo na UPA."
+    narr "Mas o que você faz agora define se a rede vai existir para Renato ou se ele sai apenas com um papel na mão."
 
     if renato_medo_alta:
-        narr "E você sabe que ele está com medo de sair."
+        narr "Você se lembra do que ele disse na reavaliação: {i}“o coração acelera quando eu penso em sair daqui”{/i}. A alta, para Renato, não é alívio — é ameaça."
 
     menu:
+        narr "Como você conduz a alta?"
 
-        "Dar a receita e liberar — {i}\"tome conforme indicado\"{/i}":
-            $ ajustar("acesso", -20)
-            $ ajustar("vinculo", -15)
-            hide assistente
-            narr "Renato olha para a receita. Não tem como comprar o remédio. Não tem Cartão SUS ativo. Não volta."
-            jump m1_sub41
+        "Prescrever, explicar a posologia e liberar.":
+            $ escolha_c5 = "A"
+            $ ajustar("direito", -10)
+            $ ajustar("acolhimento", -10)
+            narr "A prescrição foi correta — mas uma receita sem caminho é um papel. Renato sai com orientações que pressupõem farmácia acessível, endereço que funcione e retorno por iniciativa própria."
+            narr "Para quem vive na rua, cada uma é uma barreira concreta. A alta que não articula rede é alta que abandona."
 
-        "Dar a receita, registrar situação de rua, orientar sobre a farmácia popular":
-            $ ajustar("acesso", 10)
-            $ ajustar("vinculo", 5)
-            narr "Orientação parcial. Mas o CNR não foi acionado e o Cartão SUS ainda está inativo."
-            jump m1_sub41
+        "Prescrever, registrar a situação de rua e perguntar sobre o acesso ao remédio — sem acionar a rede.":
+            $ escolha_c5 = "B"
+            med "Você consegue comprar esse remédio? Tem acesso a alguma farmácia do SUS?"
+            renato "Não tenho Cartão SUS ativo."
+            $ ajustar("rede", 5)
+            $ ajustar("empatia", 5)
+            $ ajustar("acolhimento", 5)
+            narr "Você identificou a barreira — mais do que muitos atendimentos alcançam. Mas identificar sem acionar deixa o problema nomeado e sem solução."
+            narr "A farmácia da UPA aparece como possibilidade e o registro garante o histórico; falta o passo que conecta a informação ao movimento concreto."
 
-        "Fluxo completo: acionar Serviço Social, dispensar medicação da farmácia da UPA, combinar encontro com o CNR":
-            $ ajustar("acesso", 25)
-            $ ajustar("vinculo", 20)
-            assist "Me passa o resumo do caso?"
-            narr "Renato vai sair com a primeira dose tomada, o medicamento na mochila e o nome da assistente social escrito no caderno."
-            jump m1_sub41
+        "Fazer o fluxo completo: registro codificado, Serviço Social, ponte com o CNR, medicação na farmácia da UPA e plano construído com Renato.":
+            $ escolha_c5 = "C"
+            $ ajustar("direito", 10)
+            $ ajustar("rede", 10)
+            $ ajustar("acolhimento", 10)
+            $ ajustar("empatia", 10)
+            $ no_acende("Serviço Social")
+            $ no_acende("Farmácia da UPA")
+            narr "Você transformou a alta num ato de articulação, não de encerramento. Cada serviço acionado é um nó que acende na rede — e cada nó aceso reduz a chance de Renato sumir depois da porta."
+            narr "A dispensação garante que ele saia já medicado; o Serviço Social faz a ponte que o prontuário sozinho não faz. A alta deixou de ser ponto final e virou vírgula."
+
+    jump m1_sub41
 
 
-## Sub-decisão 4.1 — Comunicando os próximos passos
+## ▸ Sub-decisão 4.1 — Comunicando os próximos passos
 
 label m1_sub41:
-    hide assistente
-    show renato normal at center
-
-    narr "Você vai explicar os próximos passos."
+    narr "{b}Sub-decisão — comunicando os próximos passos.{/b} Papel: profissional responsável pela orientação de alta."
+    narr "O plano de alta está definido. Renato está sentado na cama, caderno no colo, esperando. Você tem alguns minutos antes do próximo paciente."
 
     menu:
+        narr "Como você comunica o que vem depois?"
 
-        "Explicar rapidamente em pé enquanto organiza a ficha":
-            narr "Renato absorve o que consegue. O endereço do CNR vai errar — não por descuido, mas porque a informação chegou rápido demais."
-            jump m1_sub42
+        "Explicar rapidamente os próximos passos, em pé, enquanto organiza a ficha para sair.":
+            $ escolha_s41 = "A"
+            $ ajustar("empatia", -5)
+            narr "Comunicar em pé, com pressa, comunica que o momento não é importante. Sem confirmar o que foi entendido, detalhes como o endereço do CNR e os dias de atendimento se perdem."
+            narr "Não por falha de Renato — mas porque a forma apressada não garantiu que a orientação chegasse."
 
-        "Sentar. Revisar passo a passo. Perguntar: {i}\"Tem algo que pode dificultar você ir lá na quarta?\"{/i}":
-            $ ajustar("confianca", 10)
-            $ ajustar("vinculo", 15)
-            show renato aberto with dissolve
-            renato "Nunca ninguém me perguntou isso."
-            narr "A pergunta não é sobre logística. É sobre reconhecer que o caminho entre a UPA e o CNR pode ter obstáculos que você não enxerga do consultório."
-            jump m1_sub42
+        "Sentar ao lado e entregar o plano em partes, confirmando cada passo e perguntando sobre barreiras.":
+            $ escolha_s41 = "B"
+            prof "O que pode dificultar você chegar lá?"
+            prof "A assistente social vai te ajudar com documentação, abrigo e a ponte com o Consultório na Rua."
+            $ ajustar("acolhimento", 15)
+            $ ajustar("empatia", 10)
+            $ ajustar("direito", 5)
+            narr "Você não apenas informou — perguntou sobre as barreiras. Essa inversão muda o significado do plano: de imposto para construído."
+            narr "Renato sabe o que fazer e sente que alguém se importou com o que vem depois. A pergunta sobre dificuldades é, ela mesma, uma forma de cuidado."
 
-        "Delegar o encerramento à assistente social e seguir para o próximo paciente":
-            $ ajustar("vinculo", -5)
-            narr "Ela faz o que pode. Mas a transição sem apresentação perde contexto essencial."
-            jump m1_sub42
+        "Delegar o encerramento à assistente social e sair antes de terminar a conversa.":
+            $ escolha_s41 = "C"
+            $ ajustar("acolhimento", -10)
+            $ ajustar("empatia", -5)
+            narr "A assistente social vai conduzir bem — mas quem começou o atendimento não terminou. Para Renato, isso confirma um padrão: as pessoas entram na vida dele e saem quando aparece algo mais urgente."
+            narr "Às vezes, os últimos dois minutos são os mais importantes do atendimento."
+
+    jump m1_sub42
 
 
-## Sub-decisão 4.2 — Passagem para a assistente social
+## ▸ Sub-decisão 4.2 — A passagem para o Serviço Social
 
 label m1_sub42:
-    show assistente at right with dissolve
+    show assistente at left with dissolve
 
-    assist "Posso ajudar em 5 minutos."
+    narr "{b}Sub-decisão — a passagem para o Serviço Social.{/b} Você acionou o Serviço Social. A assistente social aparece na porta com expressão de sobrecarga."
+
+    assist "Posso te ajudar em 5 minutos — tem uma fila hoje."
 
     menu:
+        narr "Como você conduz a passagem?"
 
-        "Agradecer e deixar que ela conduza como puder":
-            $ ajustar("acesso", 5)
-            narr "Ela faz o que consegue. Mas começa do zero."
-            jump m1_sub43
+        "Agradecer e deixar que ela conduza como puder no tempo que tem.":
+            $ escolha_s42 = "A"
+            $ ajustar("rede", 5)
+            $ no_acende("Serviço Social")
+            narr "A assistente social fez o possível — mas sem o contexto do atendimento, os 5 minutos viraram um encaminhamento genérico."
+            narr "O papel do CRAS, sem explicação de como chegar, a quem procurar e em que horário, é mais um papel na mochila de Renato."
 
-        "Fazer uma apresentação rápida do caso — diagnóstico, contexto, o que já foi combinado":
-            $ ajustar("acesso", 15)
-            assist "Entendido. Conheço o fluxo com o CNR. Já aciono."
-            narr "{i}\"Cinco minutos bem preparados valem mais que trinta minutos do zero.\"{/i}"
-            jump m1_sub43
+        "Fazer uma rápida apresentação de Renato — contexto, o que foi observado, o que foi combinado.":
+            $ escolha_s42 = "B"
+            $ ajustar("rede", 10)
+            $ ajustar("acolhimento", 10)
+            $ ajustar("direito", 5)
+            $ no_acende("Serviço Social")
+            narr "A assistente social vai direto ao ponto, porque alguém fez a ponte entre os saberes. Cinco minutos bem preparados valem mais que trinta do zero."
+            narr "A passagem de caso entre profissionais é, ela mesma, uma forma de cuidado — e sua qualidade decide se o próximo elo vai funcionar ou apenas existir."
 
-        "Sugerir que ele volte em outro dia para conversar com ela":
-            $ ajustar("vinculo", -10)
-            $ ajustar("acesso", -5)
-            narr "'Pode voltar' raramente se concretiza para quem não tem endereço fixo."
-            jump m1_sub43
+        "Pedir para a assistente social remarcar para outro dia — Renato “pode voltar para conversar com ela”.":
+            $ escolha_s42 = "C"
+            $ ajustar("rede", -10)
+            $ ajustar("acolhimento", -10)
+            $ ajustar("direito", -5)
+            narr "“Pode voltar” é o tipo de encaminhamento que raramente se concretiza para a PSR. Sem data, sem nome, sem compromisso, é uma porta que parece aberta mas que ninguém segura."
+            narr "Remarcar é, muitas vezes, desmarcar sem assumir."
+
+    call reflexao_card("A alta segura não se constrói só com pressão controlada e receita na mão. Ela exige que o profissional se pergunte: “o que vai acontecer com essa pessoa depois que ela cruzar a porta?”", "Quando essa pergunta organiza a conduta, a alta deixa de ser encerramento e passa a ser início.")
+
+    jump m1_cena6
 
 
-## Sub-decisão 4.3 — A despedida na porta
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 6 — MOMENTO DE DECISÃO 5 — A rede que se constrói com nome e voz
+## Papel: equipe multiprofissional (+ Renato como participante ativo)
+## ═════════════════════════════════════════════════════════════════════════════
 
-label m1_sub43:
-    scene bg upa_saida with fade
-    hide assistente
+label m1_cena6:
+    scene bg aqua_box with dissolve
+    show renato normal at center
+    show assistente at left
+    with dissolve
+
+    narr "{b}Agora é a equipe:{/b} você, a assistente social — e Renato, como participante ativo."
+    narr "Com o plano de alta definido, a assistente social lembra que ainda é preciso fechar quem do CNR vai fazer a busca ativa. Marcos, agente comunitário de plantão noturno, está em ronda no território — ramal 4127, atende o telefone do plantão pela enfermagem."
+    narr "Renato está sentado na cama, atento, ouvindo."
+
+    menu:
+        narr "Como você conduz a articulação com o Consultório na Rua?"
+
+        "Pedir que a assistente social ligue depois para o CNR — você precisa atender o próximo paciente.":
+            $ escolha_c6 = "A"
+            $ ajustar("rede", 5)
+            narr "O acionamento aconteceu — mas à distância, sem voz, sem nome, sem horário. O CNR vira caixa-preta institucional: foi acionada, mas ninguém sabe se vai funcionar."
+            narr "Para Renato, “vão entrar em contato” soa como todas as promessas que não se cumpriram."
+
+        "Ligar você mesmo, no viva-voz, e apresentar o caso a Marcos em linguagem técnica.":
+            $ escolha_c6 = "B"
+            prof "PSR masculino, 54 anos, crise hipertensiva com componente ansioso, depressão prévia, busca ativa para vinculação à UBS de referência."
+            $ ajustar("rede", 10)
+            $ ajustar("empatia", -10)
+            $ ajustar("acolhimento", -5)
+            $ no_acende("CNR (Marcos)")
+            show renato hesitante at center
+            narr "A articulação foi feita com qualidade institucional — Marcos recebeu informações suficientes para agir. Mas Renato ouviu a si mesmo virar “PSR masculino, 54 anos” na frente dele."
+            narr "O vínculo já nasce contaminado: ele foi apresentado como demanda, não como pessoa. A linguagem técnica é necessária entre profissionais — mas, na presença do paciente, precisa ser mediada."
+
+        "Ligar, apresentar o contexto — e, em vez de falar sobre Renato, falar com ele: incluí-lo na conversa.":
+            $ escolha_c6 = "C"
+            marcos "Renato, onde você costuma passar a noite?"
+            show renato aberto at center
+            renato "Tenho ficado num abrigo nas últimas semanas... e de tarde costumo ficar no coreto da praça do bairro."
+            marcos "Então combinamos: sexta-feira, 16h, no coreto. Eu vou estar lá."
+            $ ajustar("rede", 15)
+            $ ajustar("acolhimento", 10)
+            $ ajustar("empatia", 10)
+            $ ajustar("direito", 10)
+            $ no_acende("CNR (Marcos)")
+            $ no_acende("UBS de referência")
+            narr "Renato vai ao encontro na sexta porque alguém chamado {b}Marcos{/b} vai estar lá — não porque “a equipe do CNR vai passar”. A rede se ativou com nome, voz e ponto combinado."
+            narr "Incluir Renato na conversa fez o que nenhum encaminhamento por escrito consegue: transformou-o de objeto do cuidado em participante do próprio plano. A busca ativa começa aqui — com um acordo entre duas pessoas."
+            show caderno at obj_dir with dissolve
+            narr "Renato anota o nome de Marcos no caderno."
+            hide caderno with dissolve
+
+    jump m1_sub51
+
+
+## ▸ Sub-decisão 5.1 — A carteira vencida e a cidadania
+
+label m1_sub51:
+    narr "{b}Sub-decisão — a carteira vencida e a cidadania.{/b} Papel: Assistente Social + profissional clínico — decisão compartilhada sobre o que está além da ficha clínica."
+
+    show carteira at obj_dir with dissolve
+    narr "Você se lembra da carteira de trabalho vencida que Renato tirou do bolso na recepção. É a única identificação ativa que ele tem, e o registro civil está fragmentado — sem CPF regularizado, sem RG recente."
+    narr "Sem isso, o Cartão SUS pleno não se completa, e o acesso a transferência de renda ou abrigamento de longa permanência fica travado."
+    hide carteira with dissolve
+    narr "A assistente social ainda está na sala. Você tem 2 minutos antes do próximo paciente."
+
+    menu:
+        narr "O que você faz com a questão documental?"
+
+        "Tratar como fora do escopo — “documento não é problema da saúde”.":
+            $ escolha_s51 = "A"
+            prof "Documento não é problema da saúde. Foco no que é meu."
+            $ ajustar("direito", -10)
+            $ ajustar("empatia", -5)
+            narr "A frase “não é problema da saúde” define uma fronteira que parece profissional, mas abandona a pessoa na lacuna entre serviços."
+            narr "A saúde não precisa resolver a documentação — mas precisa reconhecer que, sem ela, o cuidado recém-construído não se sustenta."
+
+        "Entregar o folheto do CRAS e orientar verbalmente.":
+            $ escolha_s51 = "B"
+            prof "Procura o CRAS do bairro, eles te ajudam com a documentação."
+            $ ajustar("rede", 5)
+            $ no_acende("CRAS")
+            narr "A orientação é correta, mas genérica. Para a PSR, um folheto sem nome de referência, sem data e sem ponte construída é papel — não caminho."
+            narr "A diferença entre informação e acesso está na ponte que o profissional constrói (ou não)."
+
+        "Registrar a pendência, pedir ofício curto à Defensoria Pública e obter a anuência de Renato por digital.":
+            $ escolha_s51 = "C"
+            $ ajustar("direito", 10)
+            $ ajustar("rede", 10)
+            $ ajustar("acolhimento", 10)
+            $ ajustar("empatia", 10)
+            $ no_acende("CRAS")
+            $ no_acende("Defensoria Pública")
+            narr "A saúde reconheceu que a pessoa inteira não cabe só na ficha clínica. O ofício à Defensoria é um gesto de 2 minutos que pode mudar meses de travamento burocrático."
+            narr "O registro garante que o próximo profissional saiba que a documentação é parte do plano, e a anuência por digital respeita a autonomia de Renato — ele não foi inscrito em nada sem saber."
+            narr "Marcos leva a cópia do encaminhamento do CRAS na visita de sexta."
+
+    call reflexao_card("Ativar a rede com nome, voz e ponto combinado é diferente de acionar uma caixa-preta à distância. Incluir o paciente na construção do próprio plano não é cortesia — é princípio da Política Nacional de Humanização.", "Reconhecer que a documentação é parte do cuidado em saúde é o gesto que separa o atendimento da pessoa inteira do atendimento do sintoma isolado.")
+
+    jump m1_cena7
+
+
+## ═════════════════════════════════════════════════════════════════════════════
+## CENA 7 — MOMENTO DE DECISÃO 6 — A despedida que fica
+## Papel: o profissional que estiver presente na porta
+## ═════════════════════════════════════════════════════════════════════════════
+
+label m1_cena7:
+    scene bg aqua_saida with dissolve
+    narr "{b}Seu papel agora:{/b} o profissional que estiver na porta — qualquer membro da equipe que conduziu o atendimento."
+
     show renato despedida at center with dissolve
 
-    narr "Renato para na porta."
-    renato "E se eu não conseguir ir lá na quarta?"
+    narr "Renato pega suas coisas para ir embora. Na porta, ele para. Vira para você com o caderno na mão."
 
-    narr "Não é sobre transporte. É sobre medo."
+    renato "E se eu não conseguir encontrar o Marcos na sexta?"
+
+    narr "Ele não está falando de transporte. Está falando de {b}medo{/b} — de não acreditar que vai dar certo."
 
     menu:
+        narr "Como você responde?"
 
-        "{i}\"O CNR atende em outros dias também.\"{/i}":
-            narr "A resposta está correta. Mas não respondeu o que ele perguntou."
-            jump m1_reflexao4
+        "Explicar que o Consultório na Rua atende em outros dias também.":
+            $ escolha_c7 = "A"
+            prof "O Consultório na Rua atende em outros dias também. É só tentar."
+            $ ajustar("acolhimento", -5)
+            narr "A informação está correta — mas não respondeu o que Renato realmente perguntava. Ele não queria saber o horário; queria saber se alguém acredita que ele é capaz de dar o próximo passo."
+            narr "Responder logística a uma pergunta sobre confiança é perder o momento em que o vínculo se consolidaria."
 
-        "Para. Olha para ele. {i}\"Renato, você chegou aqui hoje com dor no peito, sozinho. Isso já foi difícil. O próximo passo não precisa ser perfeito — só precisa existir.\"{/i}":
-            $ ajustar("confianca", 15)
-            $ ajustar("vinculo", 20)
-            show renato aberto with dissolve
-            narr "Renato fica parado por um segundo. Segura o caderno com as duas mãos."
-            narr "Essa frase não está em nenhum protocolo."
-            jump m1_reflexao4
+        "Parar, olhar para ele e reconhecer o que ele já fez — sem prometer resultado.":
+            $ escolha_c7 = "B"
+            prof "Renato, você chegou aqui hoje com dor no peito, sozinho. Isso já foi difícil. O próximo passo não precisa ser perfeito — só precisa existir."
+            $ ajustar("acolhimento", 15)
+            $ ajustar("empatia", 15)
+            $ ajustar("direito", 5)
+            show renato emocionado at center
+            narr "É o tipo de frase que não está em nenhum protocolo — e que às vezes muda uma trajetória. Você não prometeu resultado; reconheceu esforço. Não deu orientação; devolveu dignidade."
+            narr "A despedida que nomeia o que o paciente já fez diz a ele que alguém viu quem ele é — não só o que ele precisa."
 
-        "{i}\"A gente torce por você.\"{/i}":
-            $ ajustar("vinculo", 5)
-            narr "Bondade genuína. Mas distante."
-            jump m1_reflexao4
+        "Dizer que entende, mas que o importante é tentar — “a gente torce por você”.":
+            $ escolha_c7 = "C"
+            prof "Entendo. Mas o importante é tentar. A gente torce por você."
+            $ ajustar("acolhimento", 5)
+            narr "A intenção é boa, mas “a gente torce” soa distante — uma despedida educada que não cria compromisso. Torcer é o que se faz por quem está longe; cuidar é o que se faz por quem está na frente."
+            narr "Renato sente que o serviço foi gentil — mas gentileza sem vínculo é cortesia, não cuidado."
 
+    call reflexao_card("A despedida não está em nenhum fluxograma e não aparece em nenhum indicador de desempenho.", "Mas é o último registro que o paciente leva do serviço — e, para alguém que aprendeu a esperar rejeição, pode ser o primeiro motivo para voltar.")
 
-## Reflexão intermediária — Momento 4
+    narr "Renato ajeita o caderno debaixo do braço e atravessa a porta. O entardecer alonga a sombra dele na calçada."
 
-label m1_reflexao4:
-    scene bg_escuro with fade
-    call reflexao_card("Entregar uma receita para alguém sem dinheiro nem Cartão SUS ativo não resolve o problema.", "A alta é um ato de continuidade — não de encerramento.")
-    jump m1_fim
-
-
-## ─────────────────────────────────────────────────────────────────────────────
-## FIM DA MISSÃO 1
-## ─────────────────────────────────────────────────────────────────────────────
-
-label m1_fim:
     stop music fadeout 3.0
-    scene bg_escuro with fade
     jump epilogo
