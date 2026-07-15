@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: renpy-sdk
-          key: renpy-sdk-rapt-8.5.3-v1
+          key: renpy-sdk-rapt-8.5.3-v2
 
       - name: Baixar Ren'Py SDK e RAPT
         if: steps.cache-renpy.outputs.cache-hit != 'true'
@@ -39,6 +39,7 @@ jobs:
           echo "$ANDROID_KEYSTORE_B64" | base64 -d > android.keystore
           echo "$BUNDLE_KEYSTORE_B64" | base64 -d > bundle.keystore
           printf '%s' "$ANDROID_JSON" > android.json
+          cp android.json .android.json
           cp android.keystore bundle.keystore renpy-sdk/rapt/
         env:
           ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
@@ -47,19 +48,40 @@ jobs:
 
       - name: Instalar Android SDK (RAPT)
         if: steps.cache-renpy.outputs.cache-hit != 'true'
+        env:
+          RAPT_NO_TERMS: "1"
+          PYTHONPATH: ${{ github.workspace }}/renpy-sdk
         run: |
           cd renpy-sdk/rapt
           yes y | ../lib/py3-linux-x86_64/python -O android.py installsdk || true
           test -d Sdk || (echo "Android SDK não instalado" && exit 1)
 
+      - name: Escrever local.properties (assinatura)
+        env:
+          ANDROID_SDK_DIR: ${{ github.workspace }}/renpy-sdk/rapt/Sdk
+          KEYSTORE_PATH: ${{ github.workspace }}/renpy-sdk/rapt/android.keystore
+        run: |
+          mkdir -p renpy-sdk/rapt/project
+          cat > renpy-sdk/rapt/project/local.properties <<EOF
+          sdk.dir=$ANDROID_SDK_DIR
+          key.store=$KEYSTORE_PATH
+          key.store.password=android
+          key.alias=android
+          key.alias.password=android
+          EOF
+          cat renpy-sdk/rapt/project/local.properties
+
       - name: Gerar APK
         run: |
-          ./renpy-sdk/renpy.sh renpy-sdk/launcher android_build "$GITHUB_WORKSPACE" --dest dist
+          ./renpy-sdk/renpy.sh launcher android_build "$GITHUB_WORKSPACE" --dest dist
           ls -la dist
 
       - name: Remover chaves antes do cache ser salvo
         if: always()
-        run: rm -f renpy-sdk/rapt/android.keystore renpy-sdk/rapt/bundle.keystore android.keystore bundle.keystore android.json
+        run: |
+          rm -f renpy-sdk/rapt/android.keystore renpy-sdk/rapt/bundle.keystore \
+                android.keystore bundle.keystore android.json .android.json \
+                renpy-sdk/rapt/project/local.properties
 
       - name: Publicar APK como artefato
         uses: actions/upload-artifact@v4
