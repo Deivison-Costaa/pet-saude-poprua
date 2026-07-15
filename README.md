@@ -15,8 +15,18 @@ O jogador é um profissional de saúde numa UPA e, a cada cena, troca de perspec
 | Pasta | O que tem |
 |---|---|
 | `game/` | O jogo (roteiro em `missao1.rpy`, telas, imagens, áudio, fontes) |
-| `docs/` | Cronograma, fluxograma de navegação, estrutura de telas, padrões visuais e mockups |
+| [`docs/`](docs/) | Cronograma, fluxograma de navegação, estrutura de telas, padrões visuais e mockups |
 | `assets-gerados/` | Imagens geradas por IA (com os prompts documentados em `PROMPTS-GERADOS.md`) |
+
+## Documentação
+
+| Documento | O que tem |
+|---|---|
+| [`docs/CRONOGRAMA.md`](docs/CRONOGRAMA.md) | Cronograma de desenvolvimento do protótipo (S0–S3, entrega 05/08) |
+| [`docs/estrutura-telas.md`](docs/estrutura-telas.md) | Estrutura de menus e telas (10 telas + telas in-game, direção visual) |
+| [`docs/fluxograma-navegacao.md`](docs/fluxograma-navegacao.md) | Fluxograma de navegação em Mermaid (menus + fluxo interno da História 1) |
+| [`docs/padroes-visuais.md`](docs/padroes-visuais.md) | Padrões visuais — estilo aquarela, personagens, pipeline de geração |
+| [`docs/mockups/`](docs/mockups/) | Mockups das telas (diálogo, decisão, objeto, menu) |
 
 ## Baixar o jogo pronto (builds)
 
