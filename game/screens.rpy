@@ -218,9 +218,10 @@ style choice_vbox:
 
 style choice_button is default:
     properties gui.button_properties("choice_button")
-    background "#0a1a2ab8"
-    hover_background "#1A6B9Acc"
-    padding (30, 12, 30, 12)
+    ## Placas aquarela (miolo quase opaco — texto não vaza sobre o cenário)
+    background Frame("gui/aquarela/choice_idle.png", 46, 26, tile=False)
+    hover_background Frame("gui/aquarela/choice_hover.png", 46, 26, tile=False)
+    padding (38, 16, 38, 16)
 
 style choice_button_text is default:
     properties gui.text_properties("choice_button")
@@ -325,11 +326,16 @@ style navigation_button_text is gui_button_text
 style navigation_button:
     size_group "navigation"
     properties gui.button_properties("navigation_button")
+    ## Sobre o painel de papel: texto limpo no repouso, placa azul no hover
+    ## (a placa clara é branca — some sobre o papel)
+    background None
+    hover_background Frame("gui/aquarela/nav_hover.png", 34, 20, tile=False)
+    padding (26, 9, 26, 9)
 
 style navigation_button_text:
     properties gui.text_properties("navigation_button")
-    idle_color "#cdd9e4"
-    hover_color "#ffffff"
+    idle_color "#1d3d5c"
+    hover_color "#f4f1ea"
     size 21
 
 
@@ -353,29 +359,26 @@ screen main_menu():
 
         vbox:
             style "default"
-            xpos 24
-            ypos 30
+            xpos 34
+            ypos 34
             spacing 4
 
             text "Caminhos":
-                size 40
-                bold True
-                color "#f4f1ea"
-                outlines [(2, "#12283ba0", 0, 2)]
+                font gui.titulo_font
+                size 46
+                color "#1d3d5c"
 
             text "do Cuidado":
-                size 40
-                bold True
-                color "#f4f1ea"
-                outlines [(2, "#12283ba0", 0, 2)]
+                font gui.titulo_font
+                size 46
+                color "#1d3d5c"
 
-            null height 2
+            null height 6
 
             text _("Um jogo sobre acolhimento,\ndireito e empatia."):
                 size 16
-                color "#dfe7ed"
+                color "#33393f"
                 italic True
-                outlines [(1, "#12283ba0", 0, 1)]
 
     ## Rodapé institucional
     fixed:
@@ -485,7 +488,7 @@ screen game_menu(title, scroll=None):
 
     use navigation
 
-    textbutton _("Return"):
+    textbutton _("Voltar"):
         style "return_button"
 
         action Return()
@@ -538,6 +541,7 @@ style game_menu_label:
     ysize 120
 
 style game_menu_label_text:
+    font gui.titulo_font
     size gui.title_text_size
     color gui.accent_color
     yalign 0.5
@@ -554,7 +558,7 @@ screen about():
 
     tag menu
 
-    use game_menu(_("About"), scroll="viewport"):
+    use game_menu(_("Créditos"), scroll="viewport"):
 
         style_prefix "about"
 
@@ -608,7 +612,7 @@ screen load():
 
 screen file_slots(title):
 
-    default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
+    default page_name_value = FilePageNameInputValue(pattern=_("Página {}"), auto=_("Salvamentos automáticos"), quick=_("Salvamentos rápidos"))
 
     use game_menu(title):
 
@@ -721,7 +725,7 @@ screen preferences():
     else:
         $ cols = 4
 
-    use game_menu(_("Preferences"), scroll="viewport"):
+    use game_menu(_("Configurações"), scroll="viewport"):
 
         vbox:
 
@@ -732,16 +736,16 @@ screen preferences():
 
                     vbox:
                         style_prefix "radio"
-                        label _("Display")
-                        textbutton _("Window") action Preference("display", "window")
-                        textbutton _("Fullscreen") action Preference("display", "fullscreen")
+                        label _("Tela")
+                        textbutton _("Janela") action Preference("display", "window")
+                        textbutton _("Tela cheia") action Preference("display", "fullscreen")
 
                 vbox:
                     style_prefix "check"
-                    label _("Skip")
-                    textbutton _("Unseen Text") action Preference("skip", "toggle")
-                    textbutton _("After Choices") action Preference("after choices", "toggle")
-                    textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
+                    label _("Avançar")
+                    textbutton _("Texto não lido") action Preference("skip", "toggle")
+                    textbutton _("Após escolhas") action Preference("after choices", "toggle")
+                    textbutton _("Transições") action InvertSelected(Preference("transitions", "toggle"))
 
             null height (4 * gui.pref_spacing)
 
@@ -751,25 +755,25 @@ screen preferences():
 
                 vbox:
 
-                    label _("Text Speed")
+                    label _("Velocidade do texto")
 
                     bar value Preference("text speed")
 
-                    label _("Auto-Forward Time")
+                    label _("Tempo do avanço automático")
 
                     bar value Preference("auto-forward time")
 
                 vbox:
 
                     if config.has_music:
-                        label _("Music Volume")
+                        label _("Volume da música")
 
                         hbox:
                             bar value Preference("music volume")
 
                     if config.has_sound:
 
-                        label _("Sound Volume")
+                        label _("Volume dos efeitos")
 
                         hbox:
                             bar value Preference("sound volume")
@@ -778,7 +782,7 @@ screen preferences():
                                 textbutton _("Test") action Play("sound", config.sample_sound)
 
                     if config.has_voice:
-                        label _("Voice Volume")
+                        label _("Volume das vozes")
 
                         hbox:
                             bar value Preference("voice volume")
@@ -789,7 +793,7 @@ screen preferences():
                     if config.has_music or config.has_sound or config.has_voice:
                         null height gui.pref_spacing
 
-                        textbutton _("Mute All"):
+                        textbutton _("Silenciar tudo"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
 
@@ -873,7 +877,7 @@ screen history():
 
     predict False
 
-    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport")):
+    use game_menu(_("Histórico"), scroll=("vpgrid" if gui.history_height else "viewport")):
 
         style_prefix "history"
 
@@ -949,7 +953,7 @@ screen help():
 
     default device = "keyboard"
 
-    use game_menu(_("Help"), scroll="viewport"):
+    use game_menu(_("Ajuda"), scroll="viewport"):
 
         style_prefix "help"
 
@@ -1130,8 +1134,8 @@ screen confirm(message, yes_action, no_action):
                 xalign 0.5
                 spacing 100
 
-                textbutton _("Yes") action yes_action
-                textbutton _("No") action no_action
+                textbutton _("Sim") action yes_action
+                textbutton _("Não") action no_action
 
     key "game_menu" action no_action
 

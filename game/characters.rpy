@@ -3,16 +3,17 @@
 
 init python:
     def textbox_tinted(accent):
-        ## Base escura + faixa de 4px na cor do personagem no topo do balão
+        ## Caixa de diálogo aquarela (gui/textbox.png) com uma pincelada fina
+        ## na cor do personagem sob a área do nome.
         return Composite(
-            (1280, 185),
-            (0, 0), Solid("#0a1a2adf"),
-            (0, 0), Solid(accent, xysize=(1280, 4)),
+            (1280, 170),
+            (0, 0), "gui/textbox.png",
+            (110, 50), Solid(accent + "cc", xysize=(150, 3)),
         )
 
 ## Narrador (sem nome, itálico)
 define narr   = Character(None, what_italic=True, what_color="#dddddd",
-                          window_background=Solid("#0a0a0ade"))
+                          window_background=Image("gui/textbox.png"))
 
 ## Paciente central
 define renato = Character("Renato",

@@ -86,7 +86,7 @@ screen perfil():
                 frame:
                     background ("#14524A" if persistent.h1_concluida else "#1a2229")
                     padding (14, 10)
-                    text ("Dia 1  ✓" if persistent.h1_concluida else "Dia 1") size 15 color ("#B8EDE4" if persistent.h1_concluida else "#5a6773") bold True
+                    text ("Dia 1  {font=DejaVuSans.ttf}✓{/font}" if persistent.h1_concluida else "Dia 1") size 15 color ("#B8EDE4" if persistent.h1_concluida else "#5a6773") bold True
                 for n in ["Dia 2", "Dia 3", "Dia 4"]:
                     frame:
                         background "#1a2229"
