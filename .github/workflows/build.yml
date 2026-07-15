@@ -1,0 +1,77 @@
+name: Build do jogo (Windows / Linux / Mac)
+
+on:
+  workflow_dispatch:      # botão "Run workflow" na aba Actions
+  push:
+    tags: ["v*"]          # ou automaticamente ao criar uma tag v0.2, v1.0...
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache do Ren'Py SDK
+        id: cache-renpy
+        uses: actions/cache@v4
+        with:
+          path: renpy-sdk
+          key: renpy-sdk-8.5.3
+
+      - name: Baixar Ren'Py SDK
+        if: steps.cache-renpy.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL -o renpy.tar.bz2 https://www.renpy.org/dl/8.5.3/renpy-8.5.3-sdk.tar.bz2
+          mkdir renpy-sdk
+          tar -xjf renpy.tar.bz2 -C renpy-sdk --strip-components=1
+
+      - name: Gerar builds
+        run: |
+          cd renpy-sdk
+          ./renpy.sh launcher distribute --destination "$GITHUB_WORKSPACE/dist" \
+            --package win --package linux --package mac "$GITHUB_WORKSPACE"
+          ls -la "$GITHUB_WORKSPACE/dist"
+
+      - name: Gerar AppImage (Linux)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          mkdir -p AppDir
+          tar -xjf dist/*-linux.tar.bz2 -C AppDir --strip-components=1
+          cat > AppDir/AppRun << 'RUNEOF'
+          #!/bin/bash
+          HERE="$(dirname "$(readlink -f "$0")")"
+          exec "$HERE"/petsaude-pop-rua.sh "$@"
+          RUNEOF
+          chmod +x AppDir/AppRun
+          cat > AppDir/petsaude-pop-rua.desktop << 'DKEOF'
+          [Desktop Entry]
+          Name=Caminhos do Cuidado
+          Comment=Visual novel educacional sobre cuidado a populacao em situacao de rua
+          Exec=petsaude-pop-rua.sh
+          Icon=petsaude-pop-rua
+          Type=Application
+          Categories=Game;Education;
+          Terminal=false
+          DKEOF
+          cp AppDir/game/gui/window_icon.png AppDir/petsaude-pop-rua.png
+          curl -sSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool
+          APPIMAGE_EXTRACT_AND_RUN=1 ./appimagetool AppDir "dist/Caminhos-do-Cuidado-x86_64.AppImage"
+          ls -la dist/
+
+      - name: Publicar artefatos (baixar na página desta execução)
+        uses: actions/upload-artifact@v4
+        with:
+          name: builds-caminhos-do-cuidado
+          path: dist/*
+          retention-days: 30
+
+      - name: Anexar à release (apenas em tags)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body: "Protótipo da 1ª história (Renato). Build automático via GitHub Actions."
+          files: dist/*

@@ -1,0 +1,29 @@
+name: Lint do Ren'Py
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache do Ren'Py SDK
+        id: cache-renpy
+        uses: actions/cache@v4
+        with:
+          path: renpy-sdk
+          key: renpy-sdk-8.5.3
+
+      - name: Baixar Ren'Py SDK
+        if: steps.cache-renpy.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL -o renpy.tar.bz2 https://www.renpy.org/dl/8.5.3/renpy-8.5.3-sdk.tar.bz2
+          mkdir renpy-sdk
+          tar -xjf renpy.tar.bz2 -C renpy-sdk --strip-components=1
+
+      - name: Rodar lint
+        run: ./renpy-sdk/renpy.sh . lint
