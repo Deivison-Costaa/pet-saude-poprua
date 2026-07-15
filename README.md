@@ -26,7 +26,7 @@ Não precisa instalar nada para gerar os pacotes — o GitHub builda sozinho:
 2. Ao terminar (~5 min), abra a execução e baixe o pacote em **Artifacts** (zips para Windows, Linux e Mac).
 3. Para versões oficiais: criar uma tag `v0.x` gera os builds e anexa numa **[Release](../../releases)** automaticamente.
 
-**Android (APK):** por enquanto é manual, pelo launcher do Ren'Py (aba *Android*) — automatizar está planejado (precisa do keystore como secret do repositório).
+**Android (APK):** workflow **"Build Android (APK)"** na mesma aba Actions (as chaves de assinatura já estão como secrets do repositório). Também dá para buildar manualmente pelo launcher do Ren'Py.
 
 A cada Pull Request, um verificador automático roda o **lint do Ren'Py** e acusa erros de script antes da revisão.
 
