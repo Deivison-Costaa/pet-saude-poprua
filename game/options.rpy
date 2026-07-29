@@ -3,7 +3,7 @@
 
 define config.name = _("Caminhos do Cuidado")
 define gui.show_name = True
-define config.version = "0.2"
+define config.version = "0.3"
 
 define gui.about = _p("""
 Visual novel educacional sobre o cuidado à população em situação de rua.
