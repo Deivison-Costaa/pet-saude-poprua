@@ -22,14 +22,12 @@ init python:
 label missao1:
     play music "audio/music/ambiente_upa.ogg" fadein 2.0
 
-    scene bg aqua_recepcao with fade
+    scene bg teste001 with fade
     window show
 
     centered "{color=#f4f1ea}{b}{size=+16}DIA 1{/size}{/b}\n\n{size=+6}“Ele não parece morador de rua”{/size}{/color}"
 
     narr "{b}Seu papel:{/b} profissional recém-chegado à UPA."
-
-    show renato hesitante at right with dissolve
 
     narr "É seu primeiro dia na UPA. O pronto-socorro está lotado. Renato chegou há pouco com dor no peito e falta de ar — passou pela Classificação de Risco Clínica e recebeu a cor {b}amarela{/b}: deve ser atendido com prioridade pelo quadro, não pela condição de moradia."
 
@@ -51,24 +49,36 @@ label missao1:
 ## ═════════════════════════════════════════════════════════════════════════════
 
 label m1_cena1:
-    scene bg aqua_espera with dissolve
+    scene bg img2 with dissolve
     narr "{b}Seu papel agora:{/b} Recepcionista da UPA — a primeira pessoa do serviço a perceber o que acontece na sala de espera."
-
-    show renato hesitante at right with dissolve
-    show senhora at left_np(0.31) with dissolve
 
     narr "Você está na recepção registrando outro paciente quando começam os murmúrios na sala de espera. Uma senhora, três cadeiras à frente de Renato, vira para o marido e fala num tom que ela acha discreto, mas não é:"
 
+    scene bg neutro_frio with fade
+    show senhora_fofoqueira at center:
+        yalign 1.0
+        zoom 1.6
+    with dissolve
+
     senhora_c "Esse homem aí, olha só, tá bem vestido, tá limpo, deve ter plano de saúde. Por que ele tá usando o SUS? Tá tirando lugar de quem precisa."
 
-    hide senhora with dissolve
-    show outro_paciente at left_np(0.33) with dissolve
+    scene bg neutro_frio with fade
+    show senhor_fofoqueiro at center:
+        yalign 1.0
+        zoom 1.6
+    with dissolve
 
     outro_pac "Se tivesse condição de pagar plano, eu não estaria aqui esperando. Vem gente aqui que não precisa."
 
-    hide outro_paciente with dissolve
+    scene bg neutro_frio with fade
+    show renato_fofocado at center:
+        yalign 1.0
+        zoom 1.4
+    with dissolve
 
     narr "Renato escuta tudo. Aperta o caderno mais forte no colo. Não diz nada."
+    scene esus with dissolve:
+        zoom 1.0
     narr "Você sabe — porque a anotação da triagem está aberta na sua tela — que ele está em situação de rua há alguns meses. Os outros não sabem."
     narr "O direito ao SUS, universal por princípio constitucional, está sendo questionado em voz alta na sua sala de espera. Você tem alguns segundos para decidir."
 
@@ -77,9 +87,17 @@ label m1_cena1:
 
         "Fingir que não ouviu e chamar Renato discretamente ao balcão, sob justificativa administrativa.":
             $ escolha_c1 = "A"
+
+            scene bg neutro_cor with fade
+            show recepcionista_chamando_renato at center:
+                yalign 1.0
+                zoom 1.4
+            with dissolve
+
             recep "Renato? Preciso confirmar uma informação no seu cadastro, vem aqui um instante."
             $ ajustar("acolhimento", 5)
             $ ajustar("empatia", -10)
+            hide recepcionista_chamando_renato with dissolve
             narr "Você protegeu Renato individualmente — gesto bem-intencionado. Mas a sala de espera continua sendo um lugar onde aquilo pode ser dito sem que ninguém nomeie que é errado."
             narr "Proteger sem educar o espaço é cuidado incompleto: o silêncio diante do estigma público é uma forma de concordância."
 
