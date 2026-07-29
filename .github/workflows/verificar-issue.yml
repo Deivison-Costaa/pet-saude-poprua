@@ -1,0 +1,33 @@
+name: Verificar issue vinculada
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize, labeled, unlabeled]
+
+jobs:
+  verificar-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exigir "Closes #N" ou label sem-issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            if (pr.labels.some(l => l.name === 'sem-issue')) {
+              core.info('Label "sem-issue" aplicada — check dispensado.');
+              return;
+            }
+
+            const body = pr.body || '';
+            const referenciaIssue = /\b(clos(?:e|es|ed)|fix(?:es|ed)?|resolv(?:e|es|ed))\s+#\d+/i;
+            if (referenciaIssue.test(body)) {
+              core.info('Referência de issue encontrada na descrição.');
+              return;
+            }
+
+            core.setFailed(
+              'A descrição do PR precisa conter "Closes #N" (ou Fixes/Resolves) ' +
+              'vinculando uma issue. Se este PR realmente não tem issue associada, ' +
+              'aplique a label "sem-issue" para dispensar este check.'
+            );
