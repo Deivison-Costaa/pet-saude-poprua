@@ -47,4 +47,13 @@ init python:
     build.classify('*.txt', None)
     build.classify('01-07/**', None)
     build.classify('Imagens-*/**', None)
+    ## Ferramentas e saídas de build que ficam na pasta do projeto.
+    ## O CI extrai o SDK em renpy-sdk/ dentro do workspace e passa o próprio
+    ## workspace como projeto para o distribute. Como a regra final do Ren'Py
+    ## é um catch-all ("**", "all"), sem estas linhas o SDK inteiro (3532
+    ## arquivos, ~340 MB) vai empacotado dentro de cada build do jogo.
+    build.classify('renpy-sdk/**', None)
+    build.classify('dist/**', None)
+    build.classify('AppDir/**', None)
+    build.classify('appimagetool', None)
     build.documentation('*.html')
