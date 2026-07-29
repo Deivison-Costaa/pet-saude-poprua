@@ -4,7 +4,6 @@ on:
   workflow_dispatch:      # botão "Run workflow" na aba Actions
   push:
     tags: ["v*"]
-    branches: [infra-github]   # gatilho temporário para validar o workflow
 
 jobs:
   apk:
@@ -91,15 +90,22 @@ jobs:
                 android.keystore bundle.keystore android.json .android.json \
                 renpy-sdk/rapt/project/local.properties
 
-      - name: Publicar APK como artefato
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk-caminhos-do-cuidado
-          path: dist/*.apk
-          retention-days: 30
-
+      # A release é o entregável oficial: assets de release não consomem a cota
+      # de artefatos do Actions (500 MB no plano Free), e o APK sozinho passa de
+      # 900 MB. Por isso ela vem ANTES do upload-artifact.
       - name: Anexar à release (apenas em tags)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*.apk
+
+      # Conveniência para execuções manuais (sem tag), onde não há release.
+      # Tolerante a falha: se a cota de artefatos estourar, o build não quebra.
+      - name: Publicar APK como artefato
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-caminhos-do-cuidado
+          path: dist/*.apk
+          retention-days: 5

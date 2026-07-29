@@ -61,13 +61,9 @@ jobs:
           APPIMAGE_EXTRACT_AND_RUN=1 ./appimagetool AppDir "dist/Caminhos-do-Cuidado-x86_64.AppImage"
           ls -la dist/
 
-      - name: Publicar artefatos (baixar na página desta execução)
-        uses: actions/upload-artifact@v4
-        with:
-          name: builds-caminhos-do-cuidado
-          path: dist/*
-          retention-days: 30
-
+      # A release é o entregável oficial: assets de release não consomem a cota
+      # de artefatos do Actions (500 MB no plano Free), enquanto estes builds
+      # somam ~1 GB por execução. Por isso ela vem ANTES do upload-artifact.
       - name: Anexar à release (apenas em tags)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
@@ -75,3 +71,14 @@ jobs:
           name: ${{ github.ref_name }}
           body: "Protótipo da 1ª história (Renato). Build automático via GitHub Actions."
           files: dist/*
+
+      # Conveniência para execuções manuais (sem tag), onde não há release.
+      # Tolerante a falha: se a cota de artefatos estourar, o build não quebra.
+      - name: Publicar artefatos (baixar na página desta execução)
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: builds-caminhos-do-cuidado
+          path: dist/*
+          retention-days: 5
