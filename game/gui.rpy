@@ -35,7 +35,7 @@ define gui.interface_text_color = '#ffffff'
 define gui.text_font = "fonts/AtkinsonHyperlegible-Regular.ttf"
 define gui.name_text_font = "fonts/AtkinsonHyperlegible-Bold.ttf"
 define gui.interface_text_font = "fonts/AtkinsonHyperlegible-Regular.ttf"
-define gui.titulo_font = "fonts/KaushanScript-Regular.ttf"
+define gui.titulo_font = "fonts/Roboto-Bold.ttf"
 
 define config.font_replacement_map = {
     ("fonts/AtkinsonHyperlegible-Regular.ttf", True,  False) : ("fonts/AtkinsonHyperlegible-Bold.ttf",       False, False),

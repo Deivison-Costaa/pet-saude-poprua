@@ -64,6 +64,8 @@ image bg aqua_saida       = "bg/aqua_saida.jpg"
 image bg neutro_cor       = "bg/neutro_cor.png"
 image bg neutro_quente    = "bg/neutro_quente.png"
 image bg neutro_frio      = "bg/neutro_frio.png"
+image bg teste001         = Transform("bg/Teste001.png", size=(1280, 720))
+image bg img2             = Transform("bg/Img2.png", size=(1280, 720))
 
 ## Overlay do e-SUS (tela de registro)
 image esus = "bg/aqua_esus.jpg"
@@ -80,6 +82,10 @@ image tecnica        = "chars/tecnica.png"
 image assistente     = "chars/assistente_social.png"
 image medico         = "chars/medico.png"
 image senhora        = "chars/senhora.png"
+image senhora_fofoqueira = "chars/SenhoraFofoqueira.png"
+image senhor_fofoqueiro  = "chars/SenhorFofoqueiro.png"
+image renato_fofocado    = "chars/RenatoFofocado.png"
+image recepcionista_chamando_renato = "chars/RecepcionistaChamandoRenato.png"
 image outro_paciente = "chars/outro_paciente.png"
 
 ## ── Objetos das cenas (recorte com alpha) ────────────────────────────────────
