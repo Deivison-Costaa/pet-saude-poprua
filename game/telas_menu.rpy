@@ -1,4 +1,4 @@
-## telas_menu.rpy — Telas de menu: Capítulos, Perfil/Progresso, Materiais,
+## telas_menu.rpy — Telas de menu: Casos, Progresso, Materiais,
 ## Redes de apoio e Sobre o jogo (estrutura de docs/estrutura-telas.md).
 ## Conteúdo de Materiais/Redes é provisório — validar textos com o grupo.
 
@@ -10,14 +10,17 @@ default persistent.h1_nos = {}
 
 
 ## ─────────────────────────────────────────────────────────────────────────────
-## CAPÍTULOS
+## CASOS — chamado de "Capítulos" no protótipo inicial; renomeado na issue #34
+## para bater com o termo usado por Luana e Laiene nas discussões do jogo.
+## Identificador interno da screen (`capitulos`) mantido para não quebrar
+## `ShowMenu("capitulos")`/navegação — só o texto exibido ao jogador mudou.
 ## ─────────────────────────────────────────────────────────────────────────────
 
 screen capitulos():
 
     tag menu
 
-    use game_menu(_("Capítulos"), scroll="viewport"):
+    use game_menu(_("Casos"), scroll="viewport"):
 
         vbox:
             spacing 18
@@ -67,14 +70,16 @@ screen capitulos():
 
 
 ## ─────────────────────────────────────────────────────────────────────────────
-## PERFIL / PROGRESSO (persistente entre sessões)
+## PROGRESSO (persistente entre sessões) — renomeado de "Perfil / Progresso"
+## na issue #35: não existe sistema de perfil de usuário, só acompanhamento
+## de progresso/medidores, então o nome antigo sugeria algo que não existe.
 ## ─────────────────────────────────────────────────────────────────────────────
 
 screen perfil():
 
     tag menu
 
-    use game_menu(_("Perfil / Progresso"), scroll="viewport"):
+    use game_menu(_("Progresso"), scroll="viewport"):
 
         vbox:
             spacing 16

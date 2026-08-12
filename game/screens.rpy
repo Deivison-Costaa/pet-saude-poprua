@@ -273,6 +273,10 @@ style quick_button_text:
 
 screen navigation():
 
+    ## Painel "Mais opções" fechado por padrão (issue #35 — menu principal
+    ## enxuto; itens de referência ficam escondidos até serem pedidos).
+    default mostrar_mais_opcoes = False
+
     vbox:
         style_prefix "navigation"
 
@@ -283,17 +287,44 @@ screen navigation():
 
         if main_menu:
 
-            textbutton _("Jogar") action Start()
+            ## Ação principal — única com placa visível em repouso, não só no hover.
+            textbutton _("Jogar"):
+                style "navigation_button_primary"
+                action Start()
 
-            textbutton _("Capítulos") action ShowMenu("capitulos")
+            textbutton _("Casos") action ShowMenu("capitulos")
 
-            textbutton _("Perfil / Progresso") action ShowMenu("perfil")
+            textbutton _("Progresso") action ShowMenu("perfil")
 
-            textbutton _("Materiais") action ShowMenu("materiais")
+            null height 12
 
-            textbutton _("Redes de apoio") action ShowMenu("redes_apoio")
+            textbutton (_("Menos opções") if mostrar_mais_opcoes else _("Mais opções")):
+                style "navigation_button_toggle"
+                action ToggleLocalVariable("mostrar_mais_opcoes")
 
-            textbutton _("Sobre o jogo") action ShowMenu("sobre_jogo")
+            if mostrar_mais_opcoes:
+
+                textbutton _("Materiais") action ShowMenu("materiais")
+
+                textbutton _("Redes de apoio") action ShowMenu("redes_apoio")
+
+                textbutton _("Sobre o jogo") action ShowMenu("sobre_jogo")
+
+                textbutton _("Carregar") action ShowMenu("load")
+
+                textbutton _("Créditos") action ShowMenu("about")
+
+            null height 12
+
+            textbutton _("Configurações"):
+                style "navigation_button_small"
+                action ShowMenu("preferences")
+
+            if renpy.variant("pc"):
+
+                textbutton _("Sair"):
+                    style "navigation_button_small"
+                    action Quit(confirm=False)
 
         else:
 
@@ -301,23 +332,23 @@ screen navigation():
 
             textbutton _("Salvar") action ShowMenu("save")
 
-        textbutton _("Carregar") action ShowMenu("load")
+            textbutton _("Carregar") action ShowMenu("load")
 
-        textbutton _("Configurações") action ShowMenu("preferences")
+            textbutton _("Configurações") action ShowMenu("preferences")
 
-        if _in_replay:
+            if _in_replay:
 
-            textbutton _("Encerrar replay") action EndReplay(confirm=True)
+                textbutton _("Encerrar replay") action EndReplay(confirm=True)
 
-        elif not main_menu:
+            else:
 
-            textbutton _("Menu principal") action MainMenu()
+                textbutton _("Menu principal") action MainMenu()
 
-        textbutton _("Créditos") action ShowMenu("about")
+            textbutton _("Créditos") action ShowMenu("about")
 
-        if renpy.variant("pc"):
+            if renpy.variant("pc"):
 
-            textbutton _("Sair") action Quit(confirm=not main_menu)
+                textbutton _("Sair") action Quit(confirm=True)
 
 
 style navigation_button is gui_button
@@ -334,10 +365,48 @@ style navigation_button:
 
 style navigation_button_text:
     properties gui.text_properties("navigation_button")
-    font gui.titulo_font
+    ## Fonte de interface (não a de título): separa o peso visual do menu
+    ## em relação ao título da tela inicial (issue #36).
+    font gui.text_font
     idle_color "#1d3d5c"
     hover_color "#f4f1ea"
-    size 22
+    size gui.navigation_button_text_size
+
+## "Jogar" — ação principal da tela inicial (issue #35): placa aquarela
+## visível já em repouso (as demais só mostram a placa no hover) e texto
+## maior/em negrito, para destacar de imediato qual é o botão certo.
+style navigation_button_primary is navigation_button
+style navigation_button_primary_text is navigation_button_text
+
+style navigation_button_primary:
+    background Frame("gui/aquarela/nav_idle.png", 34, 20, tile=False)
+
+style navigation_button_primary_text:
+    font gui.name_text_font
+    size int(gui.navigation_button_text_size * 1.2)
+    idle_color "#1d3d5c"
+    hover_color "#f4f1ea"
+    xalign 0.5
+
+## Alternador "Mais opções" — discreto, para não competir com os destinos.
+style navigation_button_toggle is navigation_button
+style navigation_button_toggle_text is navigation_button_text
+
+style navigation_button_toggle_text:
+    size (gui.navigation_button_text_size - 4)
+    italic True
+    idle_color gui.idle_color
+    hover_color gui.hover_color
+
+## Itens administrativos (Configurações, Sair) — sempre visíveis, mas com
+## menor peso que os destinos de conteúdo (issue #35).
+style navigation_button_small is navigation_button
+style navigation_button_small_text is navigation_button_text
+
+style navigation_button_small_text:
+    size (gui.navigation_button_text_size - 4)
+    idle_color gui.idle_color
+    hover_color gui.hover_color
 
 
 ## Tela main_menu ##############################################################
@@ -366,20 +435,20 @@ screen main_menu():
 
             text "Caminhos":
                 font gui.titulo_font
-                size 42
+                size gui.main_menu_title_size
                 color "#1d3d5c"
                 line_leading -6
 
             text "do Cuidado":
                 font gui.titulo_font
-                size 42
+                size gui.main_menu_title_size
                 color "#1d3d5c"
                 line_leading -8
 
             null height 4
 
             text _("Um jogo sobre acolhimento,\ndireito e empatia."):
-                size 15
+                size gui.main_menu_subtitle_size
                 color "#33393f"
                 italic True
 
@@ -394,14 +463,14 @@ screen main_menu():
         text "UFPB  ·  PET-Saúde  ·  GT-6 POP RUA":
             xpos 30
             yalign 0.5
-            size 14
+            size gui.main_menu_footer_text_size
             color "#ebf0f4"
             bold True
 
         text "protótipo — nome provisório · v[config.version]":
             xalign 0.99
             yalign 0.5
-            size 12
+            size gui.main_menu_footer_version_size
             color "#c8d4de"
             italic True
 

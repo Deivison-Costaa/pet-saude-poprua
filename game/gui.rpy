@@ -27,9 +27,16 @@ define gui.interface_text_color = '#ffffff'
 
 
 ################################################################################
-## Fontes
-## Texto: Atkinson Hyperlegible (OFL) — desenhada para máxima legibilidade;
-##        acentuação PT-BR completa. Títulos: Kaushan Script (OFL, pincel).
+## Fontes (decisão registrada na issue #36)
+## Duas famílias, separadas por função — não por decoração:
+## - Atkinson Hyperlegible (OFL): interface, menu, corpo de texto e rodapé —
+##   desenhada para máxima legibilidade; acentuação PT-BR completa.
+## - Roboto Bold: título da tela inicial e cabeçalhos de seção — mesma
+##   linguagem sans-serif limpa da placa "UPA 24h" pintada no fundo do menu,
+##   com peso de destaque para não competir com o menu.
+## KaushanScript-Regular.ttf permanece em fonts/ mas não é usada: uma fonte
+## script/pincel destoaria da sinalização sans-serif do próprio cenário e
+## perderia legibilidade nos tamanhos pequenos da variante mobile.
 ################################################################################
 
 define gui.text_font = "fonts/AtkinsonHyperlegible-Regular.ttf"
@@ -48,7 +55,14 @@ define gui.name_text_size = 31
 define gui.interface_text_size = 25
 define gui.label_text_size = 29
 define gui.notify_text_size = 17
-define gui.title_text_size = 50
+define gui.title_text_size = 36
+
+## Tela inicial — hierarquia título > menu > rodapé (issue #36)
+define gui.main_menu_title_size = 48
+define gui.main_menu_subtitle_size = 16
+define gui.navigation_button_text_size = 22
+define gui.main_menu_footer_text_size = 14
+define gui.main_menu_footer_version_size = 12
 
 
 ################################################################################
@@ -249,6 +263,12 @@ init python:
         gui.interface_text_size = 36
         gui.button_text_size = 34
         gui.label_text_size = 36
+        gui.title_text_size = 44
+        gui.main_menu_title_size = 64
+        gui.main_menu_subtitle_size = 22
+        gui.navigation_button_text_size = 30
+        gui.main_menu_footer_text_size = 20
+        gui.main_menu_footer_version_size = 17
         gui.textbox_height = 240
         gui.name_xpos = 80
         gui.dialogue_xpos = 90
