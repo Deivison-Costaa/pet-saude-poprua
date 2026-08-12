@@ -292,7 +292,7 @@ screen navigation():
                 style "navigation_button_primary"
                 action Start()
 
-            textbutton _("Capítulos") action ShowMenu("capitulos")
+            textbutton _("Casos") action ShowMenu("capitulos")
 
             textbutton _("Progresso") action ShowMenu("perfil")
 
