@@ -300,7 +300,7 @@ screen navigation():
 
             textbutton (_("Menos opções") if mostrar_mais_opcoes else _("Mais opções")):
                 style "navigation_button_toggle"
-                action ToggleScreenVariable("mostrar_mais_opcoes")
+                action ToggleLocalVariable("mostrar_mais_opcoes")
 
             if mostrar_mais_opcoes:
 
