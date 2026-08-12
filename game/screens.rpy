@@ -334,10 +334,12 @@ style navigation_button:
 
 style navigation_button_text:
     properties gui.text_properties("navigation_button")
-    font gui.titulo_font
+    ## Fonte de interface (não a de título): separa o peso visual do menu
+    ## em relação ao título da tela inicial (issue #36).
+    font gui.text_font
     idle_color "#1d3d5c"
     hover_color "#f4f1ea"
-    size 22
+    size gui.navigation_button_text_size
 
 
 ## Tela main_menu ##############################################################
@@ -366,20 +368,20 @@ screen main_menu():
 
             text "Caminhos":
                 font gui.titulo_font
-                size 42
+                size gui.main_menu_title_size
                 color "#1d3d5c"
                 line_leading -6
 
             text "do Cuidado":
                 font gui.titulo_font
-                size 42
+                size gui.main_menu_title_size
                 color "#1d3d5c"
                 line_leading -8
 
             null height 4
 
             text _("Um jogo sobre acolhimento,\ndireito e empatia."):
-                size 15
+                size gui.main_menu_subtitle_size
                 color "#33393f"
                 italic True
 
@@ -394,14 +396,14 @@ screen main_menu():
         text "UFPB  ·  PET-Saúde  ·  GT-6 POP RUA":
             xpos 30
             yalign 0.5
-            size 14
+            size gui.main_menu_footer_text_size
             color "#ebf0f4"
             bold True
 
         text "protótipo — nome provisório · v[config.version]":
             xalign 0.99
             yalign 0.5
-            size 12
+            size gui.main_menu_footer_version_size
             color "#c8d4de"
             italic True
 
