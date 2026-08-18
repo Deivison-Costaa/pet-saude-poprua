@@ -69,8 +69,8 @@ define gui.main_menu_footer_version_size = 12
 ## Menu principal e de jogo
 ################################################################################
 
-define gui.main_menu_background = "gui/main_menu.png"
-define gui.game_menu_background = "gui/game_menu.png"
+define gui.main_menu_background = "gui/main_menu.webp"
+define gui.game_menu_background = "gui/game_menu.webp"
 define gui.main_menu_text_color = "#5ab8f5"
 
 

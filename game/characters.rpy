@@ -3,17 +3,17 @@
 
 init python:
     def textbox_tinted(accent):
-        ## Caixa de diálogo aquarela (gui/textbox.png) com uma pincelada fina
+        ## Caixa de diálogo aquarela (gui/textbox.webp) com uma pincelada fina
         ## na cor do personagem sob a área do nome.
         return Composite(
             (1280, 170),
-            (0, 0), "gui/textbox.png",
+            (0, 0), "gui/textbox.webp",
             (110, 50), Solid(accent + "cc", xysize=(150, 3)),
         )
 
 ## Narrador (sem nome, itálico)
 define narr   = Character(None, what_italic=True, what_color="#dddddd",
-                          window_background=Image("gui/textbox.png"))
+                          window_background=Image("gui/textbox.webp"))
 
 ## Paciente central
 define renato = Character("Renato",
@@ -61,38 +61,38 @@ image bg aqua_consultorio = "bg/aqua_consultorio.jpg"
 image bg aqua_box         = "bg/aqua_box.jpg"
 image bg aqua_corredor    = "bg/aqua_corredor.jpg"
 image bg aqua_saida       = "bg/aqua_saida.jpg"
-image bg neutro_cor       = "bg/neutro_cor.png"
-image bg neutro_quente    = "bg/neutro_quente.png"
-image bg neutro_frio      = "bg/neutro_frio.png"
-image bg teste001         = Transform("bg/Teste001.png", size=(1280, 720))
-image bg img2             = Transform("bg/Img2.png", size=(1280, 720))
+image bg neutro_cor       = "bg/neutro_cor.webp"
+image bg neutro_quente    = "bg/neutro_quente.webp"
+image bg neutro_frio      = "bg/neutro_frio.webp"
+image bg teste001         = Transform("bg/Teste001.webp", size=(1280, 720))
+image bg img2             = Transform("bg/Img2.webp", size=(1280, 720))
 
 ## Overlay do e-SUS (tela de registro)
 image esus = "bg/aqua_esus.jpg"
 
 ## ── Sprites de Renato (2816x1536, recorte com alpha) ─────────────────────────
-image renato normal     = "chars/renato_normal.png"
-image renato hesitante  = "chars/renato_hesitante.png"
-image renato aberto     = "chars/renato_aberto.png"
-image renato emocionado = "chars/renato_emocionado.png"
-image renato despedida  = "chars/renato_despedida.png"
+image renato normal     = "chars/renato_normal.webp"
+image renato hesitante  = "chars/renato_hesitante.webp"
+image renato aberto     = "chars/renato_aberto.webp"
+image renato emocionado = "chars/renato_emocionado.webp"
+image renato despedida  = "chars/renato_despedida.webp"
 
 ## ── Sprites da equipe e NPCs ─────────────────────────────────────────────────
-image tecnica        = "chars/tecnica.png"
-image assistente     = "chars/assistente_social.png"
-image medico         = "chars/medico.png"
-image senhora        = "chars/senhora.png"
-image senhora_fofoqueira = "chars/SenhoraFofoqueira.png"
-image senhor_fofoqueiro  = "chars/SenhorFofoqueiro.png"
-image renato_fofocado    = "chars/RenatoFofocado.png"
-image recepcionista_chamando_renato = "chars/RecepcionistaChamandoRenato.png"
-image outro_paciente = "chars/outro_paciente.png"
+image tecnica        = "chars/tecnica.webp"
+image assistente     = "chars/assistente_social.webp"
+image medico         = "chars/medico.webp"
+image senhora        = "chars/senhora.webp"
+image senhora_fofoqueira = "chars/SenhoraFofoqueira.webp"
+image senhor_fofoqueiro  = "chars/SenhorFofoqueiro.webp"
+image renato_fofocado    = "chars/RenatoFofocado.webp"
+image recepcionista_chamando_renato = "chars/RecepcionistaChamandoRenato.webp"
+image outro_paciente = "chars/outro_paciente.webp"
 
 ## ── Objetos das cenas (recorte com alpha) ────────────────────────────────────
-image caderno  = "obj/caderno_renato.png"
-image carteira = "obj/obj_carteira_trabalho.png"
-image cartao   = "obj/obj_cartao_sus.png"
-image receita  = "obj/obj_receita_medica.png"
+image caderno  = "obj/caderno_renato.webp"
+image carteira = "obj/obj_carteira_trabalho.webp"
+image cartao   = "obj/obj_cartao_sus.webp"
+image receita  = "obj/obj_receita_medica.webp"
 
 ## ── Fundos de cor sólida (epílogo e transições) ──────────────────────────────
 image bg_escuro   = Solid("#0a1a2a")
