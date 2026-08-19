@@ -83,6 +83,27 @@ jobs:
           ./renpy.sh launcher android_build "$GITHUB_WORKSPACE" --dest "$GITHUB_WORKSPACE/dist"
           ls -la "$GITHUB_WORKSPACE/dist"
 
+      # RAPT empacota a si mesmo (rapt/prototype + bundletool.jar, o build
+      # tool do Android) como assets/x-rapt.zip dentro do próprio APK do jogo —
+      # ~68 MB (26%) que não tem nenhuma função em tempo de execução, já que
+      # este projeto não usa o updater do Ren'Py. build.classify não alcança
+      # esse arquivo (RAPT o gera direto, fora do sweep de distribute), então
+      # a única forma de tirar é remover do zip já assinado e reassinar.
+      - name: Remover assets/x-rapt.zip e reassinar o APK
+        env:
+          ANDROID_SDK_DIR: ${{ github.workspace }}/renpy-sdk/rapt/Sdk
+          KEYSTORE_PATH: ${{ github.workspace }}/renpy-sdk/rapt/android.keystore
+        run: |
+          APK=$(ls dist/*.apk | head -1)
+          echo "Antes:"; du -h "$APK"
+          zip -q -d "$APK" "assets/x-rapt.zip"
+          BUILD_TOOLS=$(ls -d "$ANDROID_SDK_DIR"/build-tools/*/ | sort -V | tail -1)
+          APKSIGNER="${BUILD_TOOLS}apksigner"
+          "$APKSIGNER" sign --ks "$KEYSTORE_PATH" --ks-key-alias android \
+            --ks-pass pass:android --key-pass pass:android "$APK"
+          "$APKSIGNER" verify "$APK"
+          echo "Depois:"; du -h "$APK"
+
       - name: Remover chaves antes do cache ser salvo
         if: always()
         run: |

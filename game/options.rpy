@@ -44,6 +44,8 @@ init python:
     build.classify('README.md', None)
     build.classify('*.docx', None)
     build.classify('*.png', None)
+    build.classify('*.jpg', None)
+    build.classify('*.jpeg', None)
     build.classify('*.txt', None)
     build.classify('01-07/**', None)
     build.classify('Imagens-*/**', None)
