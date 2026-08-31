@@ -64,6 +64,7 @@ image bg aqua_saida       = "bg/aqua_saida.jpg"
 image bg neutro_cor       = "bg/neutro_cor.webp"
 image bg neutro_quente    = "bg/neutro_quente.webp"
 image bg neutro_frio      = "bg/neutro_frio.webp"
+image bg neutro_corredor  = "bg/neutro_corredor.webp"
 image bg teste001         = Transform("bg/Teste001.webp", size=(1280, 720))
 image bg img2             = Transform("bg/Img2.webp", size=(1280, 720))
 
@@ -87,6 +88,9 @@ image senhor_fofoqueiro  = "chars/SenhorFofoqueiro.webp"
 image renato_fofocado    = "chars/RenatoFofocado.webp"
 image recepcionista_chamando_renato = "chars/RecepcionistaChamandoRenato.webp"
 image outro_paciente = "chars/outro_paciente.webp"
+
+## Médico de plantão da UPA (meio-corpo, 747x1232 — recorte já sem margens)
+image medico_upa     = "chars/medico_upa.webp"
 
 ## ── Objetos das cenas (recorte com alpha) ────────────────────────────────────
 image caderno  = "obj/caderno_renato.webp"
@@ -123,6 +127,15 @@ transform right:
     xpos 0.82
     yalign 1.0
     zoom 0.35
+
+## Sprite de meio-corpo (medico_upa, 747x1232): a figura já vem sem margens e é
+## cortada na altura da coxa — fica em primeiro plano, encostando na borda
+## inferior da tela. zoom 0.42 → ~517px de altura.
+transform primeiro_plano_esq:
+    xanchor 0.5
+    xpos 0.18
+    yalign 1.0
+    zoom 0.42
 
 ## Sprites novos 1024x1536 (figura ocupa o canvas inteiro): zoom calibrado para
 ## ficarem um pouco MENORES que o Renato (504px) — senhora 0.31≈465px,

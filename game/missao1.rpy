@@ -134,7 +134,8 @@ label m1_cena1:
 ## ═════════════════════════════════════════════════════════════════════════════
 
 label m1_cena2:
-    scene bg aqua_consultorio with dissolve
+    scene bg neutro_corredor with dissolve
+    show medico_upa at primeiro_plano_esq with dissolve
     narr "{b}Seu papel agora:{/b} Médico — quem recebe Renato para a consulta inicial. A pergunta é: que tipo de profissional eu vou ser nos primeiros 30 segundos?"
 
     show renato hesitante at center with dissolve
