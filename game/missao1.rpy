@@ -135,21 +135,23 @@ label m1_cena1:
 
 label m1_cena2:
     scene bg neutro_corredor with dissolve
-    show medico_upa at primeiro_plano_esq with dissolve
+    show medico_upa at primeiro_plano_centro with dissolve
     narr "{b}Seu papel agora:{/b} Médico — quem recebe Renato para a consulta inicial. A pergunta é: que tipo de profissional eu vou ser nos primeiros 30 segundos?"
-
-    show renato hesitante at center with dissolve
 
     show esus at overlay_esus with dissolve
     narr "Você chama Renato. Ele entra calado e senta. Na sua tela, três informações entram em conflito antes de você falar: o endereço desatualizado do outro lado da cidade, a observação da triagem ({i}“situação de rua há alguns meses”{/i}) e a classificação amarela (urgência cardiovascular)."
     narr "Antes do paciente, o sistema já te entregou uma narrativa — e ela está incompleta."
     hide esus with dissolve
 
+    scene bg neutro_corredor with dissolve
+    show consulta_medico_renato at ilustracao_centro with dissolve
+
     menu:
         narr "Como você abre o atendimento?"
 
         "Ir direto ao protocolo clínico, sem rodeios.":
             $ escolha_c2 = "A"
+            scene bg consulta_anamnese with dissolve
             med "Onde está a dor? Há quanto tempo? Tem histórico cardíaco?"
             $ ajustar("empatia", -5)
             narr "O protocolo se cumpre, mas o paciente fica invisível atrás da queixa. Quando o instrumento chega antes do encontro, o profissional executa, não cuida."
@@ -157,16 +159,17 @@ label m1_cena2:
 
         "Chamar pelo nome e abrir com pergunta aberta, priorizando a queixa cardiovascular.":
             $ escolha_c2 = "B"
+            scene bg consulta_anamnese with dissolve
             med "Renato, me conta o que está sentindo. Não só a dor — como você está chegando aqui hoje?"
             $ ajustar("acolhimento", 15)
             $ ajustar("empatia", 15)
             $ ajustar("direito", 5)
-            show renato aberto at center
             narr "Você ofereceu vínculo antes do instrumento, respeitou a prioridade clínica que o paciente trouxe e abriu espaço sem forçar."
             narr "Renato hesita, respira fundo e começa a falar do peso no peito que “não é só físico”."
 
         "Ver a observação “situação de rua” e tentar resolver a moradia primeiro.":
             $ escolha_c2 = "C"
+            scene bg consulta_anamnese with dissolve
             med "O senhor tem onde dormir hoje? Precisa de encaminhamento para abrigo?"
             $ ajustar("empatia", -10)
             $ ajustar("acolhimento", -10)
