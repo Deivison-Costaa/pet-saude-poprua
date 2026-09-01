@@ -64,6 +64,8 @@ image bg aqua_saida       = "bg/aqua_saida.jpg"
 image bg neutro_cor       = "bg/neutro_cor.webp"
 image bg neutro_quente    = "bg/neutro_quente.webp"
 image bg neutro_frio      = "bg/neutro_frio.webp"
+image bg neutro_corredor  = "bg/neutro_corredor.webp"
+image bg consulta_anamnese = "bg/consulta_anamnese.webp"
 image bg teste001         = Transform("bg/Teste001.webp", size=(1280, 720))
 image bg img2             = Transform("bg/Img2.webp", size=(1280, 720))
 
@@ -87,6 +89,13 @@ image senhor_fofoqueiro  = "chars/SenhorFofoqueiro.webp"
 image renato_fofocado    = "chars/RenatoFofocado.webp"
 image recepcionista_chamando_renato = "chars/RecepcionistaChamandoRenato.webp"
 image outro_paciente = "chars/outro_paciente.webp"
+
+## Médico de plantão da UPA (meio-corpo, 747x1232 — recorte já sem margens)
+image medico_upa     = "chars/medico_upa.webp"
+
+## Ilustração de cena (1536x1024, alpha recortando o fundo): médico e Renato
+## sentados na consulta — usada sobre o corredor neutro.
+image consulta_medico_renato = "chars/consulta_medico_renato.webp"
 
 ## ── Objetos das cenas (recorte com alpha) ────────────────────────────────────
 image caderno  = "obj/caderno_renato.webp"
@@ -124,6 +133,22 @@ transform right:
     yalign 1.0
     zoom 0.35
 
+## Sprite de meio-corpo (medico_upa, 747x1232): a figura já vem sem margens e é
+## cortada na altura da coxa — fica em primeiro plano, no centro da tela,
+## encostando na borda inferior. zoom 0.42 → ~517px de altura.
+transform primeiro_plano_centro:
+    xanchor 0.5
+    xpos 0.5
+    yalign 1.0
+    zoom 0.42
+
+## Ilustração de cena (1536x1024) ocupando a altura da tela, centralizada.
+## zoom 0.7031 → 1080x720; o fundo aparece nas laterais.
+transform ilustracao_centro:
+    xalign 0.5
+    yalign 1.0
+    zoom 0.7031
+
 ## Sprites novos 1024x1536 (figura ocupa o canvas inteiro): zoom calibrado para
 ## ficarem um pouco MENORES que o Renato (504px) — senhora 0.31≈465px,
 ## outro paciente 0.33≈494px.
@@ -155,9 +180,10 @@ transform obj_dir:
     yalign 0.45
     zoom 0.36
 
-## overlay e-SUS (1600x900 sobre 1280x720)
+## overlay e-SUS (1600x900 sobre 1280x720): zoom 0.8 cobre a tela exatamente.
+## Opaco de propósito — com alpha < 1 os sprites atrás vazam como fantasma
+## por cima da ficha.
 transform overlay_esus:
     xalign 0.5
     yalign 0.5
     zoom 0.8
-    alpha 0.96
