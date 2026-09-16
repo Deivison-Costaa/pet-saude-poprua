@@ -26,8 +26,16 @@ define config.window = "auto"
 define config.window_show_transition = Dissolve(.2)
 define config.window_hide_transition = Dissolve(.2)
 
-default preferences.text_cps = 0
+## Velocidade de digitação. Estava em 0 (texto instantâneo), o que deixava a
+## troca de falas brusca. A 50 cps a fala mais longa do Dia 1 (284 caracteres)
+## leva 5,7s para aparecer inteira. O jogador pode mudar em Opções.
+default preferences.text_cps = 50
 default preferences.afm_time = 15
+
+## Volume inicial. Sem isso o Ren'Py abre tudo em 100%, e nos testes o som
+## alto demais fez quem jogava no celular desligar o áudio e não voltar.
+default preferences.music_volume = 0.5
+default preferences.sfx_volume = 0.7
 
 define config.save_directory = "petsaude-pop-rua"
 define config.window_icon = "gui/window_icon.png"

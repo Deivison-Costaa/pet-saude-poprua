@@ -211,9 +211,12 @@ style choice_button is button
 style choice_button_text is button_text
 
 style choice_vbox:
+    ## Ancorado logo acima da caixa de texto (altura 260), em vez de centrado em
+    ## 0.62 — antes as placas de escolha cobriam a pergunta do menu.
     xalign 0.5
-    yalign 0.62
-    yanchor 0.5
+    yalign 1.0
+    yanchor 1.0
+    yoffset -280
     spacing gui.choice_spacing
 
 style choice_button is default:
@@ -262,6 +265,8 @@ style quick_button:
 
 style quick_button_text:
     properties gui.text_properties("quick_button")
+    bold True
+    outlines [(2, "#000000cc", 0, 0)]
 
 
 ################################################################################
@@ -1447,6 +1452,7 @@ screen quick_menu():
         textbutton _("Voltar") action Rollback()
         textbutton _("Avançar") action Skip() alternate Skip(fast=True, confirm=True)
         textbutton _("Auto") action Preference("auto-forward", "toggle")
+        textbutton _("Salvar") action ShowMenu('save')
         textbutton _("Menu") action ShowMenu()
 
 

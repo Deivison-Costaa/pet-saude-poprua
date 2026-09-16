@@ -78,7 +78,9 @@ define gui.main_menu_text_color = "#5ab8f5"
 ## Diálogos
 ################################################################################
 
-define gui.textbox_height = 170
+## Caixa mais alta: 24 das 221 falas passam de 200 caracteres, e a maior (284)
+## ocupa 4 linhas. Antes o texto batia nos botões do menu rápido e era cortado.
+define gui.textbox_height = 260
 define gui.textbox_yalign = 1.0
 
 define gui.name_xpos = 110
@@ -117,9 +119,9 @@ define gui.radio_button_borders = Borders(25, 4, 4, 4)
 define gui.check_button_borders = Borders(25, 4, 4, 4)
 define gui.confirm_button_text_xalign = 0.5
 define gui.page_button_borders = Borders(10, 4, 10, 4)
-define gui.quick_button_borders = Borders(10, 4, 10, 0)
-define gui.quick_button_text_size = 14
-define gui.quick_button_text_idle_color = gui.idle_small_color
+define gui.quick_button_borders = Borders(16, 10, 16, 6)
+define gui.quick_button_text_size = 18
+define gui.quick_button_text_idle_color = '#e4edf4'
 define gui.quick_button_text_selected_color = gui.accent_color
 
 
@@ -253,7 +255,9 @@ define gui.language = "unicode"
 init python:
     @gui.variant
     def touch():
-        gui.quick_button_borders = Borders(40, 14, 40, 0)
+        ## Alvo de toque maior: nos testes no Android o acerto dos botões
+        ## recebeu a pior nota do questionário.
+        gui.quick_button_borders = Borders(40, 22, 40, 14)
 
     @gui.variant
     def small():
@@ -269,7 +273,7 @@ init python:
         gui.navigation_button_text_size = 30
         gui.main_menu_footer_text_size = 20
         gui.main_menu_footer_version_size = 17
-        gui.textbox_height = 240
+        gui.textbox_height = 290
         gui.name_xpos = 80
         gui.dialogue_xpos = 90
         gui.dialogue_width = 1100
@@ -290,4 +294,4 @@ init python:
         gui.nvl_thought_xpos = 20
         gui.nvl_button_width = 1240
         gui.nvl_button_xpos = 20
-        gui.quick_button_text_size = 20
+        gui.quick_button_text_size = 24
