@@ -262,6 +262,8 @@ style quick_button:
 
 style quick_button_text:
     properties gui.text_properties("quick_button")
+    bold True
+    outlines [(2, "#000000cc", 0, 0)]
 
 
 ################################################################################
@@ -1447,6 +1449,7 @@ screen quick_menu():
         textbutton _("Voltar") action Rollback()
         textbutton _("Avançar") action Skip() alternate Skip(fast=True, confirm=True)
         textbutton _("Auto") action Preference("auto-forward", "toggle")
+        textbutton _("Salvar") action ShowMenu('save')
         textbutton _("Menu") action ShowMenu()
 
 

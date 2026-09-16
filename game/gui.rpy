@@ -117,9 +117,9 @@ define gui.radio_button_borders = Borders(25, 4, 4, 4)
 define gui.check_button_borders = Borders(25, 4, 4, 4)
 define gui.confirm_button_text_xalign = 0.5
 define gui.page_button_borders = Borders(10, 4, 10, 4)
-define gui.quick_button_borders = Borders(10, 4, 10, 0)
-define gui.quick_button_text_size = 14
-define gui.quick_button_text_idle_color = gui.idle_small_color
+define gui.quick_button_borders = Borders(16, 10, 16, 6)
+define gui.quick_button_text_size = 18
+define gui.quick_button_text_idle_color = '#e4edf4'
 define gui.quick_button_text_selected_color = gui.accent_color
 
 
@@ -253,7 +253,9 @@ define gui.language = "unicode"
 init python:
     @gui.variant
     def touch():
-        gui.quick_button_borders = Borders(40, 14, 40, 0)
+        ## Alvo de toque maior: nos testes no Android o acerto dos botões
+        ## recebeu a pior nota do questionário.
+        gui.quick_button_borders = Borders(40, 22, 40, 14)
 
     @gui.variant
     def small():
@@ -290,4 +292,4 @@ init python:
         gui.nvl_thought_xpos = 20
         gui.nvl_button_width = 1240
         gui.nvl_button_xpos = 20
-        gui.quick_button_text_size = 20
+        gui.quick_button_text_size = 24
