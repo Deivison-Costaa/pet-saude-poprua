@@ -206,11 +206,11 @@ screen redes_apoio():
             for nome, desc in [
                 ("UPA — Unidade de Pronto Atendimento", "urgência e emergência 24h; a prioridade é dada pela Classificação de Risco Clínica, não pela condição de moradia."),
                 ("Serviço Social", "presente na UPA; é a ponte entre o atendimento clínico e o restante da rede — CNR, CRAS, Defensoria."),
-                ("CNR — Consultório na Rua", "equipe que atende no território, com busca ativa. Funciona com nome, voz e ponto combinado."),
+                ("CNR — Consultório na Rua", "equipe que atende na rua, com busca ativa. Funciona com nome, voz e ponto combinado."),
                 ("UBS — Unidade Básica de Saúde", "referência para a continuidade do cuidado: acompanhamento, renovação de receitas, saúde mental."),
                 ("CRAS — Centro de Referência de Assistência Social", "documentação, benefícios e programas sociais; recebe encaminhamentos do Serviço Social."),
                 ("Farmácia da UPA", "dispensação imediata da medicação na alta — garante que o paciente saia medicado."),
-                ("Defensoria Pública", "regularização documental e garantia de direitos; acionada via ofício do Serviço Social com anuência do paciente.")]:
+                ("Defensoria Pública", "assistência jurídica gratuita: regularização documental e garantia de direitos; acionada via ofício do Serviço Social com anuência do paciente.")]:
 
                 frame:
                     background "#0d1f2dee"
