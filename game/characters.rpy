@@ -2,18 +2,23 @@
 ## História 1 — "Ele não parece morador de rua" (roteiro atualizado, cenas 0–7)
 
 init python:
+    ## A arte da caixa (1280x170) vira Frame para acompanhar gui.textbox_height:
+    ## como Image de tamanho fixo, falas de 4 linhas vazavam para fora da caixa
+    ## no celular, onde a fonte é maior.
+    def textbox_frame():
+        return Frame("gui/textbox.webp", 120, 45)
+
     def textbox_tinted(accent):
-        ## Caixa de diálogo aquarela (gui/textbox.webp) com uma pincelada fina
-        ## na cor do personagem sob a área do nome.
-        return Composite(
-            (1280, 170),
-            (0, 0), "gui/textbox.webp",
-            (110, 50), Solid(accent + "cc", xysize=(150, 3)),
+        ## Caixa de diálogo aquarela com uma pincelada fina na cor do personagem
+        ## sob a área do nome.
+        return Fixed(
+            textbox_frame(),
+            Transform(Solid(accent + "cc"), xysize=(150, 3), xpos=110, ypos=50),
         )
 
 ## Narrador (sem nome, itálico)
 define narr   = Character(None, what_italic=True, what_color="#dddddd",
-                          window_background=Image("gui/textbox.webp"))
+                          window_background=textbox_frame())
 
 ## Paciente central
 define renato = Character("Renato",

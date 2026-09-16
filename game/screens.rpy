@@ -211,9 +211,12 @@ style choice_button is button
 style choice_button_text is button_text
 
 style choice_vbox:
+    ## Ancorado logo acima da caixa de texto (altura 260), em vez de centrado em
+    ## 0.62 — antes as placas de escolha cobriam a pergunta do menu.
     xalign 0.5
-    yalign 0.62
-    yanchor 0.5
+    yalign 1.0
+    yanchor 1.0
+    yoffset -280
     spacing gui.choice_spacing
 
 style choice_button is default:

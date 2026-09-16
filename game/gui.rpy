@@ -78,7 +78,9 @@ define gui.main_menu_text_color = "#5ab8f5"
 ## Diálogos
 ################################################################################
 
-define gui.textbox_height = 170
+## Caixa mais alta: 24 das 221 falas passam de 200 caracteres, e a maior (284)
+## ocupa 4 linhas. Antes o texto batia nos botões do menu rápido e era cortado.
+define gui.textbox_height = 260
 define gui.textbox_yalign = 1.0
 
 define gui.name_xpos = 110
@@ -271,7 +273,7 @@ init python:
         gui.navigation_button_text_size = 30
         gui.main_menu_footer_text_size = 20
         gui.main_menu_footer_version_size = 17
-        gui.textbox_height = 240
+        gui.textbox_height = 290
         gui.name_xpos = 80
         gui.dialogue_xpos = 90
         gui.dialogue_width = 1100
