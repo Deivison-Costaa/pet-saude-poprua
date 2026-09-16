@@ -38,7 +38,7 @@ label missao1:
 
     narr "Você olha para a sala de espera. Renato está de cabeça baixa, roupa simples mas limpa, segurando um caderno velho. Ele não se parece com o que você imaginava."
     narr "E, justamente por isso, outros pacientes e até funcionários começam a olhar de um jeito diferente — não por desprezo à condição de rua, mas porque ele não “parece” dessa condição. E isso, em alguns olhares, vira suspeita de outra coisa."
-    narr "Esta UPA opera 24 horas e tem Serviço Social com fluxo direto para a equipe do {b}Consultório na Rua{/b} de plantão noturno — o agente comunitário desta noite é {b}Marcos{/b} (ramal 4127), conhecido por andar com um caderno parecido com o de Renato. Você ainda não falou com ele. Pode acionar."
+    narr "Esta UPA opera 24 horas e tem Serviço Social com fluxo direto para a equipe do {b}Consultório na Rua{/b} de plantão noturno — o agente social desta noite é {b}Marcos{/b} (ramal 4127), conhecido por andar com um caderno parecido com o de Renato. Você ainda não falou com ele. Pode acionar."
 
     jump m1_cena1
 
@@ -68,7 +68,7 @@ label m1_cena1:
         zoom 1.6
     with dissolve
 
-    outro_pac "Se tivesse condição de pagar plano, eu não estaria aqui esperando. Vem gente aqui que não precisa."
+    outro_pac "Se tivesse condição de pagar plano de saúde, não estaria aqui esperando. Ainda assim, vem gente aqui que não precisa."
 
     scene bg neutro_frio with fade
     show renato_fofocado at center:
@@ -115,7 +115,7 @@ label m1_cena1:
             show senhora at left_np(0.31) with dissolve
             recep "Senhora, todo mundo aqui passou pela classificação clínica e foi chamado pela urgência do quadro, não pela aparência. O SUS atende qualquer pessoa, e ninguém aqui tá tirando lugar de ninguém."
             hide senhora with dissolve
-            recep "Você vai ser chamado em breve. Aceita uma água?"
+            recep "Renato, você vai ser chamado em breve. Aceita uma água?"
             $ ajustar("direito", 10)
             $ ajustar("empatia", 15)
             $ ajustar("acolhimento", 10)
@@ -157,10 +157,10 @@ label m1_cena2:
             narr "O protocolo se cumpre, mas o paciente fica invisível atrás da queixa. Quando o instrumento chega antes do encontro, o profissional executa, não cuida."
             narr "Você também aceitou passivamente a narrativa enviesada do sistema. Renato responde o mínimo e a consulta vira triagem repetida."
 
-        "Chamar pelo nome e abrir com pergunta aberta, priorizando a queixa cardiovascular.":
+        "Chamar pelo nome e iniciar um diálogo, priorizando a queixa cardiovascular.":
             $ escolha_c2 = "B"
             scene bg consulta_anamnese with dissolve
-            med "Renato, me conta o que está sentindo. Não só a dor — como você está chegando aqui hoje?"
+            med "Renato, me conta o que está sentindo."
             $ ajustar("acolhimento", 15)
             $ ajustar("empatia", 15)
             $ ajustar("direito", 5)
@@ -182,10 +182,10 @@ label m1_cena2:
 ## ▸ Sub-decisão 1.1 — O campo "endereço" no e-SUS
 
 label m1_sub11:
-    narr "{b}Sub-decisão — o campo “endereço” no e-SUS.{/b} Papel: profissional clínico responsável pelo preenchimento da ficha."
+    narr "{b}Decisão — o campo “endereço” no e-SUS.{/b} Papel: profissional clínico responsável pelo preenchimento da ficha."
 
     show esus at overlay_esus with dissolve
-    narr "Renato responde ao cumprimento. Ao preencher a ficha, você chega ao campo “endereço”. Está em branco — ou desatualizado de uma década. Renato desvia o olhar."
+    narr "Renato responde ao cumprimento. Ao preencher a ficha, você chega ao campo “endereço”. Está em branco — ou desatualizado de uma década. A tela está virada para você: Renato não lê o que está escrito ali, mas percebe a pausa e desvia o olhar."
     narr "Há três caminhos no sistema, e cada um materializa uma compreensão diferente do que é direito à saúde."
 
     menu:
@@ -228,14 +228,14 @@ label m1_sub12:
     scene bg aqua_espera with dissolve
     show renato hesitante at right with dissolve
 
-    narr "{b}Sub-decisão — a espera depois do cadastro.{/b} Papel: Técnica de Enfermagem responsável pelo fluxo da sala de espera."
+    narr "{b}Decisão — a espera depois do cadastro.{/b} Papel: Técnica de Enfermagem responsável pelo fluxo da sala de espera."
     narr "Renato foi classificado (amarela) e encaminhado à sala de espera. Minutos depois, você percebe que ele está inquieto, olhando repetidamente para a porta de saída."
     narr "A espera estimada é de 20 minutos — o momento crítico em que pacientes da PSR frequentemente desistem e vão embora."
 
     menu:
         narr "Como você age?"
 
-        "Não fazer nada. É a rotina; mexer com um paciente específico pode parecer favorecimento.":
+        "Dar continuidade às demandas do momento, com receio de atrasar outros processos, e não interagir com Renato — agora não é sua função atendê-lo.":
             $ escolha_s12 = "A"
             $ ajustar("empatia", -5)
             narr "Para alguém acostumado a ser ignorado, o silêncio do serviço é lido como dispensa. A neutralidade aparente do “tratamento igual”, em populações que partem de desvantagens diferentes, reproduz a exclusão."
@@ -266,7 +266,7 @@ label m1_sub13:
     scene bg aqua_corredor with dissolve
     show medico at right with dissolve
 
-    narr "{b}Sub-decisão — a passagem para a consulta médica.{/b} Papel: Técnica de Enfermagem fazendo a entrega do paciente ao médico de plantão."
+    narr "{b}Decisão — a passagem para a consulta médica.{/b} Papel: Técnica de Enfermagem fazendo a entrega do paciente ao médico de plantão."
     narr "Chega a hora de Renato ser atendido. O médico de plantão está cansado e olha para a tela com pressa. Você tem cerca de 40 segundos para entregar o caso — e o que enfatizar vai moldar como o médico vai olhar para Renato."
 
     menu:
@@ -351,7 +351,7 @@ label m1_cena3:
 ## ▸ Sub-decisão 2.1 — O registro no prontuário e-SUS
 
 label m1_sub21:
-    narr "{b}Sub-decisão — o registro no prontuário.{/b} A consulta terminou, mas o cuidado depende do que vai permanecer registrado."
+    narr "{b}Decisão — o registro no prontuário.{/b} A consulta terminou, mas o cuidado depende do que vai permanecer registrado."
 
     show esus at overlay_esus with dissolve
     narr "Você abre o campo de evolução no prontuário. Cabem poucas linhas — e elas vão decidir quanto do atendimento continua existindo para o resto da rede."
@@ -387,17 +387,18 @@ label m1_sub21:
 ## ▸ Sub-decisão 2.2 — A prescrição fora do papel
 
 label m1_sub22:
-    narr "{b}Sub-decisão — a prescrição fora do papel.{/b} O tratamento precisa sair da lógica do consultório e entrar na rotina real de Renato."
+    narr "{b}Decisão — a prescrição fora do papel.{/b} O tratamento precisa sair da lógica do consultório e entrar na rotina real de Renato."
 
     show receita at obj_dir with dissolve
-    narr "Você prepara a receita do anti-hipertensivo: uso contínuo, um comprimido por dia. Parece simples na tela. Mas a eficácia depende de coisas que o protocolo assume como garantidas: horário estável, local seguro para guardar o remédio, alimentação regular, retorno à UBS."
+    narr "Você prepara a receita do anti-hipertensivo: uso contínuo, um comprimido por dia. Parece simples na tela. Mas a eficácia depende de coisas que o protocolo assume como garantidas: horário estável, local seguro para guardar o remédio, alimentação regular, acompanhamento depois da alta."
+    narr "Da UPA não se “retorna”: é urgência e emergência. O que Renato leva daqui é um {b}encaminhamento{/b} para o {b}HiperDia{/b} de uma UBS — e ela precisa ser perto de onde ele dorme, ou o papel não vira consulta."
     narr "Renato segura o caderno contra o peito. Você se pergunta não só “o que prescrever?”, mas “o que dessa prescrição cabe na vida dele?”."
     hide receita with dissolve
 
     menu:
         narr "Como você conduz a orientação do tratamento?"
 
-        "Explicar a prescrição de forma rápida e padronizada, com orientações gerais de retorno.":
+        "Explicar a prescrição de forma rápida e padronizada, com orientações gerais.":
             $ escolha_s22 = "A"
             med "Tomar um comprimido por dia, de preferência pela manhã, e evitar esquecer."
             $ ajustar("acolhimento", 5)
@@ -472,7 +473,7 @@ label m1_cena4:
 ## ▸ Sub-decisão 3.1 — A reavaliação clínica
 
 label m1_sub31:
-    narr "{b}Sub-decisão — a reavaliação clínica.{/b} Papel: Médico(a) — responsável pela reavaliação antes da decisão de alta."
+    narr "{b}Decisão — a reavaliação clínica.{/b} Papel: Médico(a) — responsável pela reavaliação antes da decisão de alta."
     narr "35 minutos depois. {b}PA 148/92, FC 84{/b}. Renato está mais corado, respiração tranquila, refere alívio. Clinicamente, cumpre os critérios de alta."
     narr "Mas alta segura não é só pressão controlada — é também ler o que vai acontecer quando ele atravessar a porta."
 
@@ -487,7 +488,7 @@ label m1_sub31:
 
         "Sentar ao lado, refazer o exame e perguntar de forma aberta.":
             $ escolha_s31 = "B"
-            med "Como tá agora — não só a dor, mas a cabeça, a respiração, o sono?"
+            med "Desde a medicação, os sintomas diminuíram ou pioraram? A dor, a respiração, o sono?"
             show renato aberto at center
             renato "A dor no peito sumiu... mas o coração acelera quando eu penso em sair daqui."
             $ ajustar("acolhimento", 15)
@@ -509,7 +510,7 @@ label m1_sub31:
 ## ▸ Sub-decisão 3.2 — O prontuário antes da alta
 
 label m1_sub32:
-    narr "{b}Sub-decisão — o prontuário antes da alta.{/b} Papel: profissional clínico responsável pela evolução no prontuário eletrônico."
+    narr "{b}Decisão — o prontuário antes da alta.{/b} Papel: profissional clínico responsável pela evolução no prontuário eletrônico."
 
     show esus at overlay_esus with dissolve
     narr "Antes de chamar Renato para a conversa de alta, você abre a evolução no e-SUS. O que se registra agora é o que a UBS de referência, o Consultório na Rua e qualquer profissional que cruzar com Renato vão ler depois."
@@ -601,8 +602,8 @@ label m1_cena5:
 ## ▸ Sub-decisão 4.1 — Comunicando os próximos passos
 
 label m1_sub41:
-    narr "{b}Sub-decisão — comunicando os próximos passos.{/b} Papel: profissional responsável pela orientação de alta."
-    narr "O plano de alta está definido. Renato está sentado na cama, caderno no colo, esperando. Você tem alguns minutos antes do próximo paciente."
+    narr "{b}Decisão — comunicando os próximos passos.{/b} Papel: profissional responsável pela orientação de alta."
+    narr "O plano de alta está definido. Renato está sentado na cadeira, caderno no colo, esperando. A sala de espera continua cheia — a orientação de alta é o que falta para fechar este atendimento."
 
     menu:
         narr "Como você comunica o que vem depois?"
@@ -638,7 +639,7 @@ label m1_sub41:
 label m1_sub42:
     show assistente at left with dissolve
 
-    narr "{b}Sub-decisão — a passagem para o Serviço Social.{/b} Você acionou o Serviço Social. A assistente social aparece na porta com expressão de sobrecarga."
+    narr "{b}Decisão — a passagem para o Serviço Social.{/b} Você acionou o Serviço Social. A assistente social aparece na porta com expressão de sobrecarga."
 
     assist "Posso te ajudar em 5 minutos — tem uma fila hoje."
 
@@ -686,8 +687,8 @@ label m1_cena6:
     with dissolve
 
     narr "{b}Agora é a equipe:{/b} você, a assistente social — e Renato, como participante ativo."
-    narr "Com o plano de alta definido, a assistente social lembra que ainda é preciso fechar quem do CNR vai fazer a busca ativa. Marcos, agente comunitário de plantão noturno, está em ronda no território — ramal 4127, atende o telefone do plantão pela enfermagem."
-    narr "Renato está sentado na cama, atento, ouvindo."
+    narr "Com o plano de alta definido, a assistente social lembra que ainda é preciso fechar quem do CNR vai fazer a busca ativa. Marcos, agente social de plantão noturno, está em ronda na rua — ramal 4127, atende o telefone do plantão pela enfermagem."
+    narr "Renato está sentado na cadeira, atento, ouvindo."
 
     menu:
         narr "Como você conduz a articulação com o Consultório na Rua?"
@@ -733,13 +734,13 @@ label m1_cena6:
 ## ▸ Sub-decisão 5.1 — A carteira vencida e a cidadania
 
 label m1_sub51:
-    narr "{b}Sub-decisão — a carteira vencida e a cidadania.{/b} Papel: Assistente Social + profissional clínico — decisão compartilhada sobre o que está além da ficha clínica."
+    narr "{b}Decisão — a carteira vencida e a cidadania.{/b} Papel: Assistente Social + profissional clínico — decisão compartilhada sobre o que está além da ficha clínica."
 
     show carteira at obj_dir with dissolve
     narr "Você se lembra da carteira de trabalho vencida que Renato tirou do bolso na recepção. É a única identificação ativa que ele tem, e o registro civil está fragmentado — sem CPF regularizado, sem RG recente."
     narr "Sem isso, o Cartão SUS pleno não se completa, e o acesso a transferência de renda ou abrigamento de longa permanência fica travado."
     hide carteira with dissolve
-    narr "A assistente social ainda está na sala. Você tem 2 minutos antes do próximo paciente."
+    narr "A assistente social ainda está na sala, e o próximo paciente já foi chamado. O que der para encaminhar, é agora."
 
     menu:
         narr "O que você faz com a questão documental?"
@@ -760,7 +761,7 @@ label m1_sub51:
             narr "A orientação é correta, mas genérica. Para a PSR, um folheto sem nome de referência, sem data e sem ponte construída é papel — não caminho."
             narr "A diferença entre informação e acesso está na ponte que o profissional constrói (ou não)."
 
-        "Registrar a pendência, pedir ofício curto à Defensoria Pública e obter a anuência de Renato por digital.":
+        "Registrar a pendência, acionar a assistente social para o ofício à Defensoria Pública e colher a assinatura de Renato.":
             $ escolha_s51 = "C"
             $ ajustar("direito", 10)
             $ ajustar("rede", 10)
@@ -768,8 +769,8 @@ label m1_sub51:
             $ ajustar("empatia", 10)
             $ no_acende("CRAS")
             $ no_acende("Defensoria Pública")
-            narr "A saúde reconheceu que a pessoa inteira não cabe só na ficha clínica. O ofício à Defensoria é um gesto de 2 minutos que pode mudar meses de travamento burocrático."
-            narr "O registro garante que o próximo profissional saiba que a documentação é parte do plano, e a anuência por digital respeita a autonomia de Renato — ele não foi inscrito em nada sem saber."
+            narr "A saúde reconheceu que a pessoa inteira não cabe só na ficha clínica. O ofício à Defensoria Pública — que presta assistência jurídica gratuita — é um gesto de 2 minutos que pode mudar meses de travamento burocrático."
+            narr "O registro garante que o próximo profissional saiba que a documentação é parte do plano, e a assinatura de Renato respeita a autonomia dele — ele não foi inscrito em nada sem saber."
             narr "Marcos leva a cópia do encaminhamento do CRAS na visita de sexta."
 
     call reflexao_card("Ativar a rede com nome, voz e ponto combinado é diferente de acionar uma caixa-preta à distância. Incluir o paciente na construção do próprio plano não é cortesia — é princípio da Política Nacional de Humanização.", "Reconhecer que a documentação é parte do cuidado em saúde é o gesto que separa o atendimento da pessoa inteira do atendimento do sintoma isolado.")

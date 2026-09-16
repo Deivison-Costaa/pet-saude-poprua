@@ -64,7 +64,7 @@ label tela_conceitual_psr:
 
     narr "{b}Antes de começar.{/b}"
     narr "A população em situação de rua é heterogênea: não existe um perfil único. Os motivos mais citados são problemas familiares, desemprego e uso de substâncias."
-    narr "Neste jogo, você é um profissional de saúde. A cada cena, sua perspectiva muda — recepção, medicina, enfermagem, serviço social."
+    narr "Neste jogo, você é quem faz o serviço funcionar. A cada cena, sua perspectiva muda — recepção, medicina, enfermagem, serviço social."
     narr "Suas escolhas movem quatro dimensões do cuidado: {b}Direito em Saúde{/b}, {b}Conhecimento da Rede{/b}, {b}Empatia{/b} e {b}Acolhimento{/b}. Nenhuma delas aparece durante o jogo — você descobre no fim, olhando para o que fez."
     narr "{i}Não há pontuação a vencer. Há uma pessoa a encontrar.{/i}"
 
